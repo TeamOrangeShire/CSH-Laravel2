@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en" >
+  <head>
+    @include('Components.header', ['title'=>'Core Support Hub'])
+    <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
+  </head>
+  <body>
+
+    <div class="snackbar-div" id="snackbar-div"><span class="snackbar-text" id="snackbar-text"></span></div>
+
+    <div class="preloader">
+      <div class="preloader-body">
+        <div class="cssload-container"><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+    <div class="page">
+      <div id="home">
+        <!-- Top Banner--> 
+        <!-- Page Header-->
+      @include('Components.nav')
+
+        <!-- Swiper-->
+        <section class="section swiper-container swiper-slider swiper-slider-classic" data-loop="true" data-autoplay="4859" data-simulate-touch="true" data-direction="vertical" data-nav="false">
+          <div class="swiper-wrapper text-center">
+            <div class="swiper-slide" data-slide-bg="images/bg.jpg">
+              <div class="swiper-slide-caption section-md">
+                <div class="container text-left">
+                  <h1 style="margin-top: -100px; font-size:clamp(1.1rem, 3.2vw, 4rem);" data-caption-animate="fadeInLeft" data-caption-delay="0">Core Support Hub</h1>
+                  <p class="" style="font-size: clamp(0.7rem, 1vw, 1.3rem); " data-caption-animate="fadeInRight" data-caption-delay="100">Core Support Hub: Your Partner of choice for Small and Midsize Enterprises</p>
+                  <a class="button button-primary button-ujarak" href="#services"  data-caption-animate="fadeInUp" data-caption-delay="200">Learn More</a>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide" data-slide-bg="images/bg2.jpg">
+              <div class="swiper-slide-caption section-md">
+                <div class="container text-left">
+                  <h1 data-caption-animate="fadeInLeft" style="font-size:clamp(1.1rem, 3.2vw, 4rem);" data-caption-delay="0">Outsourcing: An extension of your organization</h1>
+                  <p class="" style="font-size:clamp(0.7rem, 1vw, 1.3rem);" data-caption-animate="fadeInRight" data-caption-delay="100">A partnership where we become an extension of your team.</p>
+                  <a class="button button-primary button-ujarak" href="#services"  data-caption-animate="fadeInUp" data-caption-delay="200">Learn More</a>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide" data-slide-bg="images/bg3.jpg">
+              <div class="swiper-slide-caption section-md">
+                <div class="container text-left">
+                  <h1 data-caption-animate="fadeInLeft" style="font-size:clamp(1.1rem, 3.2vw, 4rem);" data-caption-delay="0">Let's design the outsourcing engagement</h1>
+                  <p class="" style="font-size:clamp(0.7rem, 1vw, 1.3rem);" data-caption-animate="fadeInRight" data-caption-delay="100">Consulting is at the heart of our partnerships</p>
+                  <a class="button button-primary button-ujarak" href="#services"  data-caption-animate="fadeInUp" data-caption-delay="200">Learn More</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Swiper Pagination-->
+          <div class="swiper-pagination__module">
+            <div class="swiper-pagination__fraction"><span class="swiper-pagination__fraction-index">00</span><span class="swiper-pagination__fraction-divider">/</span><span class="swiper-pagination__fraction-count">00</span></div>
+            <div class="swiper-pagination__divider"></div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </section>
+
+      </div>
+      <!-- See all services-->
+      <section class="section section-sm section-first bg-default text-center" id="services" style="padding-top: 60px;" >
+        <div class="container">
+          <div class="row row-40 justify-content-center"  >
+            <div class="col-lg-12 col-xl-12" >
+              <h2 data-wow-delay=".1s" class="wow fadeInLeft">Our Services</h2>
+           
+              <div class="row row-30" >
+                
+                <div class="col-sm-3 wow fadeInRight" data-wow-delay=".1s" id="bpo_card">
+                  <article class="box-icon-modern box-icon-modern-2 bpo_background card" >
+
+              
+                      <div class="box-icon-modern-icon "><i class="fa-solid fa-briefcase" style="color: #c7ae6c;"></i></div>
+                    <h5 class="box-icon-modern-title text-white"><a href="#">BUSINESS PROCESS<br>OUTSOURCING (BPO)</a></h5>
+                    <div class="box-icon-modern-decor"></div>
+                    <!-- <p class="text-white" style="text-decoration: underline;">Learn More</p> -->
+                      <div class="card__content">
+                        <p style="font-size:clamp(16px, 1vw, 24px);" class="card__title">BPO</p>
+                        <p style="font-size:clamp(0.7rem, 1vw, 1rem);" class="card__description">Core Support Hub is an extension of your
+                          business. We partner with you to know your
+                          business and our team members deliver services
+                          to your customers as true representatives of your
+                          brand.</p>
+                        <a href="{{ route('bpo') }}" class="learn_more">
+                         Learn More
+                        </a>
+                      </div>
+           
+                  </article>
+                </div><i ></i>
+                <div class="col-sm-3 wow fadeInRight" data-wow-delay=".1s" id="it_manage_card">
+                  <article class="box-icon-modern box-icon-modern-2 ims_backgrounds card ">
+                    <div class="box-icon-modern-icon "><i class="fa-solid fa-users-gear" style="color: #c7ae6c;"></i></div>
+                    <h5 class="box-icon-modern-title text-white"><a href="#">TECHNOLOGY<br>OUTSOURCING</a></h5>
+                    <div class="box-icon-modern-decor"></div>
+                    <!-- <p class="text-white" style="text-decoration: underline;">Learn More</p> -->
+                    <div class="card__content">
+                      <p style="font-size:clamp(16px, 1vw, 24px);" class="card__title">Technology Outsourcing</p>
+                      <p style="font-size:clamp(0.7rem, 1vw, 1rem);" class="card__description">Core Support Hub provides managed services for
+                        your IT needs whether it's for providing remote
+                        desktop support for your computers and system
+                        administration to remotely monitor your
+                        network to ensure your connectivity is performing
+                        as expected.</p>
+                      <a href="{{ route('technology') }}" class="learn_more">
+                        Learn More
+                       </a>
+                    </div>
+             
+                 </article>
+                </div>
+       
+                <div class="col-sm-3 wow fadeInRight" data-wow-delay=".3s" id="consulting_card">
+                  <article class="box-icon-modern box-icon-modern-2 cons_background card">
+                    <div class="box-icon-modern-icon "><i class="fa-solid fa-lightbulb" style="color: #c7ae6c;"></i></div>
+                    <h5 class="box-icon-modern-title text-white"><a href="#">CONSULTING</a></h5>
+                    <div class="box-icon-modern-decor"></div>
+                     <!-- <p class="text-white" style="text-decoration: underline;">Learn More</p> -->
+                    <div class="card__content">
+                      <p style="font-size:clamp(16px, 1vw, 24px);" class="card__title">Consulting</p>
+                      <p style="font-size:clamp(0.7rem, 1vw, 1rem);" class="card__description">At the heart of Core Support Hub’s business model is
+                        partnering with our clients to help build processes,
+                        design workflows and create solutions to unlock value in
+                        their organizations.</p>
+                      <a href="{{ route('consulting') }}" class="learn_more">
+                        Learn More
+                       </a>
+                    </div>
+                
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <div class="col-lg-6 col-xl-12 align-self-center small-show">
+        <div class="row row-30 justify-content-center">
+          <div class="col-sm-6 col-md-5 col-lg-6 col-xl-3 wow fadeInLeft"><a class="clients-classic" href="{{ asset('images/cs_info_big1.png') }}" data-lightgallery="item"><img src="{{ asset('images/cs_info1.png') }}" alt="" width="270" height="117"/></a></div>
+          <div class="col-sm-6 col-md-5 col-lg-6 col-xl-3 wow fadeInLeft" data-wow-delay=".2s"><a class="clients-classic"href="{{ asset('images/cs_info_big3.png') }}" data-lightgallery="item"><img src="{{ asset('images/cs_info3.png') }}" alt="" width="270" height="117"/></a></div>
+         
+        </div>  
+      </div>
+
+<section  class="section section-sm bg-default wow fadeInRight big-show" data-wow-delay=".2s"   id="images-outsource">
+ <img class="out_img" src="{{ asset('images/outsourcing_engagement.png') }}" alt="outsourcing engagement">
+ <img class="out_img" src="{{ asset('images/why_outsource.png') }}" alt="outsourcing engagement">
+</section>
+      <!-- Latest blog posts-->
+      <div style="width: 100%; height: 50px;" id="industries">
+
+      </div>
+      <section class="section section-sm bg-default" >
+        <div class="container">
+          <h2>Industries and Segments Serviced</h2>
+          <p>Core Support Hub designs each service to fit your respective industry and segment.</p>
+          <div class="row row-40" >
+            
+            <div class="card-flip">
+              <div class="card-inner">
+                <div class="card-front" style="background-image: url('images/banking.jpg');">
+                  <p style="font-size: clamp(7px, 1vw, 12px)">BFSI (Banking, Finance Services and Insurance)</p>
+                </div>
+                <div class="card-back">
+                  <h2 style="font-size: clamp(7px, 9px, 12px)">BFSI (Banking, Finance Services and Insurance)</h2>
+                  <p>Core Support Hub specializes in delivering tailored IT solutions for the BFSI sector, including BPO services, IT Managed Services, Software Development, and Consulting. We help financial institutions optimize operations, enhance security, and drive innovation to stay ahead in a competitive market.</p>
+                </div>
+              </div>
+            </div>      
+
+            <div class="card-flip">
+              <div class="card-inner">
+                <div class="card-front" style="background-image: url('images/e_commerce.jpg');">
+                  <p style="font-size: clamp(7px, 1vw, 12px)">Retail and eCommerce</p>
+                </div>
+                <div class="card-back">
+                  <h2 style="font-size: clamp(7px, 9px, 12px)">Retail and eCommerce </h2>
+                  <p>Core Support Hub offers comprehensive IT solutions for Retail and eCommerce businesses, encompassing BPO services, IT Managed Services, Software Development, and Consulting. We empower retailers to optimize their online presence, streamline operations, and deliver exceptional customer experiences in today's digital marketplace.</p>
+                </div>
+              </div>
+            </div>      
+            <div class="card-flip">
+              <div class="card-inner">
+                <div class="card-front" style="background-image: url('images/travel_hospitality.jpg');">
+                  <p style="font-size: clamp(7px, 1vw, 12px)">Travel and Hospitality</p>
+                </div>
+                <div class="card-back">
+                  <h2 style="font-size: clamp(7px, 9px, 12px)">Travel & Hospitality</h2>
+                  <p>Core Support Hub provides tailored IT solutions for Travel and Hospitality businesses, offering BPO services, IT Managed Services, Software Development, and Consulting. We enable companies in this sector to enhance their customer service, streamline operations, and leverage technology to deliver unforgettable experiences to travelers worldwide.</p>
+                </div>
+              </div>
+            </div>      
+            <div class="card-flip">
+              <div class="card-inner">
+                <div class="card-front" style="background-image: url('images/health_care.jpg');">
+                  <p style="font-size: clamp(7px, 1vw, 12px)">Healthcare</p>
+                </div>
+                <div class="card-back">
+                  <h2 >Healthcare</h2>
+                  <p>Core Support Hub delivers specialized IT solutions for the Healthcare sector, encompassing BPO services, IT Managed Services, Software Development, and Consulting. We empower healthcare organizations to optimize patient care, improve operational efficiency, and ensure compliance with industry regulations through innovative technology solutions.</p>
+                </div>
+              </div>
+            </div>      
+            <div class="card-flip">
+              <div class="card-inner">
+                <div class="card-front" style="background-image: url('images/logis.jpg');">
+                  <p style="font-size: clamp(7px, 1vw, 12px)">Logistics</p>
+                </div>
+                <div class="card-back">
+                  <h2 style="font-size: clamp(7px, 1vw, 12px)">Logistics</h2>
+                  <p>Core Support Hub offers tailored IT solutions for the Logistics sector, including BPO services, IT Managed Services, Software Development, and Consulting. We assist logistics companies in optimizing supply chain operations, enhancing efficiency, and leveraging technology to meet the evolving demands of the industry.</p>
+                </div>
+              </div>
+            </div>     
+              <div class="card-flip">
+              <div class="card-inner">
+                <div class="card-front" style="background-image: url('images/small_bus.jpg');">
+                  <p style="font-size: clamp(7px, 1vw, 12px)">Small Businesses</p>
+                </div>
+                <div class="card-back">
+                  <h2 style="font-size: clamp(7px, 1vw, 12px)">Small Bussinesses</h2>
+                  <p>Core Support Hub specializes in providing affordable and scalable IT solutions for small businesses, offering BPO services, IT Managed Services, Software Development, and Consulting. We help small businesses leverage technology to streamline operations, improve productivity, and compete more effectively in their respective markets.</p>
+                </div>
+              </div>
+            </div>      
+            <div class="card-flip">
+              <div class="card-inner">
+                <div class="card-front" style="background-image: url('images/contract.jpg');">
+                  <p style="font-size: clamp(7px, 1vw, 12px)">Independent Contractors</p>
+                </div>
+                <div class="card-back">
+                  <p class="i">BFSI (Banking, Finance Services and Insurance)</p>
+                  <h2 style="font-size: clamp(7px, 1vw, 12px)">Independent Contractors</h2>
+                  <p>Core Support Hub offers essential IT solutions designed to empower independent contractors, including BPO services, IT Managed Services, Software Development, and Consulting. We provide personalized support to help contractors optimize their digital presence, streamline administrative tasks, and focus on their core expertise without the hassle of managing IT infrastructure.</p>
+                </div>
+              </div>
+            </div>     
+              <div class="card-flip">
+              <div class="card-inner">
+                <div class="card-front" style="background-image: url('images/start_up.jpg');">
+                  <p style="font-size: clamp(7px, 1vw, 12px)">Start Ups (MVP)</p>
+                </div>
+                <div class="card-back">
+                  <h2 style="font-size: clamp(7px, 1vw, 12px)">Start Ups (MVP)</h2>
+                  <p>Core Support Hub provides comprehensive IT solutions crafted specifically for startups, offering BPO services, IT Managed Services, Software Development, and Consulting. We help startups accelerate their growth by providing scalable and cost-effective technology solutions, enabling them to focus on innovation and market expansion while we handle their IT needs with expertise and efficiency.</p>
+                </div>
+              </div>
+            </div>      
+          </div>
+        </div>
+      </section>
+
+      <div style="width: 100%; height: 90px;" id="why-core-support-hub">
+
+      </div>
+      
+           <!-- Cta-->
+           <section class="section section-fluid bg-default mb-4">
+            <h2>Why Core Support Hub?</h2>
+            <div class="row  d-flex align-items-center">
+              <div class="col-md-3 wow fadeInLeft" data-wow-delay="0.4s" >
+                <img src="{{ asset('images/why_about_us.png') }}" style="width: 80%;" alt="">
+              </div>
+              <div class="col-md-9 wow fadeInRight w-a-u-text"  style="text-align: left;" data-wow-delay="0.4s">
+                <p class="w-a-u">Unlocking the full potential of your organization requires more than just outsourcing-it demands a strategic partnership that understands your unique challenges and objectives.</p>
+                <p class="w-a-u">At Core Support Hub, we offer more than just services; we provide comprehensive solutions tailored to your specific needs. Our unwavering commitment to understanding your business processes, leveraging technology effectively, and delivering continuous improvements sets us apart.</p>
+                <p class="w-a-u">Choosing Core Support Hub means choosing a trusted partner dedicated to your success. Join us in transforming your operations and unlocking unparalleled value today.</p>
+              </div>
+            </div>
+                </section>
+           <section class="section section-fluid bg-default" >
+         
+             <div class="parallax-container" style="height: 75vh;" data-parallax-img="images/cs_asset6.jpg">
+               <div class="parallax-content section-xl context-dark bg-overlay-68 bg-mobile-overlay">
+                 <div class="container">
+                   <div class="row justify-content-end text-right">
+                     <div class="col-sm-7">
+                       <h3 style="margin-top: -60px"class="wow fadeInLeft">About Core Support Hub</h3>
+                       <p style="font-size:clamp(0.6rem, 1vw, 1rem);">Core Support Hub is a startup outsourcer founded by industry veterans in business process outsourcing, financial services, manufacturing, technology services and the academe. We believe that outsourcing should return to its core objective which is to be a true extension of the client's business, with a shared purpose and mission.
+                       </p>
+                       <div class="group-sm group-middle group justify-content-end"><a class="button button-white-outline button-ujarak" href="#images-outsource">Learn More</a></div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </section>
+     
+        
+     
+           <!-- Meet The Team-->
+           <section class="section section-sm section-fluid bg-default" id="team">
+             <div class="container-fluid">
+               <h2>Leadership</h2>
+               <p class=" wow fadeInRight" data-wow-delay=".1s">The leadership team has a combined experience of more than 80 years of multiple vertical and functional roles. We are located in Bacolod City, Philippines with satellite offices in Manila, Philippines and Australia.</p>
+         
+               <div class="row row-sm row-30 justify-content-center">
+                
+                 <div class="col-md-6 col-lg-5 col-xl-3 wow fadeInRight" data-wow-delay=".1s">
+                   <div class="linkedInDiv">
+                     <a href="https://www.linkedin.com/in/albertpimentel/"> <i class="fa-brands fa-linkedin" ></i></a>
+                    </div>
+                   <article class="team-classic team-classic-lg"><a class="team-classic-figure" href="https://www.linkedin.com/in/albertpimentel/"><img src="{{ asset('images/sir_albert.png') }}" alt="" width="420" height="424"/></a>
+                     <div class="team-classic-caption">
+                       <h4 class="team-classic-name"><a href="https://www.linkedin.com/in/albertpimentel/" style="font-size: 1rem;" >Albert Dominic Pimentel</a></h4>
+                       <p class="team-classic-status" style="font-size: 12px"> Founder and CEO</p>
+                     </div>
+                   </article>
+                  
+                 </div>
+                 <div class="col-md-6 col-lg-5 col-xl-3 wow fadeInRight">
+                   <!-- Team Classic-->
+                   <div class="linkedInDiv">
+                    <a href="https://www.linkedin.com/in/jose-leo-gamboa-redoblo-phd-4841b3100/"> <i class="fa-brands fa-linkedin" ></i></a>
+                   </div>
+               
+                   <article class="team-classic team-classic-lg"><a class="team-classic-figure" href="https://www.linkedin.com/in/jose-leo-gamboa-redoblo-phd-4841b3100/"><img   src="{{ asset('images/sir_leo.png') }}" alt="" width="420" height="424"/></a>
+             
+                     <div class="team-classic-caption" >
+                       <h4 class="team-classic-name"><a style="font-size: 1rem;" href="https://www.linkedin.com/in/jose-leo-gamboa-redoblo-phd-4841b3100/">Jose Leo Redoblo, PhD.</a></h4>
+                       <p class="team-classic-status" style="font-size:12px">Head of Technology & Co-founder</p>
+                     </div>
+                     
+                   </article>
+               
+                 </div>
+                 <div class="col-md-6 col-lg-5 col-xl-3 wow fadeInRight" data-wow-delay=".2s">
+                   <div class="linkedInDiv">
+                     <a href="https://www.linkedin.com/in/sava-trifunovic-1251741a/"> <i class="fa-brands fa-linkedin" ></i></a>
+                    </div>
+                   <article class="team-classic team-classic-lg"><a class="team-classic-figure" href="https://www.linkedin.com/in/sava-trifunovic-1251741a/"><img   src="{{ asset('images/sir_sava.png') }} " alt="" width="420" height="424"/></a>
+                     <div class="team-classic-caption">
+                       <h4 class="team-classic-name"><a style="font-size: 1rem;"  href="https://www.linkedin.com/in/sava-trifunovic-1251741a/">Sava Trifunovic</a></h4>
+                       <p class="team-classic-status" style="font-size:12px"> Senior Executive Consultant</p>
+                    
+                     </div>
+                   </article>
+                 
+                 </div>
+               
+               </div>
+             </div>
+           </section>
+   
+ <div id="contacts" style="width: 100%; height: 70px;"></div>
+ <section class="section section-sm section-last bg-default text-center "  >
+  <div class="title-classic-title">
+    <h3>Get in touch with us</h3>
+  </div>
+  
+  <div  class=" d-flex align-items-stretch row">
+    <div class="col-md-4 text-left p-5">
+      <div class="title-classic-title ">
+        <h3>Contact Us</h3>
+      </div>
+         <p class="mb-2 mt-2">If you have any questions, just fill in the contact form, and we will answer you shortly.</p>
+         <div class="d-flex flex-column mt-4 text-left">
+          <a href="https://www.linkedin.com/company/core-support-hub/" class="mb-2"><i class="fa-brands fa-linkedin"></i>: Core Support Hub</a>
+          <a href="mailto:info@coresupporthub.com" class="mb-2"><i class="fa-solid fa-envelope"></i>: info@coresupporthub.com</a>
+        </div>
+        
+    </div>
+    
+    <div class="col-md-6 d-flex align-items-stretch" >
+      
+      <form class="rd-form rd-form-variant-2 rd-mailform text-center" data-form-output="form-output-global" data-form-type="contact" method="post" id="contactSubmitForm">
+        @csrf
+        <div class="row row-14 gutters-14">
+          <div class="col-md-6">
+            <div class="form-wrap">
+              <input class="form-input" id="contact-name-2" type="text" name="name" >
+              <label class="form-label" for="contact-name-2">Your Name</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-wrap">
+              <input class="form-input" id="contact-email-2" type="email" name="email">
+              <label class="form-label" for="contact-email-2">E-mail</label>
+            </div>
+          </div>
+    
+          <div class="col-md-12">
+            <div class="form-wrap">
+              <label class="form-label" for="contact-message-2">Message</label>
+              <textarea class="form-input textarea-lg" id="contact-message-2" name="message" ></textarea>
+            </div>
+          </div>
+        </div>
+        <button class="button button-primary button-pipaluk bt-loader" type="button" id="submitButton" onclick="SendMessage()">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+
+      <!-- Page Footer-->
+   @include('Components.footer')
+
+    </div>
+ @include('Components.scripts')
+
+ <script>
+    function SendMessage() {
+   const submit = document.getElementById('submitButton');
+   submit.innerHTML = '';
+
+   submit.innerHTML = `<div class="dot-spinner">
+  <div class="dot-spinner__dot"></div>
+  <div class="dot-spinner__dot"></div>
+  <div class="dot-spinner__dot"></div>
+  <div class="dot-spinner__dot"></div>
+  <div class="dot-spinner__dot"></div>
+  <div class="dot-spinner__dot"></div>
+  <div class="dot-spinner__dot"></div>
+  <div class="dot-spinner__dot"></div>
+</div>`;
+
+    event.preventDefault();
+     var formData = $('form#contactSubmitForm').serialize();
+ 
+     $.ajax({
+         type: 'POST',
+         url: "{{ route('sendMessage') }}",
+         data: formData,
+         success: function(response) {
+
+       if(response.status === 'success'){
+        submit.innerHTML = '';
+        submit.innerHTML = '<i>Message Sent</i>';
+
+        const snackDiv = document.getElementById('snackbar-div');
+        const snackText = document.getElementById('snackbar-text');
+        document.getElementById('contact-name-2').value = null;
+        document.getElementById('contact-email-2').value = null;
+        document.getElementById('contact-message-2').value = null;
+
+        submit.disabled = true;
+        snackDiv.style.display = 'flex';
+        snackText.textContent = 'Message Sent Successfully'
+        setTimeout(() => {
+          snackDiv.style.animation = "snackOut .5s";
+          setTimeout(() =>{
+           snackDiv.style.display = 'none';
+          }, 500);
+        }, 3000);
+       }else{
+        submit.innerHTML = '';
+        submit.innerHTML = 'Send Message';
+        const snackDiv = document.getElementById('snackbar-div');
+        const snackText = document.getElementById('snackbar-text');
+
+        snackDiv.style.display = 'flex';
+        snackText.textContent = 'Please Complete the form to send message!'
+        setTimeout(() => {
+          snackDiv.style.animation = "snackOut 1s";
+          setTimeout(() => {
+           snackDiv.style.display = 'none';
+           snackDiv.style.animation = "";
+          }, 1000);
+        }, 3000);
+       }
+         
+         }, 
+         error: function (xhr) {
+
+             console.log(xhr.responseText);
+         }
+     });
+ }
+ </script>
+  </body>
+</html>
