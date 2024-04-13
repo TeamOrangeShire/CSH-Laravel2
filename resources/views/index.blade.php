@@ -141,119 +141,137 @@
   
       <div class="col-lg-6 col-xl-12 align-self-center small-show">
         <div class="row row-30 justify-content-center">
-          <div class="col-sm-6 col-md-5 col-lg-6 col-xl-3 wow fadeInLeft"><a class="clients-classic" href="{{ asset('images/cs_info_big1.png') }}" data-lightgallery="item"><img src="{{ asset('images/cs_info1.png') }}" alt="" width="270" height="117"/></a></div>
-          <div class="col-sm-6 col-md-5 col-lg-6 col-xl-3 wow fadeInLeft" data-wow-delay=".2s"><a class="clients-classic"href="{{ asset('images/cs_info_big3.png') }}" data-lightgallery="item"><img src="{{ asset('images/cs_info3.png') }}" alt="" width="270" height="117"/></a></div>
-         
+          <div class="col-sm-6 col-md-5 col-lg-6 col-xl-3 wow fadeInLeft">
+            <div style="position: relative; display: inline-block;">
+              <img src="{{ asset('images/slide1.png') }}" alt="" style="width: 90%; height: auto;">
+              <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.685); display: flex; justify-content: center; align-items: center; border-radius:25px;">
+                <a class="" href="{{ asset('images/slide1.png') }}" data-lightgallery="item"><h4 style="color: white;">view</h4></a>
+              </div>
+            </div>
+            
+            
+        </div>
+          <div class="col-sm-6 col-md-5 col-lg-6 col-xl-3 wow fadeInLeft" data-wow-delay=".2s">
+            <div style="position: relative; display: inline-block;">
+              <img src="{{ asset('images/slide2.png') }}" alt="" style="width: 90%; height: auto; ">
+              <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.685); display: flex; justify-content: center; align-items: center; border-radius:25px;">
+                <a class="" href="{{ asset('images/slide2.png') }}" data-lightgallery="item"><h4 style="color: white;">view</h4></a>
+              </div>
+            </div>
+          </div>
         </div>  
       </div>
 
 <section  class="section section-sm bg-default wow fadeInRight big-show" data-wow-delay=".2s"   id="images-outsource">
- <img class="out_img" src="{{ asset('images/outsourcing_engagement.png') }}" alt="outsourcing engagement">
- <img class="out_img" src="{{ asset('images/why_outsource.png') }}" alt="outsourcing engagement">
+ <img style="width: 80%; height: auto;" src="{{ asset('images/slide1.png') }}" alt="outsourcing engagement">
+ <img style="width: 80%; height: auto;" src="{{ asset('images/slide2.png') }}" alt="outsourcing engagement">
 </section>
       <!-- Latest blog posts-->
       <div style="width: 100%; height: 50px;" id="industries">
 
       </div>
-      <section class="section section-sm bg-default" >
-        <div class="container">
-          <h2>Industries and Segments Serviced</h2>
-          <p>Core Support Hub designs each service to fit your respective industry and segment.</p>
-          <div class="row row-40" >
-            
-            <div class="card-flip">
-              <div class="card-inner">
-                <div class="card-front" style="background-image: url('images/banking.jpg');">
-                  <p style="font-size: clamp(7px, 1vw, 12px)">BFSI (Banking, Finance Services and Insurance)</p>
-                </div>
-                <div class="card-back">
-                  <h2 style="font-size: clamp(7px, 9px, 12px)">BFSI (Banking, Finance Services and Insurance)</h2>
-                  <p>Core Support Hub specializes in delivering tailored IT solutions for the BFSI sector, including BPO services, IT Managed Services, Software Development, and Consulting. We help financial institutions optimize operations, enhance security, and drive innovation to stay ahead in a competitive market.</p>
-                </div>
-              </div>
-            </div>      
 
-            <div class="card-flip">
-              <div class="card-inner">
-                <div class="card-front" style="background-image: url('images/e_commerce.jpg');">
-                  <p style="font-size: clamp(7px, 1vw, 12px)">Retail and eCommerce</p>
-                </div>
-                <div class="card-back">
-                  <h2 style="font-size: clamp(7px, 9px, 12px)">Retail and eCommerce </h2>
-                  <p>Core Support Hub offers comprehensive IT solutions for Retail and eCommerce businesses, encompassing BPO services, IT Managed Services, Software Development, and Consulting. We empower retailers to optimize their online presence, streamline operations, and deliver exceptional customer experiences in today's digital marketplace.</p>
-                </div>
+      <div class="container">
+        <h2>Industries and Segments Serviced</h2>
+        <p>Core Support Hub designs each service to fit your respective industry and segment.</p>
+        <div class="row justify-content-md-center" style="">
+
+          <div class="col col-lg-3 d-flex justify-content-center">
+            <div class="card" style="width: 18rem; height:280px;">
+              <div class="p-2">
+                <img src="{{asset('images/banking3.png')}}" alt="...">
+            </div>
+              <div class="card-body">
+                <p style="font-size: clamp(12px, 1vw, 12px)">BFSI (Banking, Finance Services and Insurance)</p>
               </div>
-            </div>      
-            <div class="card-flip">
-              <div class="card-inner">
-                <div class="card-front" style="background-image: url('images/travel_hospitality.jpg');">
-                  <p style="font-size: clamp(7px, 1vw, 12px)">Travel and Hospitality</p>
-                </div>
-                <div class="card-back">
-                  <h2 style="font-size: clamp(7px, 9px, 12px)">Travel & Hospitality</h2>
-                  <p>Core Support Hub provides tailored IT solutions for Travel and Hospitality businesses, offering BPO services, IT Managed Services, Software Development, and Consulting. We enable companies in this sector to enhance their customer service, streamline operations, and leverage technology to deliver unforgettable experiences to travelers worldwide.</p>
-                </div>
-              </div>
-            </div>      
-            <div class="card-flip">
-              <div class="card-inner">
-                <div class="card-front" style="background-image: url('images/health_care.jpg');">
-                  <p style="font-size: clamp(7px, 1vw, 12px)">Healthcare</p>
-                </div>
-                <div class="card-back">
-                  <h2 >Healthcare</h2>
-                  <p>Core Support Hub delivers specialized IT solutions for the Healthcare sector, encompassing BPO services, IT Managed Services, Software Development, and Consulting. We empower healthcare organizations to optimize patient care, improve operational efficiency, and ensure compliance with industry regulations through innovative technology solutions.</p>
-                </div>
-              </div>
-            </div>      
-            <div class="card-flip">
-              <div class="card-inner">
-                <div class="card-front" style="background-image: url('images/logis.jpg');">
-                  <p style="font-size: clamp(7px, 1vw, 12px)">Logistics</p>
-                </div>
-                <div class="card-back">
-                  <h2 style="font-size: clamp(7px, 1vw, 12px)">Logistics</h2>
-                  <p>Core Support Hub offers tailored IT solutions for the Logistics sector, including BPO services, IT Managed Services, Software Development, and Consulting. We assist logistics companies in optimizing supply chain operations, enhancing efficiency, and leveraging technology to meet the evolving demands of the industry.</p>
-                </div>
-              </div>
-            </div>     
-              <div class="card-flip">
-              <div class="card-inner">
-                <div class="card-front" style="background-image: url('images/small_bus.jpg');">
-                  <p style="font-size: clamp(7px, 1vw, 12px)">Small Businesses</p>
-                </div>
-                <div class="card-back">
-                  <h2 style="font-size: clamp(7px, 1vw, 12px)">Small Bussinesses</h2>
-                  <p>Core Support Hub specializes in providing affordable and scalable IT solutions for small businesses, offering BPO services, IT Managed Services, Software Development, and Consulting. We help small businesses leverage technology to streamline operations, improve productivity, and compete more effectively in their respective markets.</p>
-                </div>
-              </div>
-            </div>      
-            <div class="card-flip">
-              <div class="card-inner">
-                <div class="card-front" style="background-image: url('images/contract.jpg');">
-                  <p style="font-size: clamp(7px, 1vw, 12px)">Independent Contractors</p>
-                </div>
-                <div class="card-back">
-                  <p class="i">BFSI (Banking, Finance Services and Insurance)</p>
-                  <h2 style="font-size: clamp(7px, 1vw, 12px)">Independent Contractors</h2>
-                  <p>Core Support Hub offers essential IT solutions designed to empower independent contractors, including BPO services, IT Managed Services, Software Development, and Consulting. We provide personalized support to help contractors optimize their digital presence, streamline administrative tasks, and focus on their core expertise without the hassle of managing IT infrastructure.</p>
-                </div>
-              </div>
-            </div>     
-              <div class="card-flip">
-              <div class="card-inner">
-                <div class="card-front" style="background-image: url('images/start_up.jpg');">
-                  <p style="font-size: clamp(7px, 1vw, 12px)">Start Ups (MVP)</p>
-                </div>
-                <div class="card-back">
-                  <h2 style="font-size: clamp(7px, 1vw, 12px)">Start Ups (MVP)</h2>
-                  <p>Core Support Hub provides comprehensive IT solutions crafted specifically for startups, offering BPO services, IT Managed Services, Software Development, and Consulting. We help startups accelerate their growth by providing scalable and cost-effective technology solutions, enabling them to focus on innovation and market expansion while we handle their IT needs with expertise and efficiency.</p>
-                </div>
-              </div>
-            </div>      
+            </div>
           </div>
+
+          <div class="col col-lg-3 d-flex justify-content-center">
+            <div class="card" style="width: 18rem; height:280px;">
+              <div class="p-2">
+                <img src="{{asset('images/e_commerce.png')}}" alt="...">
+            </div>
+              <div class="card-body">
+                <p style="font-size: clamp(12px, 1vw, 12px)">Retail and eCommerce</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col col-lg-3 d-flex justify-content-center" >
+            <div class="card" style="width: 18rem; height:280px;">
+              <div class="p-2">
+                <img src="{{asset('images/travel_hospitality.png')}}" alt="...">
+            </div>
+              <div class="card-body">
+                <p style="font-size: clamp(12px, 1vw, 12px)">Travel and Hospitality</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col col-lg-3 d-flex justify-content-center" >
+            <div class="card" style="width: 18rem; height:280px;">
+              <div class="p-2">
+                <img src="{{asset('images/health_care.png')}}" alt="...">
+            </div>
+              <div class="card-body">
+                <p style="font-size: clamp(12px, 1vw, 12px)">Healthcare</p>
+              </div>
+            </div>
+          </div>
+
         </div>
-      </section>
+
+        <div class="row justify-content-md-center" style="margin-top:0px;">
+
+          <div class="col col-lg-3 d-flex justify-content-center">
+            <div class="card" style="width: 18rem; height:280px;">
+              <div class="p-2">
+                <img src="{{asset('images/logis.png')}}" alt="...">
+            </div>
+              <div class="card-body">
+                <p style="font-size: clamp(12px, 1vw, 12px)">Logistics</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col col-lg-3 d-flex justify-content-center">
+            <div class="card" style="width: 18rem; height:280px;">
+              <div class="p-2">
+                <img src="{{asset('images/small_bus.png')}}" alt="...">
+            </div>
+              <div class="card-body">
+                <p style="font-size: clamp(12px, 1vw, 12px)">Small Businesses</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col col-lg-3 d-flex justify-content-center" >
+            <div class="card" style="width: 18rem; height:280px;">
+              <div class="p-2">
+                <img src="{{asset('images/contract.png')}}" alt="...">
+            </div>
+              <div class="card-body">
+                <p style="font-size: clamp(12px, 1vw, 12px)">Independent Contractors</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col col-lg-3 d-flex justify-content-center" >
+            <div class="card" style="width: 18rem; height:280px;">
+              <div class="p-2">
+                <img src="{{asset('images/start_up.png')}}" alt="...">
+            </div>
+              <div class="card-body">
+                <p style="font-size: clamp(12px, 1vw, 12px)">Start Ups (MVP)</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
 
       <div style="width: 100%; height: 90px;" id="why-core-support-hub">
 
