@@ -4,7 +4,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta charset="utf-8">
 <link rel="icon" href="{{ asset('images/cs_icon2.png') }}" type="image/x-icon">
-<script src="https://kit.fontawesome.com/3634c881df.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Poppins:400,500,600%7CTeko:300,400,500%7CMaven+Pro:500">
 
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">

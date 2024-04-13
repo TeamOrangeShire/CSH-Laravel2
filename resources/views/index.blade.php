@@ -73,7 +73,7 @@
                   <article class="box-icon-modern box-icon-modern-2 bpo_background card" >
 
               
-                      <div class="box-icon-modern-icon "><i class="fa-solid fa-briefcase" style="color: #c7ae6c;"></i></div>
+                      <div class="box-icon-modern-icon "><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"  style="fill: #c7ae6a;"><path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z"/></svg></div>
                     <h5 class="box-icon-modern-title text-white"><a href="#">Business Process<br>Outsourcing (BPO)</a></h5>
                     <div class="box-icon-modern-decor"></div>
                     <!-- <p class="text-white" style="text-decoration: underline;">Learn More</p> -->
@@ -93,7 +93,8 @@
                 </div><i ></i>
                 <div class="col-sm-3 wow fadeInRight" data-wow-delay=".1s" id="it_manage_card">
                   <article class="box-icon-modern box-icon-modern-2 ims_backgrounds card ">
-                    <div class="box-icon-modern-icon "><i class="fa-solid fa-users-gear" style="color: #c7ae6c;"></i></div>
+                    <div class="box-icon-modern-icon ">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"  style="fill: #c7ae6a;"><path d="M176 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64c-35.3 0-64 28.7-64 64H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64c0 35.3 28.7 64 64 64v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448c35.3 0 64-28.7 64-64h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V280h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V176h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448c0-35.3-28.7-64-64-64V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H280V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H176V24zM160 128H352c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32H160c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32zm192 32H160V352H352V160z"/></svg></div>
                     <h5 class="box-icon-modern-title text-white"><a href="#">Technology<br>Outsourcing</a></h5>
                     <div class="box-icon-modern-decor"></div>
                     <!-- <p class="text-white" style="text-decoration: underline;">Learn More</p> -->
@@ -115,7 +116,7 @@
        
                 <div class="col-sm-3 wow fadeInRight" data-wow-delay=".3s" id="consulting_card">
                   <article class="box-icon-modern box-icon-modern-2 cons_background card">
-                    <div class="box-icon-modern-icon "><i class="fa-solid fa-lightbulb" style="color: #c7ae6c;"></i></div>
+                    <div class="box-icon-modern-icon "><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"  style="fill: #c7ae6a;"><path d="M272 384c9.6-31.9 29.5-59.1 49.2-86.2l0 0c5.2-7.1 10.4-14.2 15.4-21.4c19.8-28.5 31.4-63 31.4-100.3C368 78.8 289.2 0 192 0S16 78.8 16 176c0 37.3 11.6 71.9 31.4 100.3c5 7.2 10.2 14.3 15.4 21.4l0 0c19.8 27.1 39.7 54.4 49.2 86.2H272zM192 512c44.2 0 80-35.8 80-80V416H112v16c0 44.2 35.8 80 80 80zM112 176c0 8.8-7.2 16-16 16s-16-7.2-16-16c0-61.9 50.1-112 112-112c8.8 0 16 7.2 16 16s-7.2 16-16 16c-44.2 0-80 35.8-80 80z"/></svg></div>
                     <h5 class="box-icon-modern-title text-white"><a href="#">Consulting</a></h5>
                     <div class="box-icon-modern-decor"></div>
                      <!-- <p class="text-white" style="text-decoration: underline;">Learn More</p> -->
@@ -302,7 +303,7 @@
                 
                  <div class="col-md-6 col-lg-5 col-xl-3 wow fadeInRight" data-wow-delay=".1s">
                    <div class="linkedInDiv">
-                     <a href="https://www.linkedin.com/in/albertpimentel/"> <i class="fa-brands fa-linkedin" ></i></a>
+                     <a href="https://www.linkedin.com/in/albertpimentel/" class="icon fa-brands fa-linkedin linkedin"></a>
                     </div>
                    <article class="team-classic team-classic-lg"><a class="team-classic-figure" href="https://www.linkedin.com/in/albertpimentel/"><img src="{{ asset('images/sir_albert.png') }}" alt="" width="420" height="424"/></a>
                      <div class="team-classic-caption">
@@ -315,7 +316,7 @@
                  <div class="col-md-6 col-lg-5 col-xl-3 wow fadeInRight">
                    <!-- Team Classic-->
                    <div class="linkedInDiv">
-                    <a href="https://www.linkedin.com/in/jose-leo-gamboa-redoblo-phd-4841b3100/"> <i class="fa-brands fa-linkedin" ></i></a>
+                    <a href="https://www.linkedin.com/in/jose-leo-gamboa-redoblo-phd-4841b3100/" class="icon fa-brands fa-linkedin linkedin"></a>
                    </div>
                
                    <article class="team-classic team-classic-lg"><a class="team-classic-figure" href="https://www.linkedin.com/in/jose-leo-gamboa-redoblo-phd-4841b3100/"><img   src="{{ asset('images/sir_leo.png') }}" alt="" width="420" height="424"/></a>
@@ -330,7 +331,7 @@
                  </div>
                  <div class="col-md-6 col-lg-5 col-xl-3 wow fadeInRight" data-wow-delay=".2s">
                    <div class="linkedInDiv">
-                     <a href="https://www.linkedin.com/in/sava-trifunovic-1251741a/"> <i class="fa-brands fa-linkedin" ></i></a>
+                     <a href="https://www.linkedin.com/in/sava-trifunovic-1251741a/" class="icon fa-brands fa-linkedin linkedin"></a>
                     </div>
                    <article class="team-classic team-classic-lg"><a class="team-classic-figure" href="https://www.linkedin.com/in/sava-trifunovic-1251741a/"><img   src="{{ asset('images/sir_sava.png') }} " alt="" width="420" height="424"/></a>
                      <div class="team-classic-caption">

@@ -14,9 +14,7 @@
             <div class="col-sm-6 col-md-4 text-sm-right text-md-center">
               <div>
                 <ul class="list-inline list-inline-sm footer-social-list-2">
-                  <li><a class="icon fa fa-facebook" href="#"></a></li>
-             
-                  <li><a class="icon fa fa-instagram" href="#"></a></li>
+                  <li><a class="icon fa fa-brands fa-linkedin" href="https://www.linkedin.com/company/core-support-hub/"></a></li>
                 </ul>
               </div>
             </div>

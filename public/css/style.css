@@ -45251,3 +45251,7 @@ button.close {
 .invisible {
 	visibility: hidden !important;
 }
+.linkedin{
+	color: #c7ae6a;
+	font-size: 1.5rem;
+}
