@@ -384,7 +384,7 @@
         
     </div>
     
-    <div class="col-md-6 d-flex align-items-stretch" >
+    <div class="col-md-6 d-flex align-items-stretch small-margin" >
       
       <form class="rd-form rd-form-variant-2 rd-mailform text-center" data-form-output="form-output-global" data-form-type="contact" method="post" id="contactSubmitForm">
         @csrf
