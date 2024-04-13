@@ -23,7 +23,7 @@
         <!-- Swiper-->
         <section class="section swiper-container swiper-slider swiper-slider-classic" data-loop="true" data-autoplay="4859" data-simulate-touch="true" data-direction="vertical" data-nav="false">
           <div class="swiper-wrapper text-center">
-            <div class="swiper-slide" data-slide-bg="images/bg.jpg">
+            <div class="swiper-slide slider1">
               <div class="swiper-slide-caption section-md">
                 <div class="container text-left">
                   <h1 style="margin-top: -100px; font-size:clamp(1.1rem, 3.2vw, 4rem);" data-caption-animate="fadeInLeft" data-caption-delay="0">Core Support Hub</h1>
@@ -32,7 +32,7 @@
                 </div>
               </div>
             </div>
-            <div class="swiper-slide" data-slide-bg="images/bg2.jpg">
+            <div class="swiper-slide slider2">
               <div class="swiper-slide-caption section-md">
                 <div class="container text-left">
                   <h1 data-caption-animate="fadeInLeft" style="font-size:clamp(1.1rem, 3.2vw, 4rem);" data-caption-delay="0">Outsourcing: An extension of your organization</h1>
@@ -41,7 +41,7 @@
                 </div>
               </div>
             </div>
-            <div class="swiper-slide" data-slide-bg="images/bg3.jpg">
+            <div class="swiper-slide slider3">
               <div class="swiper-slide-caption section-md">
                 <div class="container text-left">
                   <h1 data-caption-animate="fadeInLeft" style="font-size:clamp(1.1rem, 3.2vw, 4rem);" data-caption-delay="0">Let's design the outsourcing engagement</h1>

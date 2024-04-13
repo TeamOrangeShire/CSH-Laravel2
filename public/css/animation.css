@@ -507,3 +507,19 @@
       opacity: 0;
     }
   }
+  .slider1, .slider2, .slider3{
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .slider1{
+    background-image: url('../images/bg.jpg');
+  }
+  .slider2{
+    background-image: url('../images/bg2.jpg');
+  }
+  .slider3{
+    background-image: url('../images/bg3.jpg');
+  }
+
+  
