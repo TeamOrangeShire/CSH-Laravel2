@@ -74,7 +74,7 @@
 
               
                       <div class="box-icon-modern-icon "><i class="fa-solid fa-briefcase" style="color: #c7ae6c;"></i></div>
-                    <h5 class="box-icon-modern-title text-white"><a href="#">BUSINESS PROCESS<br>OUTSOURCING (BPO)</a></h5>
+                    <h5 class="box-icon-modern-title text-white"><a href="#">Business Process<br>Outsourcing (BPO)</a></h5>
                     <div class="box-icon-modern-decor"></div>
                     <!-- <p class="text-white" style="text-decoration: underline;">Learn More</p> -->
                       <div class="card__content">
@@ -94,7 +94,7 @@
                 <div class="col-sm-3 wow fadeInRight" data-wow-delay=".1s" id="it_manage_card">
                   <article class="box-icon-modern box-icon-modern-2 ims_backgrounds card ">
                     <div class="box-icon-modern-icon "><i class="fa-solid fa-users-gear" style="color: #c7ae6c;"></i></div>
-                    <h5 class="box-icon-modern-title text-white"><a href="#">TECHNOLOGY<br>OUTSOURCING</a></h5>
+                    <h5 class="box-icon-modern-title text-white"><a href="#">Technology<br>Outsourcing</a></h5>
                     <div class="box-icon-modern-decor"></div>
                     <!-- <p class="text-white" style="text-decoration: underline;">Learn More</p> -->
                     <div class="card__content">
@@ -116,7 +116,7 @@
                 <div class="col-sm-3 wow fadeInRight" data-wow-delay=".3s" id="consulting_card">
                   <article class="box-icon-modern box-icon-modern-2 cons_background card">
                     <div class="box-icon-modern-icon "><i class="fa-solid fa-lightbulb" style="color: #c7ae6c;"></i></div>
-                    <h5 class="box-icon-modern-title text-white"><a href="#">CONSULTING</a></h5>
+                    <h5 class="box-icon-modern-title text-white"><a href="#">Consulting</a></h5>
                     <div class="box-icon-modern-decor"></div>
                      <!-- <p class="text-white" style="text-decoration: underline;">Learn More</p> -->
                     <div class="card__content">
