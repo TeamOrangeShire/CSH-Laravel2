@@ -32,7 +32,7 @@
                 </div>
               </div>
             </div>
-            <div class="swiper-slide slider2">
+            <div class="swiper-slide slider2" loading="lazy">
               <div class="swiper-slide-caption section-md">
                 <div class="container text-left">
                   <h1 data-caption-animate="fadeInLeft" style="font-size:clamp(1.1rem, 3.2vw, 4rem);" data-caption-delay="0">Outsourcing: An extension of your organization</h1>
