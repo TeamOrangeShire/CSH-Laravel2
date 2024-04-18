@@ -81,7 +81,7 @@
       <div class="container-xxl py-5">
         <div class="container">
             <div class="bg-light rounded p-3" >
-              <h3 class="wow fadeInLeft">IT Managed Services</h3>
+              <h2 class="wow fadeInLeft">IT Managed Services</h2>
                 <div class="bg-white rounded p-4"id="customer-service">
                     <div class="row g-5">
                         <div class="col-lg-6 wow fadeIn">
@@ -139,7 +139,7 @@
                           </div>
                       </div>
                       <div class="col-lg-6 wow fadeIn">
-                        <img src="{{ asset('images/print.jpg') }}" alt="">
+                        <img src="{{ asset('images/print-min.jpg') }}" alt="">
                       </div>
                   </div>
                 </div>
@@ -154,7 +154,7 @@
     <div class="container-xxl py-5">
       <div class="container">
           <div class="bg-light rounded p-3" >
-            <h3 class="wow fadeInLeft">Software Development</h3>
+            <h2 class="wow fadeInLeft">Software Development</h2>
               <div class="bg-white rounded p-4"id="customer-service">
                   <div class="row g-5">
                       <div class="col-lg-6 wow fadeIn">

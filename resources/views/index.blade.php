@@ -61,7 +61,7 @@
 
       </div>
       <!-- See all services-->
-      <section class="section section-sm section-first bg-default text-center" id="services" style="padding-top: 60px;" >
+      <section class="section section-sm section-first bg-default text-center" id="services" style="padding-top: 100px;" >
         <div class="container">
           <div class="row row-40 justify-content-center"  >
             <div class="col-lg-12 col-xl-12" >
@@ -167,7 +167,7 @@
  <img style="width: 80%; height: auto;" src="{{ asset('images/slide2.png') }}" alt="outsourcing engagement">
 </section>
       <!-- Latest blog posts-->
-      <div style="width: 100%; height: 50px;" id="industries">
+      <div style="width: 100%; height: 50px; margin-bottom:3.5%;" id="industries">
 
       </div>
 
@@ -279,22 +279,23 @@
       
            <!-- Cta-->
            <section class="section section-fluid bg-default mb-4">
-            <h2>Why Core Support Hub?</h2>
+            
             <div class="row  d-flex align-items-center">
               <div class="col-md-3 wow fadeInLeft" data-wow-delay="0.4s" >
                 <img src="{{ asset('images/why_about_us.png') }}" style="width: 80%;" alt="">
               </div>
               <div class="col-md-9 wow fadeInRight w-a-u-text"  style="text-align: left;" data-wow-delay="0.4s">
-                <p class="w-a-u">Unlocking the full potential of your organization requires more than just outsourcing-it demands a strategic partnership that understands your unique challenges and objectives.</p>
-                <p class="w-a-u">At Core Support Hub, we offer more than just services; we provide comprehensive solutions tailored to your specific needs. Our unwavering commitment to understanding your business processes, leveraging technology effectively, and delivering continuous improvements sets us apart.</p>
-                <p class="w-a-u">Choosing Core Support Hub means choosing a trusted partner dedicated to your success. Join us in transforming your operations and unlocking unparalleled value today.</p>
+                <h2 class="w-a-u" style="font-size: 2rem;">Why Core Support Hub?</h2>
+                <p class="w-a-u" style="margin-right:5%">Unlocking the full potential of your organization requires more than just outsourcing-it demands a strategic partnership that understands your unique challenges and objectives.</p>
+                <p class="w-a-u" style="margin-right:5%">At Core Support Hub, we offer more than just services; we provide comprehensive solutions tailored to your specific needs. Our unwavering commitment to understanding your business processes, leveraging technology effectively, and delivering continuous improvements sets us apart.</p>
+                <p class="w-a-u" style="margin-right:5%">Choosing Core Support Hub means choosing a trusted partner dedicated to your success. Join us in transforming your operations and unlocking unparalleled value today.</p>
               </div>
             </div>
                 </section>
            <section class="section section-fluid bg-default" >
          
              <div class="parallax-container" style="height: 75vh;" data-parallax-img="images/cs_asset6.jpg">
-               <div class="parallax-content section-xl context-dark bg-overlay-68 bg-mobile-overlay">
+               <div class="parallax-content section-xl context-dark bg-mobile-overlay">
                  <div class="container">
                    <div class="row justify-content-end text-right">
                      <div class="col-sm-7">
@@ -315,7 +316,7 @@
            <section class="section section-sm section-fluid bg-default" id="team">
              <div class="container-fluid">
                <h2>Leadership</h2>
-               <p class=" wow fadeInRight" data-wow-delay=".1s">The leadership team has a combined experience of more than 80 years of multiple vertical and functional roles. We are located in Bacolod City, Philippines with satellite offices in Manila, Philippines and Australia.</p>
+               <p class=" wow fadeInRight" data-wow-delay=".1s" style="margin: 10%">The leadership team has a combined experience of more than 80 years of multiple vertical and functional roles. We are located in Bacolod City, Philippines with satellite offices in Manila, Philippines and Australia.</p>
          
                <div class="row row-sm row-30 justify-content-center">
                 
