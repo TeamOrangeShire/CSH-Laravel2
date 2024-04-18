@@ -294,7 +294,7 @@
                 </section>
            <section class="section section-fluid bg-default" >
          
-             <div class="parallax-container" style="height: 75vh;" data-parallax-img="images/cs_asset6.jpg">
+             <div class="parallax-container" style="height: 75vh;" data-parallax-img="https://teamorangeshire.github.io/Images/images/build.jpg">
                <div class="parallax-content section-xl context-dark bg-mobile-overlay">
                  <div class="container">
                    <div class="row justify-content-end text-right">
