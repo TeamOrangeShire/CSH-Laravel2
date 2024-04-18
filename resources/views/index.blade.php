@@ -316,7 +316,7 @@
            <section class="section section-sm section-fluid bg-default" id="team">
              <div class="container-fluid">
                <h2>Leadership</h2>
-               <p class=" wow fadeInRight" data-wow-delay=".1s" style="margin: 10%">The leadership team has a combined experience of more than 80 years of multiple vertical and functional roles. We are located in Bacolod City, Philippines with satellite offices in Manila, Philippines and Australia.</p>
+               <p class=" wow fadeInRight" data-wow-delay=".1s" style="margin: 5%">The leadership team has a combined experience of more than 80 years of multiple vertical and functional roles. We are located in Bacolod City, Philippines with satellite offices in Manila, Philippines and Australia.</p>
          
                <div class="row row-sm row-30 justify-content-center">
                 
