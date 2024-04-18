@@ -22,7 +22,7 @@
 
       <!-- Cta-->
       <section class="section section-fluid bg-default" style="height: 650px;">
-        <div class="parallax-container" data-parallax-img="{{ asset('images/itbgphoto.jpg') }}" style="height: 650px;">
+        <div class="parallax-container" data-parallax-img="https://img.freepik.com/free-photo/scene-with-business-person-working-futuristic-office-job_23-2151003690.jpg?t=st=1713417924~exp=1713421524~hmac=457d29a6653d08d84cc82292430097ff90f2c1efa486d13840df947475aa27f5&w=996" style="height: 650px;">
           <div class="parallax-content section-xl context-dark bg-overlay-68 bg-mobile-overlay">
             <div class="container">
               <div class="justify-content-end text-left">
