@@ -32,7 +32,7 @@
  
       <!-- Cta-->
       <section class="section section-fluid bg-default" style="height: 650px;">
-        <div class="parallax-container" data-parallax-img="{{ asset('images/bpo_finalbg.jpeg') }}" style="height: 650px;">
+        <div class="parallax-container" data-parallax-img="https://teamorangeshire.github.io/Images/images/bpo.jpg" >
           <div class="parallax-content section-xl context-dark bg-overlay-68 bg-mobile-overlay">
             <div class="container">
               <div class="justify-content-end text-left">

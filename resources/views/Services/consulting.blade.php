@@ -21,7 +21,7 @@
 
       <!-- Cta-->
       <section class="section section-fluid bg-default" >
-        <div class="parallax-container" data-parallax-img="https://img.freepik.com/free-photo/team-work-process-young-business-managers-crew-working-with-new-startup-project-labtop-wood-table-typing-keyboard-texting-message-analyze-graph-plans_1253-799.jpg?w=996&t=st=1713417537~exp=1713418137~hmac=e0572eafbf5efcc800f5d149f0e1ddc98b8bf656c9c6d27c67293d64540319a5">
+        <div class="parallax-container" data-parallax-img="https://teamorangeshire.github.io/Images/images/cons.jpg">
           <div class="parallax-content section-xl context-dark bg-overlay-68 bg-mobile-overlay">
             <div class="container">
               <div class="justify-content-end text-left">

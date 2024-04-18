@@ -22,7 +22,7 @@
 
       <!-- Cta-->
       <section class="section section-fluid bg-default" style="height: 650px;">
-        <div class="parallax-container" data-parallax-img="https://img.freepik.com/free-vector/business-infographic-with-image_23-2148340472.jpg?t=st=1713418302~exp=1713421902~hmac=ae18c369f67e855034891a6684b85c2e471328b380832d58700b609c49484f4d&w=996" style="height: 650px;">
+        <div class="parallax-container" data-parallax-img="https://teamorangeshire.github.io/Images/images/ims.jpg" >
           <div class="parallax-content section-xl context-dark bg-overlay-68 bg-mobile-overlay">
             <div class="container">
               <div class="justify-content-end text-left">
