@@ -12713,9 +12713,7 @@ html.tablet .ui-to-top {
 	border-radius: 50%;
 	transition: .3s all ease;
 }
-.w-a-u-text{
-	margin-top: -90px;
-}
+
 @media(max-width:600px){
 	.w-a-u-text{ 
 	  padding: 20px;
