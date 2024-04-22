@@ -282,7 +282,7 @@
             
             <div class="row  d-flex align-items-center">
               <div class="col-md-3 wow fadeInLeft" data-wow-delay="0.4s" >
-                <img src="{{ asset('images/why_about_us.png') }}" style="width: 80%;" alt="">
+                <img src="{{ asset('images/CSH.png') }}" style="width: 80%;" alt="">
               </div>
               <div class="col-md-9 wow fadeInRight w-a-u-text"  style="text-align: left;" data-wow-delay="0.4s">
                 <h2 class="w-a-u" style="font-size: 2rem;">Why Core Support Hub?</h2>
