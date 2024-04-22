@@ -3,11 +3,11 @@
 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta charset="utf-8">
-{{-- <meta property="og:title" content="Core Support Hub">
+<meta property="og:title" content="Core Support Hub">
 <meta property="og:description" content="Core Support Hub: Your Partner of choice for Small and Midsize Enterprises">
 <meta property="og:image" content="https://www.coresupporthub.com/images/CSH.png">
 <meta property="og:url" content="https://www.coresupporthub.com">
-<meta property="og:type" content="website"> --}}
+<meta property="og:type" content="website">
 <meta name="description" content="Your Partner of choice for Small and Midsize Enterprises" itemprop="description">
 
 <script type="application/ld+json">
