@@ -382,7 +382,7 @@
           <a href="https://www.linkedin.com/company/core-support-hub/" class="mb-2"><i class="fa-brands fa-linkedin"></i>: Core Support Hub</a>
           <a href="mailto:info@coresupporthub.com" class="mb-2"><i class="fa-solid fa-envelope"></i>: info@coresupporthub.com</a>
           <a href="tel:+1-585-937-3983" class="mb-2"><i class="fa-solid fa-phone"></i> US: +1 585 937 3983</a>
-          <a href="tel:+61 28 529 6697" class="mb-2"><i class="fa-solid fa-phone"></i> Au: +61 28 529 6697</a>
+          <a href="tel:+61 28 529 6697" class="mb-2"><i class="fa-solid fa-phone"></i> AU: +61 28 529 6697</a>
         </div>
         
     </div>

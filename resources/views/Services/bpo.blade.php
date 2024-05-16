@@ -212,12 +212,12 @@
                               <h3 class="mb-3">Virtual Assistants</h3>
                               <p> We offer a host of remote assistance which includes the following:</p><br>
                               <ul>
-                                <li><span class="bullet">✔</span> Administrative Assistants</li>
-                                <li><span class="bullet">✔</span> Remote Executive Assistants</li>
-                                <li><span class="bullet">✔</span> Ad Hoc Researchers</li>
-                                <li><span class="bullet">✔</span> Social Media Assistants</li>
-                                <li><span class="bullet">✔</span> Data Entry</li>
-                                <li><span class="bullet">✔</span> Graphic Design</li>
+                                <li>Administrative Assistants</li>
+                                <li>Remote Executive Assistants</li>
+                                <li>Ad Hoc Researchers</li>
+                                <li>Social Media Assistants</li>
+                                <li>Data Entry</li>
+                                <li>Graphic Design</li>
                               </ul>
                           </div>
                       </div>
