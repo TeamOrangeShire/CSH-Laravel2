@@ -14,7 +14,7 @@
 				<div class="col-xl-4 col-lg-5 col-sm-6 col-12">
 					<form id="login" method="POST" class="my-5">
 						@csrf
-						<div class="card p-md-4 p-sm-3" style="backdrop-filter: blur(20px)">
+						<div class="card p-md-4 p-sm-4" style="backdrop-filter: blur(20px); padding: 4%">
 							<div class="login-form">
 								<a href="{{ route('home') }}" class="mb-4 d-flex justify-content-center">
 									<img src="{{ asset('images/cs_icon2.png') }}" class="img-fluid login-logo" alt="CSH Logo" />
@@ -35,13 +35,7 @@
 									</div>
 									<small id="passwordE" style="display: none" class="text-danger">(Please provide a Password)</small>
 								</div>
-								<div class="d-flex align-items-center justify-content-between">
-									<div class="form-check m-0">
-										<input class="form-check-input" name="remember" type="checkbox" value="none" id="rememberPassword" />
-										<label class="form-check-label" for="rememberPassword">Remember</label>
-									</div>
-									
-								</div>
+								
 								<div class="d-grid py-3 mt-3">
 									<button onclick="Login('{{ route('login') }}', '{{ route('admin') }}')" type="button" class="btn btn-lg btn-success">
 										LOGIN

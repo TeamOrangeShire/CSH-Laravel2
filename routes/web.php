@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactBackEnd;
 use App\Http\Controllers\Authenticate;
+use App\Http\Controllers\AdminBackEnd;
 
 Route::get('/', function () {
     return view('index');
@@ -38,3 +39,5 @@ Route::get('/admin/attendance', [Authenticate::class, 'Attendance'])->name('admi
 Route::post('/admin/login/authenticate', [Authenticate::class, 'AdminLogin'])->name('login');
 Route::post('/admin/login/signup', [Authenticate::class, 'AdminSignup'])->name('signup');
 Route::post('/admin/login/verify', [Authenticate::class, 'AdminVerify'])->name('verification');
+Route::post('/admin/attendance/scan', [AdminBackEnd::class, 'ScanAttendance'])->name('scanAttendance');
+

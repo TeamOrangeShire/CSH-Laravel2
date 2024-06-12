@@ -1,6 +1,6 @@
-<div id="qrScanner"class="d-lg-none d-sm-block w-100 border fixed-bottom z-3"  style="height: 14%">
+<div id="qr"class="d-lg-none d-sm-block w-100 fixed-bottom z-3"  style="height: 14%">
 <div class="d-flex justify-content-center h-100">
-    <button data-bs-toggle="modal" data-bs-target="#openQr" class="btn btn-primary border-secondary rounded-circle w-25" ><i class=" icon-qr_code_scanner" style="font-size:3rem" ></i></button>
+    <button data-bs-toggle="modal" data-bs-target="#openQr" class="btn btn-primary border-secondary rounded-circle w-25" ><i class="icon-qr_code_scanner" style="font-size:3rem" ></i></button>
 </div>
 </div>
 
@@ -34,10 +34,21 @@ aria-labelledby="openQrLabel" aria-hidden="true">
             <div class="mt-4" style="border: 2px solid #c7ae6a" id="qrScanner" style="display: none;"></div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <button type="button" id="closeQr" class="btn btn-secondary" data-bs-dismiss="modal">
                 Close
             </button>
         </div>
     </div>
 </div>
 </div>
+<form method="POST" id="scanAttendance">
+    @csrf
+    <input type="hidden" name="code" id="code">
+    <input type="hidden" name="user_id" value="{{ $user }}">
+</form>
+
+<script>
+    window.onload = ()=>{
+        ScanAttendance("{{ route('scanAttendance') }}");
+    }
+</script>

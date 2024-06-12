@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\CshUser;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cookie;
 
 class Authenticate extends Controller
 {
@@ -15,7 +16,9 @@ class Authenticate extends Controller
        $user = CshUser::where('user_username', $req->username)->first();
        if($user){
           if(Hash::check($req->password, $user->user_password)){
-            Session::put('admin_id', $user->user_id);
+           
+            $cookie = Cookie::make('admin_id', $user->user_id, 60*24*31);
+          
             $status = 'success';
           }else{
             $status = 'incorrect';
@@ -24,7 +27,7 @@ class Authenticate extends Controller
         $status = 'not found';
        }
 
-       return response()->json(['status'=>$status]);
+       return response()->json(['status'=>$status])->withCookie($cookie);
     }
 
     public function AdminVerify(Request $req){
@@ -58,19 +61,21 @@ class Authenticate extends Controller
 
         
     //FrontEnd
-    public function Dashboard(){
-      if(Session::has('admin_id')){
-          return view('admin.index');
-      }else{
-          return redirect()->route('adminLogin');
-      }
+    public function Dashboard(Request $req){
+      $userId = $req->cookie('admin_id');
+          if($userId){
+            return view('admin.index', ['user'=>$userId]);
+          }else{
+            return redirect()->route('adminLogin');
+          }
   }
 
-  public function Attendance(){
-    if(Session::has('admin_id')){
-      return view('admin.attendance ');
-  }else{
-      return redirect()->route('adminLogin');
-  }
+  public function Attendance(Request $req){
+    $userId = $req->cookie('admin_id');
+        if($userId){
+          return view('admin.attendance', ['user'=>$userId]);
+        }else{
+          return redirect()->route('adminLogin');
+        }
   }
 }

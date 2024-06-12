@@ -32,7 +32,5 @@
 		<link rel="stylesheet" href="{{ asset('assets/vendor/datatables/dataTables.bs5-custom.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/vendor/datatables/buttons/dataTables.bs5-custom.css') }}" />
 
-		<link rel="stylesheet" href="{{ asset('backend/qr.css') }}" />
-
 		<!--QR Code Library-->
         <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>

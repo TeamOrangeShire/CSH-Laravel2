@@ -13,7 +13,7 @@
             <div class="col-xl-4 col-lg-5 col-sm-6 col-12">
                 <form id="signup" method="POST" class="my-5">
                     @csrf
-                    <div class="card p-md-4 p-sm-3" style="backdrop-filter: blur(20px)">
+                    <div class="card p-md-4 p-sm-3" style="backdrop-filter: blur(20px); padding: 4%">
                         <div class="login-form">
                             <a href="{{ route('home') }}" class="mb-4 d-flex justify-content-center">
                                 <img src="{{ asset('images/cs_icon2.png') }}" class="img-fluid login-logo"
