@@ -21,6 +21,9 @@
 
             </div>
 
+            @php
+                $user = App\Models\CshUser::where('user_id', $user)->first();
+            @endphp
             <div class="col-md-9 col-10">
                 <!-- App header actions start -->
                 <div class="header-actions d-flex align-items-center justify-content-end">
@@ -28,8 +31,8 @@
                     <div class="dropdown ms-2">
                         <a class="dropdown-toggle d-flex align-items-center user-settings" href="#!" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="d-none d-md-block">Violeta Escobar</span>
-                            <img src="assets/images/user.png" class="img-3x m-2 me-0 rounded-5" alt="Bootstrap Gallery" />
+                            <span class="d-none d-md-block">{{ $user->user_name }}</span>
+                            <img src="{{ $user->user_pic === 'none' ? asset('images/placeholder.webp') : asset('images/'. $user->user_pic) }}" class="img-3x m-2 me-0 rounded-5" alt="Profile Pic" />
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-sm shadow-sm gap-3" style="">
                             <a class="dropdown-item d-flex align-items-center py-2" href="agent-profile.html"><i

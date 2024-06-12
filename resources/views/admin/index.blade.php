@@ -49,7 +49,7 @@
 			<div class="col-sm-4 col-12">
 				<div class="card mb-2">
 					<div class="card-img">
-						<img src="assets/images/products/product2.jpg" background-size:="" cover;=""
+						<img id="statusPic" src="assets/images/products/{{ $status ? 'product2.jpg' : 'product9.jpg' }}" background-size:="" cover;=""
 							class="card-img-top img-fluid" alt="Admin" />
 					</div>
 					<div class="card-header">

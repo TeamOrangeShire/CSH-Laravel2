@@ -16,7 +16,7 @@
 						@csrf
 						<div class="card p-md-4 p-sm-4" style="backdrop-filter: blur(20px); padding: 4%">
 							<div class="login-form">
-								<a href="{{ route('home') }}" class="mb-4 d-flex justify-content-center">
+								<a href="{{ route('adminLogin') }}" class="mb-4 d-flex justify-content-center">
 									<img src="{{ asset('images/cs_icon2.png') }}" class="img-fluid login-logo" alt="CSH Logo" />
 								</a>
 								<h2 class="mt-4 mb-4 text-center">Core Support Hub Admin Access</h2>
