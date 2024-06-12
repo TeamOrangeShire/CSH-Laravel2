@@ -1,6 +1,6 @@
 <div id="qr"class="d-lg-none d-sm-block w-100 fixed-bottom z-3"  style="height: 14%">
 <div class="d-flex justify-content-center h-100">
-    <button data-bs-toggle="modal" data-bs-target="#openQr" class="btn btn-primary border-secondary rounded-circle w-25" ><i class="icon-qr_code_scanner" style="font-size:3rem" ></i></button>
+    <button data-bs-toggle="modal" onclick=" ScanAttendance('{{ route('scanAttendance') }}')" data-bs-target="#openQr" class="btn btn-primary border-secondary rounded-circle w-25" ><i class="icon-qr_code_scanner" style="font-size:3rem" ></i></button>
 </div>
 </div>
 
@@ -46,9 +46,3 @@ aria-labelledby="openQrLabel" aria-hidden="true">
     <input type="hidden" name="code" id="code">
     <input type="hidden" name="user_id" value="{{ $user }}">
 </form>
-
-<script>
-    window.onload = ()=>{
-        ScanAttendance("{{ route('scanAttendance') }}");
-    }
-</script>
