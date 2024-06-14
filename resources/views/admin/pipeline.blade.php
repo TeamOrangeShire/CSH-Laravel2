@@ -340,7 +340,7 @@ tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <span class="text-primary fw-bold"><span id="progressStatus"></span>%</span>
                     </div>
                     <div class="progress small">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 0%; transition: width 0.3s" 
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 0%; transition: width 0.3s" 
                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>

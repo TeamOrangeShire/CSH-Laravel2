@@ -136,7 +136,8 @@ const Pipeline = {
         });
        }
     }, SaveCSVData: ()=>{
-        console.log(csvData);
+        const length = csvData.company.length;
+        console.log(length)
     }
 }
 
