@@ -43,7 +43,7 @@ class AdminBackEnd extends Controller
             }else{
                 $time = timeDifference($check->att_time_in, Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A'));
                 $totalTime = $time['hours']. "Hrs & " . $time['minutes'] . 'Mins';
-                $check->attendance([
+                $check->update([
                    'att_time_out'=> Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A'),
                    'att_total_time'=>$totalTime,
                    'att_status'=>1,
