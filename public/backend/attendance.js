@@ -69,3 +69,4 @@ function SubmitScannedData(route){
     }
   })
 }
+

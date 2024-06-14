@@ -34,3 +34,9 @@
 
 		<!--QR Code Library-->
         <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+		<style>
+			select option {
+  background-color: #666666; /* Blue background for options */
+  color: white; /* White text color for options */
+}
+		</style>

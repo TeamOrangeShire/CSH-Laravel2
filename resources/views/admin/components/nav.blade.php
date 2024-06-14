@@ -90,49 +90,49 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="dropdown-item" href="agent-profile.html">
+                            <a class="dropdown-item" href="{{ route('pipeline', ['state'=> 'all']) }}">
                                 <span>All</span></a>
                         </li>
                         <li>
-                            <a class="dropdown-item current-page" href="starter-page.html">
+                            <a class="dropdown-item current-page"  href="{{ route('pipeline', ['state'=> 'leads']) }}">
                                 <span>Leads</span></a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="client-list.html">
+                            <a class="dropdown-item"  href="{{ route('pipeline', ['state'=> 'prospects']) }}">
                                 <span>Prospects</span>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="create-invoice.html">
+                            <a class="dropdown-item"  href="{{ route('pipeline', ['state'=> 'discussion']) }}">
                                 <span>Discussion</span>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="invoice.html">
+                            <a class="dropdown-item"  href="{{ route('pipeline', ['state'=> 'proposal']) }}">
                                 <span>Proposal</span>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="invoice-list.html">
+                            <a class="dropdown-item"  href="{{ route('pipeline', ['state'=> 'negotiation']) }}">
                                 <span>Negotiation</span>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="faq.html">
+                            <a class="dropdown-item"  href="{{ route('pipeline', ['state'=> 'contract']) }}">
                                 <span>Contract</span>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="contact-us.html">
+                            <a class="dropdown-item"  href="{{ route('pipeline', ['state'=> 'won']) }}">
                                 <span>Won</span>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="notifications.html">
+                            <a class="dropdown-item"  href="{{ route('pipeline', ['state'=> 'lost']) }}">
                                 <span>Lost</span></a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="notifications.html">
+                            <a class="dropdown-item"  href="{{ route('pipeline', ['state'=> 'dnc']) }}">
                                 <span>DNC</span></a>
                         </li>
                        
@@ -140,6 +140,9 @@
                 </li>
                 <li class="nav-item {{ $active==='monitoring' ? 'active-link' : '' }}">
                     <a class="nav-link" href="agents.html"> Email Sent Monitoring </a>
+                </li>
+                <li class="nav-item {{ $active==='monitoring' ? 'active-link' : '' }}">
+                    <a class="nav-link" href="agents.html"> Attendance Monitoring </a>
                 </li>
             </ul>
         </div>

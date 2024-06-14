@@ -78,4 +78,14 @@ class Authenticate extends Controller
           return redirect()->route('adminLogin');
         }
   }
+
+  public function PipeLine(Request $req){
+    $userId = $req->cookie('admin_id');
+        if($userId){
+          $state = $req->route('state');
+          return view('admin.pipeline', ['user'=>$userId, 'state'=>strtoupper($state)]);
+        }else{
+          return redirect()->route('adminLogin');
+        }
+  }
 }

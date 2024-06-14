@@ -20,5 +20,27 @@ const Support = {
             errs.style.display = 'none';
             return 1;
         }
+    },
+    CheckStatus: status=>{
+        switch(status){
+            case "Lead":
+                return 'primary';
+            case "Prospect":
+                return 'secondary';
+            case "Discussion":
+                return 'warning';
+            case "Proposal":
+                return 'warning';
+            case "Negotiation":
+                return 'info';
+            case "Contract":
+                return 'info';
+            case "Won":
+                return 'success';
+            case "Lost":
+                return 'danger';
+            case "DNC":
+                return 'danger';
+        }
     }
 }
