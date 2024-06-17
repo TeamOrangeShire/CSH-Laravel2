@@ -125,19 +125,50 @@ const Pipeline = {
             var saveCSV = new bootstrap.Modal(document.getElementById('saveCSVdata'));
             document.getElementById('classAddCSV').click();
             AsText('numOfRows', res.company.length);
-            console.log(res);
             saveCSV.show();
-
             csvData = res;
-          
+            
          }, error: xhr=>{
             console.log(xhr.responseText);
          }
         });
        }
-    }, SaveCSVData: ()=>{
+    }, SaveCSVData: (route, load, getDetail, disable)=>{
         const length = csvData.company.length;
-        console.log(length)
+        const each = (1/length)*100;
+        const progressBar = document.getElementById('progressBar');
+        const progressStatus = document.getElementById('progressStatus');
+        const totalData = document.getElementById('totalData');
+        const savedData = document.getElementById('savedData');
+       
+        for(let i = 0; i < length; i++){
+           AsVal('companyNameAdd', csvData.company[i]);
+           AsVal('nameAdd', csvData.name[i]);
+           AsVal('emailAdd', csvData.email[i]);
+
+     
+            $.ajax({
+                type:"POST",
+                url: route,
+                data: $('form#addLeadForm').serialize(),
+                success: res=>{
+                 if(res.status === 'success'){
+                    const percent = (i + 1) * each;
+                    progressBar.style.width = percent + "%";
+                    progressStatus.textContent = percent;
+                    totalData.textContent = length;
+                    savedData.textContent = i + 1;
+                 }
+                }, error: xhr=>{
+                    console.log(xhr.responseText);
+                }
+            })
+        
+            
+        }
+
+        LoadLead(load, getDetail, disable);
+        document.getElementById('doneButton').style.display = 'flex';
     }
 }
 

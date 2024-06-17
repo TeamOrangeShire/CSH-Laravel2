@@ -268,19 +268,19 @@
                             <div class="row mb-3">
                                 <label for="companyNameAdd" class="col-sm-3 col-form-label">Company Name</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="companyName" class="form-control" placeholder="Match Column of your CSV/Excel" id="companyNameAdd" />
+                                    <input type="text" name="companyName" class="form-control" placeholder="Match Column of your CSV/Excel" id="companyNameCSV" />
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="nameAdd" class="col-sm-3 col-form-label">Name</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="name" placeholder="Match Column of your CSV/Excel" class="form-control" id="nameAdd" />
+                                    <input type="text" name="name" placeholder="Match Column of your CSV/Excel" class="form-control" id="nameAddCSV" />
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="emailAdd" class="col-sm-3 col-form-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input type="email" name="email" placeholder="Match Column of your CSV/Excel" class="form-control" id="emailAdd" />
+                                    <input type="email" name="email" placeholder="Match Column of your CSV/Excel" class="form-control" id="emailAddCSV" />
                                 </div>
                             </div>
                             <div class="mt-5 mb-4">
@@ -315,7 +315,7 @@
                 </p>
             </div>
             <div class="modal-footer flex-nowrap p-0">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#savingDataleads" onclick="Pipeline.SaveCSVData()" class="btn text-primary fs-6 col-6 m-0 border-end">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#savingDataleads" onclick="Pipeline.SaveCSVData('{{route('addLead')}}', '{{ route('loadPipeline') }}?state={{ $state }}&user_id={{ $user }}', '{{ route('getLeadDetails') }}', '{{ route('disableLead') }}')" class="btn text-primary fs-6 col-6 m-0 border-end">
                     <strong>Yes, Please</strong>
                 </button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#addCSVLeads" class="btn text-secondary fs-6 col-6 m-0" data-bs-dismiss="modal">
@@ -336,20 +336,26 @@ tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="card mb-2">
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
-                        <span>Please Wait.....</span>
+                        <span>Please Wait.....(<span id="savedData"></span>/<span id="totalData"></span>)</span>
                         <span class="text-primary fw-bold"><span id="progressStatus"></span>%</span>
                     </div>
                     <div class="progress small">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 0%; transition: width 0.3s" 
+                        <div class="progress-bar bg-success" id="progressBar" role="progressbar" style="width: 0%; transition: width 0.3s" 
                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
+
                 </div>
+            </div>
+
+            <div class="w-100 justify-content-center" style="display: none" id="doneButton">
+                <button data-bs-dismiss="modal" class="btn btn-primary">Done!</button>
             </div>
         </div>
        
     </div>
 </div>
 </div>
+
 			</div>
 			<!-- App container ends -->
 <form method="POST" id="disableForm">
