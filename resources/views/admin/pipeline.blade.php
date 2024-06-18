@@ -125,7 +125,6 @@
                                                     <option value="null" disabled selected> -------Select Service------- </option>
                                                     <option value="IT Service">IT Service</option>
                                                     <option value="BPO">BPO</option>
-                                                    <option value="BPO-Back Office">BPO-Back Office</option>
                                                     <option value="Software">Software</option>
                                                 </select>
                                             </div>
@@ -261,42 +260,86 @@
                     <h5 class="modal-title">Add Leads Using CSV/Excel</h5>
                     <button id="closeAddLead" style="filter: brightness(0) invert(1);" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+            
+      
                 <div class="modal-body">
                     <div class="card-body">
+                     
                         <form id="scanCSVForm" enctype="multipart/form-data" method="POST">
-                            @csrf
-                            <div class="row mb-3">
-                                <label for="companyNameAdd" class="col-sm-3 col-form-label">Company Name</label>
-                                <div class="col-sm-9">
-                                    <input type="text" name="companyName" class="form-control" placeholder="Match Column of your CSV/Excel" id="companyNameCSV" />
+                        <div class="accordion" id="accordionExample2">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThreeLight">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThreeLight" aria-expanded="false"
+                                        aria-controls="collapseThreeLight">
+                                        <h6 class="m-0">System Define Header</h6>
+                                    </button>
+                                </h2>
+                                <div id="collapseThreeLight" class="accordion-collapse collapse show"
+                                    aria-labelledby="headingThreeLight" data-bs-parent="#accordionExample2">
+                                    <div class="accordion-body">
+                                        <small>You can upload a CSV file, and the system will automatically detect the following headers:
+                                        </small>
+                                        <ul>
+                                            <li>COMPANY</li>
+                                            <li>NAME</li>
+                                            <li>EMAIL</li>
+                                        </ul>
+                                        <small>The data is automatically uploaded as leads in the leads list
+                                        </small>
+                                        <br><br>
+                                        <small><i>Alternatively, you can customize the header names according to your preferences by clicking the 'Use Custom Header Definition' Button</i></small>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="nameAdd" class="col-sm-3 col-form-label">Name</label>
-                                <div class="col-sm-9">
-                                    <input type="text" name="name" placeholder="Match Column of your CSV/Excel" class="form-control" id="nameAddCSV" />
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOneLight">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOneLight" aria-expanded="false" aria-controls="collapseOneLight">
+                                        <h6 class="m-0">Use Custom Header Definition</h6>
+                                    </button>
+                                </h2>
+                                <div id="collapseOneLight" class="accordion-collapse collapse"
+                                    aria-labelledby="headingOneLight" data-bs-parent="#accordionExample2">
+                                    <div class="accordion-body">
+                                     
+                                            @csrf
+                                            <div class="row mb-3">
+                                                <label for="companyNameAdd" class="col-sm-3 col-form-label">COMPANY</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="companyName" class="form-control" placeholder="Match Column of your CSV/Excel" id="companyNameCSV" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="nameAdd" class="col-sm-3 col-form-label">NAME</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="name" placeholder="Match Column of your CSV/Excel" class="form-control" id="nameAddCSV" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="emailAdd" class="col-sm-3 col-form-label">EMAIL</label>
+                                                <div class="col-sm-9">
+                                                    <input type="email" name="email" placeholder="Match Column of your CSV/Excel" class="form-control" id="emailAddCSV" />
+                                                </div>
+                                            </div>
+                                      
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="emailAdd" class="col-sm-3 col-form-label">Email</label>
-                                <div class="col-sm-9">
-                                    <input type="email" name="email" placeholder="Match Column of your CSV/Excel" class="form-control" id="emailAddCSV" />
-                                </div>
-                            </div>
-                            <div class="mt-5 mb-4">
-                                <label for="formFile" class="form-label">Upload you CSV/Excel file Here</label>
-                                <input class="form-control" type="file" name="leadFile" id="formFile" />
-                            </div>
-
-                            <div class="modal-footer flex-column">
-                                <button type="button" onclick="Pipeline.ReadCSV('{{ route('readCSV') }}')" class="btn btn-lg btn-primary w-100 mx-0 mb-2">
-                                    Scan File
-                                </button>
-                                <button type="button" id="classAddCSV" class="btn btn-lg btn-secondary w-100 mx-0" data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                            </div>
-                        </form>
+                        </div>
+                        <div class="mt-4 mb-4">
+                            <label for="formFile" class="form-label">Upload you CSV/Excel file Here</label>
+                            <input class="form-control" type="file" name="leadFile" id="formFile" />
+                        </div>
+                    </form>
+                        <div class="modal-footer flex-column">
+                            <button type="button" onclick="Pipeline.ReadCSV('{{ route('readCSV') }}')" class="btn btn-lg btn-primary w-100 mx-0 mb-2">
+                                Scan File
+                            </button>
+                            <button type="button" id="classAddCSV" class="btn btn-lg btn-secondary w-100 mx-0" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
                     </div>
                 </div>
          
@@ -331,7 +374,7 @@ tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-body p-4 text-center">
-            <h5 class="text-primary">Leads are Saving!</h5>
+            <h5 class="text-primary" id="savingLeadsTitle">Leads are Saving!</h5>
            
             <div class="card mb-2">
                 <div class="card-body">
@@ -347,7 +390,8 @@ tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 </div>
             </div>
 
-            <div class="w-100 justify-content-center" style="display: none" id="doneButton">
+            <div class="w-100 mt-4" style="display: none; justify-content:center; flex-direction: column" id="doneButton">
+                <p class="text-primary">You may now close the progress modal</p>
                 <button data-bs-dismiss="modal" class="btn btn-primary">Done!</button>
             </div>
         </div>

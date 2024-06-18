@@ -152,120 +152,82 @@ class AdminBackEnd extends Controller
     }
 
     public function ReadCSV(Request $req){
+    // Set default values if parameters are empty
+    $companyName = !empty($req->companyName) ? $req->companyName : 'COMPANY';
+    $name = !empty($req->name) ? $req->name : 'NAME';
+    $email = !empty($req->email) ? $req->email : 'EMAIL';
 
-        $companyName = $req->companyName;
-        $name = $req->name;
-        $email = $req->email;
+    // Load the uploaded file
+    $file = $req->file('leadFile'); 
+    $spreadsheet = IOFactory::load($file);
+    $worksheet = $spreadsheet->getActiveSheet();
 
-        $file = $req->file('leadFile'); 
+    // Initialize variables for column headers
+    $headerColumnCompany = null;
+    $headerColumnName = null;
+    $headerColumnEmail = null;
 
-        $spreadsheet = IOFactory::load($file);
-
-        $worksheet = $spreadsheet->getActiveSheet();
-
-        $columnCompany = [];
-        $headerColumnCompany= null;
-
-        $columnName = [];
-        $headerColumnName= null;
-
-        $columnEmail = [];
-        $headerColumnEmail= null;
-   
-       foreach ($worksheet->getRowIterator() as $row) {
-         $cellIterator = $row->getCellIterator();
-         $cellIterator->setIterateOnlyExistingCells(false); 
-         foreach ($cellIterator as $cell) {
-             if ($cell->getValue() == $companyName) {
-                 $headerColumnCompany = $cell->getColumn();
-                 break 2; 
-             }
-         }
-     }
-     foreach ($worksheet->getRowIterator() as $row) {
-        $cellIterator = $row->getCellIterator();
-        $cellIterator->setIterateOnlyExistingCells(false); 
-        foreach ($cellIterator as $cell) {
-            if ($cell->getValue() == $name) {
-                $headerColumnName = $cell->getColumn();
-                break 2; 
+    // Function to find column header
+    function findHeaderColumn($worksheet, $headerName) {
+        foreach ($worksheet->getRowIterator() as $row) {
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(false);
+            foreach ($cellIterator as $cell) {
+                if ($cell->getValue() == $headerName) {
+                    return $cell->getColumn();
+                }
             }
         }
+        return null;
     }
-    foreach ($worksheet->getRowIterator() as $row) {
-        $cellIterator = $row->getCellIterator();
-        $cellIterator->setIterateOnlyExistingCells(false); 
-        foreach ($cellIterator as $cell) {
-            if ($cell->getValue() == $email) {
-                $headerColumnEmail = $cell->getColumn();
-                break 2; 
-            }
-        }
+
+    // Find header columns
+    $headerColumnCompany = findHeaderColumn($worksheet, $companyName);
+    $headerColumnName = findHeaderColumn($worksheet, $name);
+    $headerColumnEmail = findHeaderColumn($worksheet, $email);
+
+    // Check if any header was not found
+    if ($headerColumnCompany === null) {
+        return response()->json(['status' => 'fail', 'message' => "Header '$companyName' not found"]);
     }
-    
-    
-    if ($headerColumnName !== null) {
-        $column = $worksheet->getColumnIterator($headerColumnName)->current();
+    if ($headerColumnName === null) {
+        return response()->json(['status' => 'fail', 'message' => "Header '$name' not found"]);
+    }
+    if ($headerColumnEmail === null) {
+        return response()->json(['status' => 'fail', 'message' => "Header '$email' not found"]);
+    }
+
+    // Initialize arrays to store column data
+    $columnCompany = [];
+    $columnName = [];
+    $columnEmail = [];
+
+    // Function to extract column data
+    function extractColumnData($worksheet, $headerColumn) {
+        $columnData = [];
+        $column = $worksheet->getColumnIterator($headerColumn)->current();
         if ($column) {
             $cellIterator = $column->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(false);
-
             foreach ($cellIterator as $cell) {
                 // Skip the header row
                 if ($cell->getRow() === 1) {
                     continue;
                 }
-
                 // Get cell value and add to columnData
                 $cellValue = $cell->getValue();
-                $columnName[] = $cellValue;
-
-             
+                $columnData[] = $cellValue;
             }
         }
-    }
-    if ($headerColumnEmail !== null) {
-        $column = $worksheet->getColumnIterator($headerColumnEmail)->current();
-        if ($column) {
-            $cellIterator = $column->getCellIterator();
-            $cellIterator->setIterateOnlyExistingCells(false);
-
-            foreach ($cellIterator as $cell) {
-                // Skip the header row
-                if ($cell->getRow() === 1) {
-                    continue;
-                }
-
-                // Get cell value and add to columnData
-                $cellValue = $cell->getValue();
-                $columnEmail[] = $cellValue;
-
-            }
-        }
-    }
-     
-    
-    if ($headerColumnCompany !== null) {
-        $column = $worksheet->getColumnIterator($headerColumnCompany)->current();
-        if ($column) {
-            $cellIterator = $column->getCellIterator();
-            $cellIterator->setIterateOnlyExistingCells(false);
-
-            foreach ($cellIterator as $cell) {
-                // Skip the header row
-                if ($cell->getRow() === 1) {
-                    continue;
-                }
-
-                // Get cell value and add to columnData
-                $cellValue = $cell->getValue();
-                $columnCompany[] = $cellValue;
-
-            }
-        }
+        return $columnData;
     }
 
- 
-     return response()->json(['company' => $columnCompany, 'name'=>$columnName, 'email'=>$columnEmail]);
+    // Extract data from each column
+    $columnCompany = extractColumnData($worksheet, $headerColumnCompany);
+    $columnName = extractColumnData($worksheet, $headerColumnName);
+    $columnEmail = extractColumnData($worksheet, $headerColumnEmail);
+
+    // Return JSON response with the extracted data
+    return response()->json(['status'=>'success','company' => $columnCompany, 'name' => $columnName, 'email' => $columnEmail]);
     }
 }

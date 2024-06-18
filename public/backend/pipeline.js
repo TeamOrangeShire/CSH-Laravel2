@@ -121,12 +121,31 @@ const Pipeline = {
          contentType: false,
          processData: false,
          success: res=>{
+           if(res.status === 'success'){
             document.getElementById('mainLoader').style.display = 'none';
             var saveCSV = new bootstrap.Modal(document.getElementById('saveCSVdata'));
             document.getElementById('classAddCSV').click();
             AsText('numOfRows', res.company.length);
             saveCSV.show();
             csvData = res;
+           }else{
+            document.getElementById('mainLoader').style.display = 'none';
+            if(!alertify.errorAlert){
+                alertify.dialog('errorAlert',function factory(){
+                  return{
+                          build:function(){
+                              var errorHeader = '<span class="icon-warning fs-3" '
+                              +    'style="vertical-align:middle;color:#e10000;">'
+                              + '</span> CSV Reading Error';
+                              this.setHeader(errorHeader);
+                          }
+                      };
+                  },true,'alert');
+              }
+
+              alertify
+                  .errorAlert("One of the columns you defined is not found in your CSV please recheck it and try again " );
+           }
             
          }, error: xhr=>{
             console.log(xhr.responseText);
@@ -140,35 +159,44 @@ const Pipeline = {
         const progressStatus = document.getElementById('progressStatus');
         const totalData = document.getElementById('totalData');
         const savedData = document.getElementById('savedData');
+
        
         for(let i = 0; i < length; i++){
            AsVal('companyNameAdd', csvData.company[i]);
            AsVal('nameAdd', csvData.name[i]);
            AsVal('emailAdd', csvData.email[i]);
-
-     
+           const percentInit = (i + 1) * each;
+           const percent = percentInit.toFixed(2);
             $.ajax({
                 type:"POST",
                 url: route,
                 data: $('form#addLeadForm').serialize(),
                 success: res=>{
                  if(res.status === 'success'){
-                    const percent = (i + 1) * each;
                     progressBar.style.width = percent + "%";
                     progressStatus.textContent = percent;
                     totalData.textContent = length;
                     savedData.textContent = i + 1;
+                    if (percent > 99) {
+                        document.getElementById('savingLeadsTitle').textContent = 'DONE!!'
+                        document.getElementById('doneButton').style.display = 'flex';
+                    }
+
                  }
                 }, error: xhr=>{
                     console.log(xhr.responseText);
                 }
             })
         
+           
             
         }
 
+      
+      
+
         LoadLead(load, getDetail, disable);
-        document.getElementById('doneButton').style.display = 'flex';
+       
     }
 }
 
