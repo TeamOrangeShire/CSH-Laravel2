@@ -31,12 +31,14 @@
 		<link rel="stylesheet" href="{{ asset('assets/vendor/datatables/dataTables.bs5.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/vendor/datatables/dataTables.bs5-custom.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/vendor/datatables/buttons/dataTables.bs5-custom.css') }}" />
-
+		
+		<!--Quil-->
+		<link href="{{asset('assets/vendor/quill/quill.core.css')}}" rel="stylesheet" />
 		<!--QR Code Library-->
         <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 		<style>
 			select option {
-  background-color: #666666; /* Blue background for options */
-  color: white; /* White text color for options */
-}
+            background-color: #666666; /* Blue background for options */
+            color: white; /* White text color for options */
+         }
 		</style>

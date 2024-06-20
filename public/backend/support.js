@@ -42,5 +42,24 @@ const Support = {
             case "DNC":
                 return 'danger';
         }
+    },TabSignature: id => {
+        const editor = document.getElementById('emailSignatureEditor');
+        const output = document.getElementById('emailSignatureOutput');
+        const code = document.getElementById('emailSignatureCode');
+
+        if(id === 'editor'){
+           
+        }else if(id === 'output'){
+
+        }else{
+            code.innerHTML = Support.EscapeHtml(emailSignQuill.root.innerHTML);
+        }
+
+    },EscapeHtml: html =>{
+        return html.replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 }

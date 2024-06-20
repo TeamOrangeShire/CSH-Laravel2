@@ -25,3 +25,5 @@
 		<script src="{{ asset('assets/vendor/apex/apexcharts.min.js') }}"></script>
 		<script src="{{ asset('assets/vendor/apex/custom/home/ticketsData.js') }}"></script>
 
+		
+		<script src="{{asset('assets/vendor/quill/quill.min.js')}}"></script>
