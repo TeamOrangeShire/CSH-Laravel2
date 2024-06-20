@@ -1,5 +1,6 @@
 <?php
 use Carbon\Carbon;
+
 function GenToken($length = 16) {
     $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     $charactersLength = strlen($characters);
@@ -11,6 +12,7 @@ function GenToken($length = 16) {
     
     return $randomString;
 }
+
 
 function PastTimeCalc($date){
     $now = Carbon::now()->format('Y-m-d H:i:s');
@@ -56,3 +58,4 @@ function parseTime($time) {
 
     return $totalMinutes * 60 * 1000; 
 }
+

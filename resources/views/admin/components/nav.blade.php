@@ -35,9 +35,9 @@
                             <img src="{{ $user->user_pic === 'none' ? asset('images/placeholder.webp') : asset('images/'. $user->user_pic) }}" class="img-3x m-2 me-0 rounded-5" alt="Profile Pic" />
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-sm shadow-sm gap-3" style="">
-                            <a class="dropdown-item d-flex align-items-center py-2" href="agent-profile.html"><i
+                            <a class="dropdown-item d-flex align-items-center py-2" href="{{route('user')}}"><i
                                     class="icon-smile fs-4 me-3"></i>User Profile</a>
-                            <a class="dropdown-item d-flex align-items-center py-2" href="account-settings.html"><i
+                            <a class="dropdown-item d-flex align-items-center py-2" href="{{route('userSetting')}}"><i
                                     class="icon-settings fs-4 me-3"></i>Account
                                 Settings</a>
                             <a class="dropdown-item d-flex align-items-center py-2" href="login.html"><i

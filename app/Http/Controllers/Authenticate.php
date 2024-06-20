@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CshUser;
+use App\Models\CshEmailConfig;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Cookie;
@@ -54,6 +55,13 @@ class Authenticate extends Controller
         $user->user_status = 1;
         $user->save();
 
+        $config = new CshEmailConfig;
+        $config->user_id = $user->user_id;
+        $config->econf_host = 'smtpout.secureserver.net';
+        $config->econf_port = '465';
+        $config->econf_encryption = 'ssl';
+        $config->save();
+
         Session::put('admin_id', $user->user_id);
 
         return response()->json(['status'=>'success']);
@@ -84,6 +92,25 @@ class Authenticate extends Controller
         if($userId){
           $state = $req->route('state');
           return view('admin.pipeline', ['user'=>$userId, 'state'=>strtoupper($state)]);
+        }else{
+          return redirect()->route('adminLogin');
+        }
+  }
+
+  public function User(Request $req){
+    $userId = $req->cookie('admin_id');
+        if($userId){
+          $state = $req->route('state');
+          return view('admin.user', ['user'=>$userId, 'state'=>strtoupper($state)]);
+        }else{
+          return redirect()->route('adminLogin');
+        }
+  }
+  public function UserSetting(Request $req){
+    $userId = $req->cookie('admin_id');
+        if($userId){
+          $state = $req->route('state');
+          return view('admin.userSetting', ['user'=>$userId, 'state'=>strtoupper($state)]);
         }else{
           return redirect()->route('adminLogin');
         }

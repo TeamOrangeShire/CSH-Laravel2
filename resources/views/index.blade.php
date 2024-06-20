@@ -450,7 +450,7 @@
          url: "{{ route('sendMessage') }}",
          data: formData,
          success: function(response) {
-
+         
        if(response.status === 'success'){
         submit.innerHTML = '';
         submit.innerHTML = '<i>Message Sent</i>';
@@ -471,6 +471,7 @@
           }, 500);
         }, 3000);
        }else{
+
         submit.innerHTML = '';
         submit.innerHTML = 'Send Message';
         const snackDiv = document.getElementById('snackbar-div');

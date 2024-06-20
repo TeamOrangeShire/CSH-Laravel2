@@ -34,6 +34,8 @@ Route::get('/admin/login', function () { return view('admin.login');})->name('ad
 Route::get('/admin/signup', function () { return view('admin.signup');})->name('adminSignup');
 Route::get('/admin/pipeline/{state}', [Authenticate::class, 'PipeLine'])->name('pipeline');
 Route::get('/admin/attendance', [Authenticate::class, 'Attendance'])->name('adminAttendance');
+Route::get('/admin/user', [Authenticate::class, 'User'])->name('user');
+Route::get('/admin/user/settings', [Authenticate::class, 'UserSetting'])->name('userSetting');
 
 //Admin Routes BackEnd
 Route::post('/admin/login/authenticate', [Authenticate::class, 'AdminLogin'])->name('login');
