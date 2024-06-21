@@ -1,3 +1,7 @@
+@php
+    $smtpConfig = App\Models\CshEmailConfig::where('user_id', $user)->first();
+@endphp
+
 <div class="modal fade" id="updateLead" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -474,11 +478,11 @@
                                             <div class="accordion-body">
                                                 <div class="w-100 d-flex justify-content-end">
 
-                                                    <button data-bs-toggle="modal" data-bs-target="#addEmailTemplate" class="btn btn-success"><i class="icon-plus-circle"></i>
+                                                    <button data-bs-toggle="modal" data-bs-target="#addEmailTemplate" onclick="Support.OpenAdd('tempName', 'emailTemplateEditor', 'updateEmailTempButton', 'saveEmailTempButton')" class="btn btn-success"><i class="icon-plus-circle"></i>
                                                         Add Template</button>
                                                 </div>
 
-                                                <ul class="list-group mt-4">
+                                                <ul class="list-group mt-4" id="emailTemplateList">
                                                     <li
                                                         class="list-group-item d-flex justify-content-between align-items-center">
                                                         A list item
@@ -510,12 +514,12 @@
                                             <div class="accordion-body">
                                                 <div class="w-100 d-flex justify-content-end">
 
-                                                    <button data-bs-toggle="modal" data-bs-target="#addEmailSignature" class="btn btn-success"><i class="icon-plus-circle"></i>
+                                                    <button data-bs-toggle="modal" onclick="Support.OpenAdd('sigName', 'emailSignatureEditor', 'updateEmailSigButton', 'saveEmailSigButton')" data-bs-target="#addEmailSignature" class="btn btn-success"><i class="icon-plus-circle"></i>
                                                         Add Signature</button>
                                                 </div>
 
 
-                                                <ul class="list-group mt-4">
+                                                <ul class="list-group mt-4" id="emailSignatureList">
                                                     <li
                                                         class="list-group-item d-flex justify-content-between align-items-center">
                                                         A list item
@@ -545,11 +549,54 @@
                                             aria-labelledby="advanceSettingsTitle"
                                             data-bs-parent="#settingsMailAccordion">
                                             <div class="accordion-body">
-                                                <h5 class="mb-3 fw-light lh-lg">
-                                                    <strong class="fw-bold">Not Yet Available I still have nothing in
-                                                        mind to put here</strong>
-
+                                                <form method="POST" id="smtpConfig">
+                                                    @csrf
+                                                    <input type="hidden" name="user_id" value="{{ $user }}">
+                                                <h5 class="text-primary">
+                                                   Professional Mail Credentials
                                                 </h5>
+                                                  <div class="ps-4 w-100 mb-4">
+                                                    <div class="m-0">
+                                                        <label class="form-label">Mail Address</label>
+                                                        <input type="text" value="{{ $smtpConfig->econf_username }}" name="mailAddress" id="mailAddress" class="form-control" placeholder="Professional Email Address" />
+                                                        <small id="mailAddressE" style="display: none" class="text-danger">This is a required field</small>
+                                                    </div>
+                                                    <div class="m-0">
+                                                        <label class="form-label">Password</label>
+                                                        <div class="input-group">
+                                                            <input type="password" value="{{ $smtpConfig->econf_password }}" id="mailPassword" name="mailPassword" class="form-control" placeholder="Password" />
+                                                            <button class="btn btn-outline-dark" onclick="Support.ShowPass('mailPassword', this)" type="button">
+                                                              <i class="icon-eye"></i>
+                                                            </button>
+                                                        </div>
+                                                        <small id="mailPasswordE" style="display: none" class="text-danger">This is a required field</small>
+                                                    </div>
+                                                  </div>
+                                                <h5 class="text-primary">
+                                                    SMTP Configuration
+                                                 </h5>
+                                                 <div class="ps-4 w-100 mb-4">
+                                                    <div class="m-0">
+                                                        <label class="form-label">SMTP Host</label>
+                                                        <input type="text" value="{{ $smtpConfig->econf_host }}" id="smtpHost" name="smtpHost" class="form-control" placeholder="SMTP Host" />
+                                                        <small id="smtpHostE" style="display: none" class="text-danger">This is a required field</small>
+                                                    </div>
+                                                    <div class="m-0">
+                                                        <label class="form-label">SMTP Port</label>
+                                                        <input type="text" value="{{ $smtpConfig->econf_port }}" name="smtpPort" id="smtpPort" class="form-control" placeholder="SMTP Port" />
+                                                        <small id="smtpPortE" style="display: none" class="text-danger">This is a required field</small>
+                                                    </div>
+                                                    <div class="m-0">
+                                                        <label class="form-label">SMTP Encryption</label>
+                                                        <input type="text" value="{{ $smtpConfig->econf_encryption }}" id="smtpEncrypt" name="smtpEncrypt" class="form-control" placeholder="SMTP Encryption" />
+                                                        <small id="smtpEncryptE" style="display: none" class="text-danger">This is a required field</small>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="w-100 d-flex justify-content-end">
+                                                    <button type="button" onclick="Pipeline.UpdateSMTPConfig('{{ route('updateSMTPConfig') }}')" class="btn btn-success"><i class="icon-save1"></i> Save</button>
+                                                  </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -573,9 +620,14 @@
                 <h5 class="modal-title" id="staticBackdropLabel">
                     Add Template
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button style="filter: brightness(0) invert(1);" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div class="mb-4">
+                    <label class="form-label">Template Name</label>
+                    <input type="text" id="tempName" class="form-control" placeholder="Template 1" />
+                    <small style="display: none" class="text-danger" id="tempNameE">This field is required</small>
+                </div>
                 	<div class="custom-tabs-container">
 											<ul class="nav nav-tabs" id="customTab2" role="tablist">
 												<li class="nav-item" role="presentation">
@@ -584,25 +636,21 @@
 														</a>
 												</li>
 												<li class="nav-item" role="presentation">
-													<a class="nav-link" id="tab-twoA" data-bs-toggle="tab" href="#addTempOutput" role="tab"
+													<a class="nav-link" onclick="Support.OpenOutput('emailTemplateOutput', 'emailTemplateEditor')" id="tab-twoA" data-bs-toggle="tab" href="#addTempOutput" role="tab"
 														aria-controls="twoA" aria-selected="false"><i class="icon-type"></i> Output</a>
 												</li>
-												<li class="nav-item" role="presentation">
-													<a class="nav-link" id="tab-threeA" data-bs-toggle="tab" href="#addTempCode" role="tab"
-														aria-controls="threeA" aria-selected="false"><i class="icon-code"></i> Code
-														</a>
-												</li>
+											
 											</ul>
 											<div class="tab-content" id="customTabContent2">
 												<div class="tab-pane fade show active" id="addTempEditor" role="tabpanel">
 													<div id="emailTemplateEditor"></div>
 												</div>
 												<div class="tab-pane fade" id="addTempOutput" role="tabpanel">
-													<p>Output</p>
+												      <div class="card">
+                                                        <div class="card-body" id="emailTemplateOutput"></div>
+                                                    </div>
 												</div>
-												<div class="tab-pane fade" id="addTempCode" role="tabpanel">
-													<p>Code</p>
-												</div>
+											
 											</div>
 										</div>
             </div>
@@ -610,8 +658,11 @@
                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#sendMail">
                     Back
                 </button>
-                <button type="button" class="btn btn-primary">
-                    Understood
+                <button type="button" onclick="Pipeline.UpdateEmailTempSig('{{ route('UpdateEmailTempSig') }}', 'template')" id="updateEmailSigButton" style="display: none" class="btn btn-primary">
+                    <i class="icon-save"></i>   Update Template
+                   </button>
+                <button type="button" id="saveEmailSigButton" onclick="Pipeline.SaveEmailTemp('{{ route('SaveEmailTemp') }}', 'template')" class="btn btn-primary">
+                 <i class="icon-save"></i>   Save
                 </button>
             </div>
         </div>
@@ -626,9 +677,14 @@
                 <h5 class="modal-title" id="staticBackdropLabel">
                     Add Signature
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button style="filter: brightness(0) invert(1);" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div class="mb-4">
+                    <label class="form-label">Signature Name</label>
+                    <input type="text" class="form-control" id="sigName" placeholder="Signature #1" />
+                    <small style="display: none" class="text-danger" id="sigNameE">This field is required</small>
+                </div>
                 	<div class="custom-tabs-container">
 											<ul class="nav nav-tabs" id="customTab2" role="tablist">
 												<li class="nav-item" role="presentation">
@@ -637,14 +693,10 @@
 														</a>
 												</li>
 												<li class="nav-item" role="presentation">
-													<a class="nav-link" id="tab-twoA" data-bs-toggle="tab" onclick="Support.TabSignature('output')" href="#addSignOutput" role="tab"
+													<a class="nav-link" id="tab-twoA" data-bs-toggle="tab" onclick="Support.OpenOutput('emailSignatureOutput', 'emailSignatureEditor')" href="#addSignOutput" role="tab"
 														aria-controls="twoA" aria-selected="false"><i class="icon-type"></i> Output</a>
 												</li>
-												<li class="nav-item" role="presentation">
-													<a class="nav-link" id="tab-threeA" data-bs-toggle="tab" onclick="Support.TabSignature('code')" href="#addSignCode" role="tab"
-														aria-controls="threeA" aria-selected="false"><i class="icon-code"></i> Code
-														</a>
-												</li>
+											
 											</ul>
 											<div class="tab-content" id="customTabContent2">
 												<div class="tab-pane fade show active" id="addSignEditor" role="tabpanel">
@@ -655,11 +707,7 @@
                                                         <div class="card-body" id="emailSignatureOutput"></div>
                                                     </div>
 												</div>
-												<div class="tab-pane fade" id="addSignCode" role="tabpanel">
-													<div class="card">
-                                                        <div class="card-body" id="emailSignatureCode" contenteditable="true"></div>
-                                                    </div>
-												</div>
+												
 											</div>
 										</div>
             </div>
@@ -667,11 +715,29 @@
                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#sendMail">
                     Close
                 </button>
-                <button type="button" class="btn btn-primary">
-                    Understood
+                <button type="button" onclick="Pipeline.UpdateEmailTempSig('{{ route('UpdateEmailTempSig') }}', 'template')" id="updateEmailTempButton" style="display: none" class="btn btn-primary">
+                    <i class="icon-save"></i>   Update Signature
+                </button>
+                <button  type="button" id="saveEmailTempButton" onclick="Pipeline.SaveEmailTemp('{{ route('SaveEmailTemp') }}', 'signature')" class="btn btn-primary">
+                    <i class="icon-save"></i>   Save
                 </button>
             </div>
         </div>
     </div>
 </div>
 
+<form id="emailTempSig" method="POST">
+    @csrf
+    <input type="hidden" name="user_id" value="{{ $user }}">
+    <input type="hidden" name="name" id="tempSigName">
+    <input type="hidden" name="content" id="tempSigContent">
+    <input type="hidden" name="type" id="tempSigType">
+</form>
+
+<form id="emailTempSigUpdate" method="POST">
+    @csrf
+    <input type="hidden" name="sigTempId" id="sigTempIdUpdate">
+    <input type="hidden" name="name" id="tempSigNameUpdate">
+    <input type="hidden" name="content" id="tempSigContentUpdate">
+    <input type="hidden" name="type" id="tempSigTypeUpdate">
+</form>

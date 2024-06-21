@@ -29,7 +29,7 @@
 									<label class="form-label">Password</label>
 									<div class="input-group">
 										<input type="password" id="loginPassword"  name="password" class="form-control" placeholder="Enter password" />
-										<button type="button" onclick="Support.ShowPass('loginPassword')" class="input-group-text">
+										<button type="button" onclick="Support.ShowPass('loginPassword', this)" class="input-group-text">
 											<i class="icon-eye"></i>
 										</button>
 									</div>

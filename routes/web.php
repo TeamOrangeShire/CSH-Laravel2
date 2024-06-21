@@ -50,3 +50,8 @@ Route::get('/admin/pipelineload/getlead', [AdminBackEnd::class, 'GetLeadDetails'
 Route::post('/admin/pipelineload/updatelead', [AdminBackEnd::class, 'UpdateLead'])->name('updateLead');
 Route::post('/admin/pipelineload/disable', [AdminBackEnd::class, 'DisableLead'])->name('disableLead');
 Route::post('/admin/pipelineload/readCsv', [AdminBackEnd::class, 'ReadCSV'])->name('readCSV');
+Route::post('/admin/pipelineload/updateSMTPConfig', [AdminBackEnd::class, 'UpdateSMTPConfig'])->name('updateSMTPConfig');
+Route::post('/admin/pipelineload/saveEmailTempSig', [AdminBackEnd::class, 'SaveEmailTemp'])->name('SaveEmailTemp');
+Route::get('/admin/pipelineload/LoadTempSig', [AdminBackEnd::class, 'LoadTempSig'])->name('LoadTempSig');
+Route::get('/admin/pipelineload/getTempSig', [AdminBackEnd::class, 'GetTempSig'])->name('GetTempSig');
+Route::get('/admin/pipelineload/UpdateEmailTempSig', [AdminBackEnd::class, 'UpdateEmailTempSig'])->name('UpdateEmailTempSig');

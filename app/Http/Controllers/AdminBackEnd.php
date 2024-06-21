@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\CshAttendance;
+use App\Models\CshEmailConfig;
 use App\Models\CshPipeline;
 use App\Models\CshSentEmail;
+use App\Models\CshEmailSignature;
+use App\Models\CshEmailTemplate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class AdminBackEnd extends Controller
@@ -229,5 +232,75 @@ class AdminBackEnd extends Controller
 
     // Return JSON response with the extracted data
     return response()->json(['status'=>'success','company' => $columnCompany, 'name' => $columnName, 'email' => $columnEmail]);
+    }
+
+    public function UpdateSMTPConfig(Request $req){
+        $config = CshEmailConfig::where('user_id', $req->user_id)->first();
+        $config->update([
+          'econf_username'=>$req->mailAddress,
+          'econf_password'=>$req->mailPassword,
+          'econf_host'=>$req->smtpHost,
+          'econf_port'=>$req->smtpPort,
+          'econf_encryption'=>$req->smtpEncrypt,
+          'econf_from_address'=>$req->mailAddress,
+        ]);
+
+        return response()->json(['status'=>'success']);
+    }
+
+    public function SaveEmailTemp(Request $req){
+        if($req->type === 'signature'){
+           $data = new CshEmailSignature();
+           $data->user_id = $req->user_id;
+           $data->emsig_name = $req->name;
+           $data->emsig_content = $req->content;
+           $data->emsig_status = 1;
+           $data->save();
+        }else{
+            $data = new CshEmailTemplate();
+            $data->user_id = $req->user_id;
+            $data->emtemp_name = $req->name;
+            $data->emtemp_content = $req->content;
+            $data->emtemp_status = 1;
+            $data->save();
+        }
+
+        return response()->json(['status'=>'success']);
+    }
+
+    public function LoadTempSig(Request $req){
+        if($req->type === 'signature'){
+          return response()->json(['data'=>CshEmailSignature::where('user_id', $req->user_id)->where('emsig_status', 1)->get()]);
+        }else{
+            return response()->json(['data'=>CshEmailTemplate::where('user_id', $req->user_id)->where('emtemp_status', 1)->get()]);
+        }
+    }
+
+    public function GetTempSig(Request $req){
+        if($req->type === 'signature'){
+            return response()->json(['data'=>CshEmailSignature::where('emsig_id', $req->sigTemp)->first()]);
+        }else{
+            return response()->json(['data'=>CshEmailTemplate::where('emtemp_id', $req->sigTemp)->first()]);
+        }
+    }
+
+    public function UpdateEmailTempSig(Request $req){
+        if($req->type === 'signature'){
+            $data = CshEmailSignature::where('emsig_id', $req->sigTempIdUpdate)->first();
+            $data->update([
+              'emsig_name'=>$req->name,
+              'emsig_content'=>$req->content
+            ]);
+
+            return response()->json(['status'=>'success']);
+        }else{
+            $data = CshEmailTemplate::where('emtemp_id', $req->sigTempIdUpdate)->first();
+            $data->update([
+              'emtemp_name'=>$req->name,
+              'emtemp_content'=>$req->content
+            ]);
+
+            return response()->json(['status'=>'success']);
+        }
     }
 }

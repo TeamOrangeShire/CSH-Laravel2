@@ -96,11 +96,13 @@
 </form>
 		</div>
 		<!-- Page wrapper end -->
-
+    <input type="hidden" id="getTempSigRoute" value="{{ route('GetTempSig') }}">
 	@include('admin.components.scripts')
     <script src="{{ asset('backend/pipeline.js') }}"></script>
     <script>
         window.onload = ()=>{
+			Pipeline.LoadTempSig("{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature", "signature");
+			Pipeline.LoadTempSig("{{ route('LoadTempSig') }}?user_id={{ $user }}&type=template", "template");
             LoadLead("{{ route('loadPipeline') }}?state={{ $state }}&user_id={{ $user }}", "{{ route('getLeadDetails') }}", "{{ route('disableLead') }}");
         }
     </script>

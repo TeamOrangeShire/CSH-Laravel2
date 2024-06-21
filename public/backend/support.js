@@ -1,9 +1,11 @@
 const Support = {
-    ShowPass: id => {
+    ShowPass: (id, input) => {
         const pass = document.getElementById(id);
         if(pass.type === 'text'){
             pass.type = 'password';
+              input.innerHTML = `<i class='icon-eye'></i>`
         }else{
+            input.innerHTML = `<i class='icon-eye-off'></i>`
             pass.type = 'text';
         }
     },
@@ -42,24 +44,21 @@ const Support = {
             case "DNC":
                 return 'danger';
         }
-    },TabSignature: id => {
-        const editor = document.getElementById('emailSignatureEditor');
-        const output = document.getElementById('emailSignatureOutput');
-        const code = document.getElementById('emailSignatureCode');
+    }, OpenDiv: (id, method)=>{
+        document.getElementById(id).style.display = method;
+    }, CloseDiv: id =>{
+        document.getElementById(id).style.display = 'none';
+    },OpenOutput: (output, editor)=>{
+        const out = document.getElementById(output);
 
-        if(id === 'editor'){
-           
-        }else if(id === 'output'){
+        out.innerHTML =  $('#' + editor).summernote('code');
 
-        }else{
-            code.innerHTML = Support.EscapeHtml(emailSignQuill.root.innerHTML);
-        }
-
-    },EscapeHtml: html =>{
-        return html.replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    }, OpenAdd: (stname, editor, update, save) => {
+        document.getElementById(stname).value = '';
+        $('#' + editor).summernote('empty');
+        Support.OpenDiv(save, '');
+        Support.CloseDiv(update);
     }
+
 }
+

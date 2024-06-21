@@ -32,8 +32,10 @@
 		<link rel="stylesheet" href="{{ asset('assets/vendor/datatables/dataTables.bs5-custom.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/vendor/datatables/buttons/dataTables.bs5-custom.css') }}" />
 		
+		<!-- Summer Note -->
+			<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 		<!--Quil-->
-		<link href="{{asset('assets/vendor/quill/quill.core.css')}}" rel="stylesheet" />
+		
 		<!--QR Code Library-->
         <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 		<style>
