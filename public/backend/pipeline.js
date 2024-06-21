@@ -279,6 +279,7 @@ var toolbarOptions = [
 	[{ color: [] }, { background: [] }], // dropdown with defaults from theme
 	[{ font: [] }],
 	[{ align: [] }],
+    ["link"],
 
 	["clean"], // remove formatting button
 ];
