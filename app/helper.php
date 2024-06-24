@@ -1,5 +1,7 @@
 <?php
 use Carbon\Carbon;
+use App\Models\CshEmailConfig;
+use Illuminate\Support\Facades\Config;
 
 function GenToken($length = 16) {
     $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -59,3 +61,15 @@ function parseTime($time) {
     return $totalMinutes * 60 * 1000; 
 }
 
+function EmailCred($id){
+        $credentials = CshEmailConfig::where('user_id', $id)->first();
+        $port = is_numeric($credentials->econf_port) ? (int)$credentials->econf_port : null;
+
+        Config::set('mail.mailers.smtp.host', $credentials->econf_host);
+        Config::set('mail.mailers.smtp.port', $port);
+        Config::set('mail.mailers.smtp.username', $credentials->econf_username);
+        Config::set('mail.mailers.smtp.password', $credentials->econf_password);
+        Config::set('mail.mailers.smtp.encryption', $credentials->econf_encryption);
+        Config::set('mail.from.address', $credentials->econf_username);
+        Config::set('mail.from.name', config('app.name'));
+}

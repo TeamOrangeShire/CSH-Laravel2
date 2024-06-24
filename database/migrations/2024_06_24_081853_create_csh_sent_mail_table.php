@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('csh_sent_email', function (Blueprint $table) {
+        Schema::create('csh_sent_mail', function (Blueprint $table) {
             $table->id('se_id');
             $table->unsignedBigInteger('pl_id');
             $table->foreign('pl_id')->references('pl_id')->on('csh_pipeline');
-            $table->string('se_level', 20);
-            $table->string('se_date', 20);
-            $table->integer('se_status');
+            $table->longtext('se_message');
+            $table->string('se_subject');
+            $table->string('se_date');
+            $table->string('se_level');
+            $table->string('se_status');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('csh_sent_email');
+        Schema::dropIfExists('csh_sent_mail');
     }
 };

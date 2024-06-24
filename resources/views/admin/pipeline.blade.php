@@ -101,8 +101,9 @@
     <script src="{{ asset('backend/pipeline.js') }}"></script>
     <script>
         window.onload = ()=>{
-			Pipeline.LoadTempSig("{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature", "signature");
-			Pipeline.LoadTempSig("{{ route('LoadTempSig') }}?user_id={{ $user }}&type=template", "template");
+			Pipeline.LoadTempSig("{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature", "signature", "{{ route('DisableEmTempSig') }}");
+			Pipeline.LoadTempSig("{{ route('LoadTempSig') }}?user_id={{ $user }}&type=template", "template", "{{ route('DisableEmTempSig') }}");
+			Pipeline.LoadActiveSignature("{{ route('LoadActiveSignature') }}?user_id={{ $user }}");
             LoadLead("{{ route('loadPipeline') }}?state={{ $state }}&user_id={{ $user }}", "{{ route('getLeadDetails') }}", "{{ route('disableLead') }}");
         }
     </script>
