@@ -9,6 +9,6 @@
 <body>
     {!! $mess !!}
 
-    <img src="{{ route('emailTracking', ['id' => $id]) }}" alt="" width="1" height="1" style="display:none;">
+    {{-- <img src="{{ route('emailTracking', ['id' => $id]) }}" alt="" width="1" height="1" style="display:none;"> --}}
 </body>
 </html>
