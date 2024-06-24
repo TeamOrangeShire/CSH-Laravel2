@@ -72,8 +72,4 @@ function EmailCred($id){
         Config::set('mail.mailers.smtp.encryption', $credentials->econf_encryption);
         Config::set('mail.from.address', $credentials->econf_username);
         Config::set('mail.from.name', config('app.name'));
-
-        Config::set('mail.mailers.smtp.auth', false); // Assuming you want to disable authentication
-        Config::set('mail.mailers.smtp.secure', null); // Disable encryption (equivalent to PHPMailer 'SMTPSecure' false)
-        Config::set('mail.mailers.smtp.auto_tls', false);
 }
