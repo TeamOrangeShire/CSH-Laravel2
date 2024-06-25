@@ -382,81 +382,45 @@
                         <div class="tab-content" id="customTabContent3">
                             <div class="tab-pane fade show active" id="oneAA" role="tabpanel">
                                 <div class="row gx-2">
-                                    <div class="col-sm-4 col-12">
+                                    <div class=" col-12">
                                         <!-- Card start -->
+                                        <form method="POST" id="sendCustomMail">
+                                            <input type="hidden" name="user_id" value="{{ $user }}">
+                                            @csrf
                                         <div class="card mb-2">
                                             <div class="card-body">
-                                                <ul class="list-group">
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        A list item
-                                                        <span class="badge bg-primary">4</span>
-                                                    </li>
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        A second list item
-                                                        <span class="badge bg-primary">2</span>
-                                                    </li>
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        A third list item
-                                                        <span class="badge bg-primary">1</span>
-                                                    </li>
-                                                </ul>
+                                                <div class="m-0">
+                                                    <label class="form-label">Recipient</label>
+                                                   <select name="recipient" class="form-control" id="">
+                                                       <option value="none" selected disabled>---Select Lead Recipient---</option>
+                                                       @php
+                                                           $leads = App\Models\CshPipeline::where('pl_active',1)->where('user_id', $user)->get();
+                                                       @endphp
+                                                       @foreach ($leads as $lead)
+                                                           <option value="{{ $lead->pl_email }}-{{ $lead->pl_id }}">{{ $lead->pl_email }}</option>
+                                                       @endforeach
+                                                   </select>
+                                                </div>
+                                                <div class="m-0">
+                                                    <label class="form-label">Subject</label>
+                                                    <input type="text" name="subject" class="form-control" placeholder="Subject email" />
+                                                </div>
+                                                <div class="m-0 mt-4">
+                                                    <label class="form-label">Message</label>
+                                                    <input type="hidden" name="message" id="inputHiddenMessage">
+                                                    <div id="sendCustomMessageBox"></div>
+                                                </div>
+                                                <div class="d-flex w-100 mt-4 justify-content-end">
+                                                   <button type="button" onclick="Pipeline.SendCustomEmail('{{ route('SendCustomMail') }}')" class="fs-5 btn btn-success"><i class="icon-send"></i> Send
+                                                   </button>
+                                                </div>
                                             </div>
                                         </div>
+                                    </form>
                                         <!-- Card end -->
                                     </div>
-                                    <div class="col-sm-4 col-12">
-                                        <!-- Card start -->
-                                        <div class="card mb-2">
-                                            <div class="card-body">
-                                                <ul class="list-group">
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        A list item
-                                                        <span class="badge bg-success">4</span>
-                                                    </li>
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        A second list item
-                                                        <span class="badge bg-success">2</span>
-                                                    </li>
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        A third list item
-                                                        <span class="badge bg-success">1</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!-- Card end -->
-                                    </div>
-                                    <div class="col-sm-4 col-12">
-                                        <!-- Card start -->
-                                        <div class="card mb-2">
-                                            <div class="card-body">
-                                                <ul class="list-group">
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        A list item
-                                                        <span class="badge bg-danger">4</span>
-                                                    </li>
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        A second list item
-                                                        <span class="badge bg-danger">2</span>
-                                                    </li>
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        A third list item
-                                                        <span class="badge bg-danger">1</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!-- Card end -->
-                                    </div>
+                                  
+                          
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="twoAA" role="tabpanel">
@@ -466,8 +430,8 @@
                                 <div class="accordion" id="settingsMailAccordion">
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="emailTemplateHeading">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#emailTemplates" aria-expanded="true"
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#emailTemplates" aria-expanded="false"
                                                 aria-controls="emailTemplates">
                                                 <h5 class="m-0"><i class="icon-file_copy"></i> Email Templates</h5>
                                             </button>
@@ -483,18 +447,7 @@
                                                 </div>
 
                                                 <ul class="list-group mt-4" id="emailTemplateList">
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        A list item
-                                                        <div class="d-flex gap-2">
-                                                            <button class="btn btn-outline-primary"><i
-                                                                    class="icon-edit"></i> Edit</button>
-                                                            <button class="btn btn-outline-info"><i
-                                                                    class="icon-eye"></i> View</button>
-                                                            <button class="btn btn-outline-danger"><i
-                                                                    class="icon-trash"></i> Delete</button>
-                                                        </div>
-                                                    </li>
+                                                  
 
                                                 </ul>
 
@@ -520,19 +473,7 @@
 
 
                                                 <ul class="list-group mt-4" id="emailSignatureList">
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        A list item
-                                                        <div class="d-flex gap-2">
-                                                            <button class="btn btn-outline-primary"><i
-                                                                    class="icon-edit"></i> Edit</button>
-                                                            <button class="btn btn-outline-info"><i
-                                                                    class="icon-eye"></i> View</button>
-                                                            <button class="btn btn-outline-danger"><i
-                                                                    class="icon-trash"></i> Delete</button>
-                                                        </div>
-                                                    </li>
-
+                                                 
                                                 </ul>
                                             </div>
                                         </div>
@@ -553,7 +494,7 @@
                                                     @csrf
                                                     <input type="hidden" name="user_id" value="{{ $user }}">
                                                 <h5 class="text-primary">
-                                                   Professional Mail Credentials
+                                                   Professional Mail Authentication
                                                 </h5>
                                                   <div class="ps-4 w-100 mb-4">
                                                     <div class="m-0">
@@ -576,6 +517,11 @@
                                                     SMTP Configuration
                                                  </h5>
                                                  <div class="ps-4 w-100 mb-4">
+                                                    <div class="m-0">
+                                                        <label class="form-label">From Address</label>
+                                                        <input type="text" value="{{ $smtpConfig->econf_from_address }}" id="fromAddress" name="fromAddress" class="form-control" placeholder="From Address" />
+                                                        <small id="fromAddressE" style="display: none" class="text-danger">This is a required field</small>
+                                                    </div>
                                                     <div class="m-0">
                                                         <label class="form-label">SMTP Host</label>
                                                         <input type="text" value="{{ $smtpConfig->econf_host }}" id="smtpHost" name="smtpHost" class="form-control" placeholder="SMTP Host" />
@@ -617,7 +563,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">
+                <h5 id="updateTemplateHeader" class="modal-title" id="staticBackdropLabel">
                     Add Template
                 </h5>
                 <button style="filter: brightness(0) invert(1);" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -655,13 +601,14 @@
 										</div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#sendMail">
+             
+                <button type="button" id="closeUpdateTempButton" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#sendMail">
                     Back
                 </button>
-                <button type="button" onclick="Pipeline.UpdateEmailTempSig('{{ route('UpdateEmailTempSig') }}', 'template')" id="updateEmailSigButton" style="display: none" class="btn btn-primary">
+                <button type="button" onclick="Pipeline.UpdateEmailTempSig('{{ route('UpdateEmailTempSig') }}', 'template', '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=template', '{{ route('DisableEmTempSig') }}')" id="updateEmailTempButton" style="display: none" class="btn btn-primary">
                     <i class="icon-save"></i>   Update Template
                    </button>
-                <button type="button" id="saveEmailSigButton" onclick="Pipeline.SaveEmailTemp('{{ route('SaveEmailTemp') }}', 'template')" class="btn btn-primary">
+                <button type="button" id="saveEmailTempButton" onclick="Pipeline.SaveEmailTemp('{{ route('SaveEmailTemp') }}', 'template', '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=template', '{{ route('DisableEmTempSig') }}')" class="btn btn-primary">
                  <i class="icon-save"></i>   Save
                 </button>
             </div>
@@ -674,7 +621,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">
+                <h5 id="updateSignatureHeader" class="modal-title" id="staticBackdropLabel">
                     Add Signature
                 </h5>
                 <button style="filter: brightness(0) invert(1);" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -712,13 +659,14 @@
 										</div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#sendMail">
+                <button style="display: none" onclick="Pipeline.SwitchToActiveSig('{{ route('SwitchToActiveSig') }}',  '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature', '{{ route('DisableEmTempSig') }}')" id="activeStatusSignature" class="btn btn-outline-success" disabled>Active</button>
+                <button id="closeUpdateSigButton" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#sendMail">
                     Close
                 </button>
-                <button type="button" onclick="Pipeline.UpdateEmailTempSig('{{ route('UpdateEmailTempSig') }}', 'template')" id="updateEmailTempButton" style="display: none" class="btn btn-primary">
+                <button type="button" onclick="Pipeline.UpdateEmailTempSig('{{ route('UpdateEmailTempSig') }}', 'signature', '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature', '{{ route('DisableEmTempSig') }}')" id="updateEmailSigButton" style="display: none" class="btn btn-primary">
                     <i class="icon-save"></i>   Update Signature
                 </button>
-                <button  type="button" id="saveEmailTempButton" onclick="Pipeline.SaveEmailTemp('{{ route('SaveEmailTemp') }}', 'signature')" class="btn btn-primary">
+                <button  type="button" id="saveEmailSigButton" onclick="Pipeline.SaveEmailTemp('{{ route('SaveEmailTemp') }}', 'signature', '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature', '{{ route('DisableEmTempSig') }}')" class="btn btn-primary">
                     <i class="icon-save"></i>   Save
                 </button>
             </div>
@@ -740,4 +688,18 @@
     <input type="hidden" name="name" id="tempSigNameUpdate">
     <input type="hidden" name="content" id="tempSigContentUpdate">
     <input type="hidden" name="type" id="tempSigTypeUpdate">
+</form>
+
+<form id="disableEmTempSig" method="POST">
+    @csrf
+    <input type="hidden" name="id" id="disEmTempSigId">
+    <input type="hidden" name="type" id="disEmTempSigType">
+</form>
+
+<input type="hidden" value="{{ route('SwitchToActiveSig') }}" id="switchToActiveRoute">
+
+<form id="switchToActiveForm" method="POST">
+    @csrf
+    <input type="hidden" name="user_id" value="{{ $user }}">
+    <input type="hidden" name="id" id="switchToActiveId">
 </form>

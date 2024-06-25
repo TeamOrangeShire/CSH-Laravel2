@@ -20,15 +20,15 @@ class Authenticate extends Controller
            
             $cookie = Cookie::make('admin_id', $user->user_id, 60*24*31);
           
-            $status = 'success';
+            return response()->json(['status'=>'success'])->withCookie($cookie);
           }else{
-            $status = 'incorrect';
+            return response()->json(['status'=>'incorrect']);
           }
        }else{
-        $status = 'not found';
+        return response()->json(['status'=>'not found']);
        }
 
-       return response()->json(['status'=>$status])->withCookie($cookie);
+       
     }
 
     public function AdminVerify(Request $req){

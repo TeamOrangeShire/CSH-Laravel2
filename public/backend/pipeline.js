@@ -7,15 +7,15 @@ const Pipeline = {
             url: route,
             dataType: "json",
             success: res => {
-                AsVal('upCompanyName', res.pipeline.pl_company_name);
-                AsVal('upName', res.pipeline.pl_name);
-                AsVal('upEmail', res.pipeline.pl_email);
-                AsVal('upServiceOffer', res.pipeline.pl_service_offer);
-                AsVal('upPosition', res.pipeline.pl_position);
-                AsVal('upEmployees', res.pipeline.pl_employee);
-                AsVal('upStatus', res.pipeline.pl_status);
-                AsVal('pl_id', res.pipeline.pl_id);
-                AsVal('upEmailStatus', res.pipeline.pl_email_verification);
+                Support.AsVal('upCompanyName', res.pipeline.pl_company_name);
+                Support.AsVal('upName', res.pipeline.pl_name);
+                Support.AsVal('upEmail', res.pipeline.pl_email);
+                Support.AsVal('upServiceOffer', res.pipeline.pl_service_offer);
+                Support.AsVal('upPosition', res.pipeline.pl_position);
+                Support.AsVal('upEmployees', res.pipeline.pl_employee);
+                Support.AsVal('upStatus', res.pipeline.pl_status);
+                Support.AsVal('pl_id', res.pipeline.pl_id);
+                Support.AsVal('upEmailStatus', res.pipeline.pl_email_verification);
 
                 if (!$.fn.DataTable.isDataTable('#sentEmail')) {
                     table = $("#sentEmail").DataTable({
@@ -57,7 +57,7 @@ const Pipeline = {
         });
     },
     DisableLead: (route, load, detail, id) => {
-        AsVal('disablePl_id', id);
+        Support.AsVal('disablePl_id', id);
         alertify.confirm("Remove Lead?", "Are you sure you want to delete this lead?",
             () => {
                 document.getElementById('mainLoader').style.display = 'grid';
@@ -125,7 +125,7 @@ const Pipeline = {
                         document.getElementById('mainLoader').style.display = 'none';
                         var saveCSV = new bootstrap.Modal(document.getElementById('saveCSVdata'));
                         document.getElementById('classAddCSV').click();
-                        AsText('numOfRows', res.company.length);
+                        Support.AsText('numOfRows', res.company.length);
                         saveCSV.show();
                         csvData = res;
                     } else {
@@ -162,9 +162,9 @@ const Pipeline = {
 
 
         for (let i = 0; i < length; i++) {
-            AsVal('companyNameAdd', csvData.company[i]);
-            AsVal('nameAdd', csvData.name[i]);
-            AsVal('emailAdd', csvData.email[i]);
+            Support.AsVal('companyNameAdd', csvData.company[i]);
+            Support.AsVal('nameAdd', csvData.name[i]);
+            Support.AsVal('emailAdd', csvData.email[i]);
             const percentInit = (i + 1) * each;
             const percent = percentInit.toFixed(2);
             $.ajax({
@@ -198,8 +198,9 @@ const Pipeline = {
         validity += Support.CheckError('smtpHost', 'smtpHostE');
         validity += Support.CheckError('smtpPort', 'smtpPortE');
         validity += Support.CheckError('smtpEncrypt', 'smtpEncryptE');
+        validity += Support.CheckError('fromAddress', 'fromAddressE');
 
-        if (validity === 5) {
+        if (validity === 6) {
             document.getElementById('mainLoader').style.display = 'grid';
 
             $.ajax({
@@ -217,23 +218,25 @@ const Pipeline = {
                 }
             })
         }
-    }, SaveEmailTemp: (route, type) => {
+    }, SaveEmailTemp: (route, type, load, dis) => {
         let notify = '';
         if (type === 'signature') {
             if (Support.CheckError('sigName', 'sigNameE') === 1) {
                 Support.OpenDiv('mainLoader', 'grid');
-                AsVal('tempSigName', document.getElementById('sigName').value);
-                AsVal('tempSigContent', $('#emailSignatureEditor').summernote('code'));
-                AsVal('tempSigType', 'signature');
+                Support.AsVal('tempSigName', document.getElementById('sigName').value);
+                Support.AsVal('tempSigContent', $('#emailSignatureEditor').summernote('code'));
+                Support.AsVal('tempSigType', 'signature');
                 notify = 'Successfully Added a email signature';
+                var closeBtn = 'closeUpdateSigButton';
             }
         } else {
             if (Support.CheckError('tempName', 'tempNameE') === 1) {
                 Support.OpenDiv('mainLoader', 'grid');
-                AsVal('tempSigName', document.getElementById('tempName').value);
-                AsVal('tempSigContent', $('#emailTemplateEditor').summernote('code'));
-                AsVal('tempSigType', 'template');
+                Support.AsVal('tempSigName', document.getElementById('tempName').value);
+                Support.AsVal('tempSigContent', $('#emailTemplateEditor').summernote('code'));
+                Support.AsVal('tempSigType', 'template');
                 notify = 'Successfully Added a email template';
+                var closeBtn = 'closeUpdateTempButton';
             }
         }
 
@@ -245,13 +248,15 @@ const Pipeline = {
                 if (res.status === 'success') {
                     Support.CloseDiv('mainLoader');
                     alertify.set('notifier', 'position', 'top-right');
-                    alertify.success(notify)
+                    alertify.success(notify);
+                    Pipeline.LoadTempSig(load, type, dis);
+                    document.getElementById(closeBtn).click();
                 }
             }, error: xhr => {
                 console.log(xhr.responseText);
             }
         })
-    }, LoadTempSig: (route, type) => {
+    }, LoadTempSig: (route, type, dis) => {
         if (type === 'signature') {
             $.ajax({
                 type: "GET",
@@ -260,19 +265,19 @@ const Pipeline = {
                 success: res => {
                     const list = document.getElementById('emailSignatureList');
                     list.innerHTML = '';
-                    console.log(res.data);
                     res.data.forEach(e => {
                         list.innerHTML += `<li
                                             class="list-group-item d-flex justify-content-between align-items-center">
                                                 ${e.emsig_name}
-                                            <div class="d-flex gap-2">
+                                            <div class="d-flex gap-2 align-items-center">
+                                            ${e.emsig_status === 2 ? `<span class="badge rounded-pill bg-success p-2">Active</span>` : ''}
                                             <button data-bs-toggle="modal" 
-                                            onclick="EditTempSig('signature', '${e.emsig_id}', '#emailSignatureEditor')" 
+                                            onclick="EditTempSig('signature', '${e.emsig_id}', '#emailSignatureEditor', '${route}', '${dis}')" 
                                             data-bs-target="#addEmailSignature" class="btn btn-outline-primary"><i
                                             class="icon-edit"></i> Edit</button>
                                             <button class="btn btn-outline-info"><i
                                             class="icon-eye"></i> View</button>
-                                            <button class="btn btn-outline-danger"><i
+                                            <button  onclick="Pipeline.DisableTempSig('${dis}', '${e.emsig_id}', 'signature', '${route}')" class="btn btn-outline-danger"><i
                                             class="icon-trash"></i> Delete</button>
                                             </div>
                                             </li>`;
@@ -289,7 +294,6 @@ const Pipeline = {
                 success: res => {
                     const list = document.getElementById('emailTemplateList');
                     list.innerHTML = '';
-                    console.log(res.data);
                     res.data.forEach(e => {
                         list.innerHTML += `<li
                                             class="list-group-item d-flex justify-content-between align-items-center">
@@ -302,7 +306,7 @@ const Pipeline = {
                                             class="icon-edit"></i> Edit</button>
                                             <button class="btn btn-outline-info"><i
                                             class="icon-eye"></i> View</button>
-                                            <button class="btn btn-outline-danger"><i
+                                            <button onclick="Pipeline.DisableTempSig('${dis}', '${e.emtemp_id}', 'template', 'na', 'na')" class="btn btn-outline-danger"><i
                                             class="icon-trash"></i> Delete</button>
                                             </div>
                                             </li>`;
@@ -312,31 +316,111 @@ const Pipeline = {
                 }
             })
         }
-    }, UpdateEmailTempSig: (route, type) => {
-        
+    }, UpdateEmailTempSig: (route, type, load, dis) => {
+        Support.AsVal('tempSigTypeUpdate', type);
         if(type === 'signature'){
             if(Support.CheckError('sigName', 'sigNameE')===1){
-                AsVal('tempSigNameUpdate', document.getElementById('sigName').value);
-                AsVal('tempSigContentUpdate', $('#emailSignatureEditor').summernote('code'));
-                AsVal('tempSigTypeUpdate', 'signature');
+                Support.AsVal('tempSigNameUpdate', document.getElementById('sigName').value);
+                Support.AsVal('tempSigContentUpdate', $('#emailSignatureEditor').summernote('code'));
+                var notif = 'Email Signature is successfully updated';
+                var close = 'closeUpdateTempButton';
             }
         }else{
             if(Support.CheckError('tempName', 'tempNameE')===1){
-                AsVal('tempSigNameUpdate', document.getElementById('tempName').value);
-                AsVal('tempSigContentUpdate', $('#emailSignatureEditor').summernote('code'));
-                AsVal('tempSigTypeUpdate', 'signature');
+                Support.AsVal('tempSigNameUpdate', document.getElementById('tempName').value);
+                Support.AsVal('tempSigContentUpdate', $('#emailTemplateEditor').summernote('code'));
+                var notif = 'Email Template is successfully updated';
+                var close = 'closeUpdateTempButton';
             }
         }
+
+        Support.OpenDiv('mainLoader', 'grid');
+
+        $.ajax({
+            type:"POST",
+            url: route,
+            data: $('form#emailTempSigUpdate').serialize(),
+            success: res=>{
+                if(res.status === 'success'){
+                    Support.CloseDiv('mainLoader');
+                    alertify.set('notifier', 'position', 'top-right');
+                    alertify.success(notif);
+                    document.getElementById(close).click();
+                    Pipeline.LoadTempSig(load, type, dis);
+                }
+            }, error: xhr => console.log(xhr.responseText)
+        })
+    }, DisableTempSig: (route, id, type, load) => {
+       alertify.confirm('Confirm Delete', `Are you sure do you want to delete this ${type}?`,
+        ()=>{
+          Support.AsVal('disEmTempSigId', id);
+          Support.AsVal('disEmTempSigType', type);
+
+          Support.OpenDiv('mainLoader', 'grid');
+
+          $.ajax({
+            type: "POST",
+            url: route,
+            data: $('form#disableEmTempSig').serialize(),
+            success: res=>{
+               if(res.status === 'success'){
+                Support.CloseDiv('mainLoader');
+                alertify.set('notifier', 'position', 'top-right');
+                alertify.error(`${type} is successfully deleted`);
+                Pipeline.LoadTempSig(load, type, route)
+               }
+            }, error: xhr => console.log(xhr),
+          });
+        }, ()=> console.log('cancel')
+       )
+    }, SwitchToActiveSig: (route, load, dis) => {
+        alertify.confirm("Switch Active Signature", "Are you sure do you want to switch to this email signature?",
+            ()=>{
+             Support.OpenDiv('mainLoader', 'grid');
+             $.ajax({
+               type: "POST",
+               url: route,
+               data: $('form#switchToActiveForm').serialize(),
+               success: res=>{
+                if(res.status === 'success'){
+                    Support.CloseDiv('mainLoader');
+                    Pipeline.LoadTempSig(load, 'signature', dis);
+                    document.getElementById('closeUpdateSigButton').click();
+                }
+               }, error: xhr => console.log(xhr.responseText),
+             });
+            },
+            ()=>console.log('cancel'),
+        )
+    }, LoadActiveSignature: route =>{
+        $.ajax({
+            type:"GET",
+            url: route,
+            dataType: "json",
+            success: res=>{
+                if(res.status === 'success'){
+                    $('#sendCustomMessageBox').summernote('pasteHTML', '<pre><code><br><br>' + res.data.emsig_content + '</code></pre>');
+                }
+            }, error: xhr => console.log(xhr.responseText),
+        })
+    }, SendCustomEmail: route => {
+        Support.OpenDiv('mainLoader', 'grid');
+        Support.AsVal('inputHiddenMessage', $('#sendCustomMessageBox').summernote('code'));
+        $.ajax({
+            type: "POST",
+            url: route,
+            data: $('form#sendCustomMail').serialize(),
+            success: res=>{
+              if(res.status === 'success'){
+                Support.CloseDiv('mainLoader');
+                alertify.set('notifier', 'position', 'top-right');
+                alertify.success('Message Sent');
+              }
+            },error: xhr=> console.log(xhr.responseText),
+        })
     }
 
-}
-
-function AsVal(id, value) {
-    document.getElementById(id).value = value;
-}
-function AsText(id, value) {
-    document.getElementById(id).textContent = value;
-}
+} 
 let tables;
 function LoadLead(route, getDetail, disable) {
     $.ajax({
@@ -432,6 +516,25 @@ $(document).ready(function () {
             ['help', ['help']]
         ]
     });
+
+    $('#sendCustomMessageBox').summernote({
+        placeholder: 'Compose a message',
+        height: 300,                 // set editor height
+        minHeight: null,             // set minimum height of editor
+        maxHeight: null,             // set maximum height of edit
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['insert', ['link', 'picture', 'table', 'hr']],
+            ['view', ['fullscreen', 'codeview']],
+            ['help', ['help']]
+        ]
+    });
 });
 
 function EditTempSig(type, id, editor){
@@ -442,18 +545,35 @@ function EditTempSig(type, id, editor){
         url: route,
         dataType: 'json',
         success: res=>{
+            $(editor).summernote('code', '');
             if(type === 'signature'){
+                const status = document.getElementById('activeStatusSignature');
+                status.style.display = '';
+                if(res.data.emsig_status === 2){
+                   status.disabled = true;
+                   status.classList.add('btn-outline-success');
+                   status.classList.remove('btn-outline-danger');
+                   status.textContent = 'Active';
+                }else{
+                    status.disabled = false;
+                    status.classList.remove('btn-outline-success');
+                    status.classList.add('btn-outline-danger');
+                    status.textContent = 'Not Active';
+                    document.getElementById('switchToActiveId').value = res.data.emsig_id;
+                }
+                Support.AsText('updateSignatureHeader', 'Update Signature');
                 Support.OpenDiv('updateEmailSigButton', '');
                 Support.CloseDiv('saveEmailSigButton');
                 document.getElementById('sigName').value = res.data.emsig_name;
                 $(editor).summernote('pasteHTML', '<pre><code>' + res.data.emsig_content + '</code></pre>');
-                document.getElementById('sigTempId').value = res.data.emsig_id;
+                document.getElementById('sigTempIdUpdate').value = res.data.emsig_id;
             }else{
+                Support.AsText('updateTemplateHeader', 'Update Template');
                 Support.OpenDiv('updateEmailTempButton', '');
                 Support.CloseDiv('saveEmailTempButton');
                 document.getElementById('tempName').value = res.data.emtemp_name;
                 $(editor).summernote('pasteHTML', '<pre><code>' + res.data.emtemp_content + '</code></pre>');
-                document.getElementById('sigTempId').value = res.data.emtemp_id;
+                document.getElementById('sigTempIdUpdate').value = res.data.emtemp_id;
             }
         }, error: xhr => {
             console.log(xhr.responseText);

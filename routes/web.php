@@ -58,4 +58,9 @@ Route::post('/admin/pipelineload/updateSMTPConfig', [AdminBackEnd::class, 'Updat
 Route::post('/admin/pipelineload/saveEmailTempSig', [AdminBackEnd::class, 'SaveEmailTemp'])->name('SaveEmailTemp');
 Route::get('/admin/pipelineload/LoadTempSig', [AdminBackEnd::class, 'LoadTempSig'])->name('LoadTempSig');
 Route::get('/admin/pipelineload/getTempSig', [AdminBackEnd::class, 'GetTempSig'])->name('GetTempSig');
-Route::get('/admin/pipelineload/UpdateEmailTempSig', [AdminBackEnd::class, 'UpdateEmailTempSig'])->name('UpdateEmailTempSig');
+Route::post('/admin/pipelineload/UpdateEmailTempSig', [AdminBackEnd::class, 'UpdateEmailTempSig'])->name('UpdateEmailTempSig');
+Route::post('/admin/pipelineload/DisableEmTempSig', [AdminBackEnd::class, 'DisableEmTempSig'])->name('DisableEmTempSig');
+Route::post('/admin/pipelineload/SwitchToActiveSig', [AdminBackEnd::class, 'SwitchToActiveSig'])->name('SwitchToActiveSig');
+Route::get('/admin/pipelineload/LoadActiveSignature', [AdminBackEnd::class, 'LoadActiveSignature'])->name('LoadActiveSignature');
+Route::post('/admin/pipelineload/SendCustomMail', [AdminBackEnd::class, 'SendCustomMail'])->name('SendCustomMail');
+Route::get('/track-email/{id}', [AdminBackEnd::class, 'EmailTracking'])->name('emailTracking');

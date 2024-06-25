@@ -8,10 +8,13 @@ use Carbon\Carbon;
 use App\Models\CshAttendance;
 use App\Models\CshEmailConfig;
 use App\Models\CshPipeline;
-use App\Models\CshSentEmail;
+use App\Models\CshSentMail;
 use App\Models\CshEmailSignature;
 use App\Models\CshEmailTemplate;
+use App\Mail\SendCustomMail;
+use App\Models\CshUser;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Support\Facades\Mail;
 
 class AdminBackEnd extends Controller
 {
@@ -123,7 +126,7 @@ class AdminBackEnd extends Controller
 
     public function GetLeadDetails(Request $req){
         $pl = CshPipeline::where('pl_id', $req->pl_id)->first();
-        $email = CshSentEmail::where('pl_id', $req->pl_id)->get();
+        $email = CshSentMail::where('pl_id', $req->pl_id)->get();
       
         return response()->json(['pipeline'=>$pl, 'email'=>$email]);
     }
@@ -242,7 +245,7 @@ class AdminBackEnd extends Controller
           'econf_host'=>$req->smtpHost,
           'econf_port'=>$req->smtpPort,
           'econf_encryption'=>$req->smtpEncrypt,
-          'econf_from_address'=>$req->mailAddress,
+          'econf_from_address'=>$req->fromAddress,
         ]);
 
         return response()->json(['status'=>'success']);
@@ -254,7 +257,7 @@ class AdminBackEnd extends Controller
            $data->user_id = $req->user_id;
            $data->emsig_name = $req->name;
            $data->emsig_content = $req->content;
-           $data->emsig_status = 1;
+           $data->emsig_status = CshEmailSignature::where('emsig_status', 2)->first() ? 1 : 2;
            $data->save();
         }else{
             $data = new CshEmailTemplate();
@@ -270,7 +273,7 @@ class AdminBackEnd extends Controller
 
     public function LoadTempSig(Request $req){
         if($req->type === 'signature'){
-          return response()->json(['data'=>CshEmailSignature::where('user_id', $req->user_id)->where('emsig_status', 1)->get()]);
+          return response()->json(['data'=>CshEmailSignature::where('user_id', $req->user_id)->where('emsig_status','!=', 0)->get()]);
         }else{
             return response()->json(['data'=>CshEmailTemplate::where('user_id', $req->user_id)->where('emtemp_status', 1)->get()]);
         }
@@ -286,21 +289,74 @@ class AdminBackEnd extends Controller
 
     public function UpdateEmailTempSig(Request $req){
         if($req->type === 'signature'){
-            $data = CshEmailSignature::where('emsig_id', $req->sigTempIdUpdate)->first();
+            $data = CshEmailSignature::where('emsig_id', $req->sigTempId)->first();
             $data->update([
               'emsig_name'=>$req->name,
               'emsig_content'=>$req->content
             ]);
-
-            return response()->json(['status'=>'success']);
         }else{
-            $data = CshEmailTemplate::where('emtemp_id', $req->sigTempIdUpdate)->first();
+            $data = CshEmailTemplate::where('emtemp_id', $req->sigTempId)->first();
             $data->update([
               'emtemp_name'=>$req->name,
               'emtemp_content'=>$req->content
             ]);
-
-            return response()->json(['status'=>'success']);
         }
+
+        return response()->json(['status'=>'success']);
+    }
+
+    public function DisableEmTempSig(Request $req){
+        if($req->type === 'signature'){
+          CshEmailSignature::where('emsig_id', $req->id)->first()->update(['emsig_status'=>0]);
+        }else{
+            CshEmailTemplate::where('emtemp_id', $req->id)->first()->where(['emtemp_status'=>1]);
+        }
+
+        return response()->json(['status'=>'success']);
+    }
+
+    public function SendCustomMail(Request $req){
+         EmailCred($req->user_id);
+         $sent = new CshSentMail();
+         $sent->pl_id = explode('-', $req->recipient)[1];
+         $sent->se_subject = $req->subject;
+         $sent->se_message = $req->message;
+         $sent->se_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+         $sent->se_level = '1';
+         $sent->se_status = '1';
+         $sent->save();
+         $user = CshUser::where('user_id', $req->user_id)->first();
+         $conf = CshEmailConfig::where('user_id', $req->user_id)->first();
+
+         Mail::to(explode('-', $req->recipient)[0])->send(new SendCustomMail($req->subject, $req->message, $sent->se_id, $conf->econf_from_address, $user->user_name));
+
+         return response()->json(['status'=>'success']);
+    }
+
+    public function SwitchToActiveSig(Request $req){
+      CshEmailSignature::where('emsig_status', 2)->where('user_id', $req->user_id)->first()->update(['emsig_status'=>1]);
+      CshEmailSignature::where('emsig_id', $req->id)->where('user_id', $req->user_id)->first()->update(['emsig_status'=>2]);
+
+      return response()->json(['status'=>'success']);
+    }
+
+    public function LoadActiveSignature(Request $req){
+        $data = CshEmailSignature::where('emsig_status', 2)->where('user_id', $req->user_id)->first();
+
+        return response()->json(['status'=>'success', 'data'=>$data]);
+    }
+
+    public function EmailTracking($id){
+        $email = CshSentMail::find($id);
+        if ($email) {
+          $email->update(['se_status'=>2]);
+        }
+
+        // Return a 1x1 pixel image
+        $img = imagecreate(1, 1);
+        header('Content-Type: image/png');
+        imagepng($img);
+        imagedestroy($img);
+        exit;
     }
 }
