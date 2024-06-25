@@ -59,4 +59,13 @@ Route::post('/admin/pipelineload/DisableEmTempSig', [AdminBackEnd::class, 'Disab
 Route::post('/admin/pipelineload/SwitchToActiveSig', [AdminBackEnd::class, 'SwitchToActiveSig'])->name('SwitchToActiveSig');
 Route::get('/admin/pipelineload/LoadActiveSignature', [AdminBackEnd::class, 'LoadActiveSignature'])->name('LoadActiveSignature');
 Route::post('/admin/pipelineload/SendCustomMail', [AdminBackEnd::class, 'SendCustomMail'])->name('SendCustomMail');
+Route::get('/admin/pipelineload/massEmailLeads', [AdminBackEnd::class, 'MassEmailLeads'])->name('massEmailLeads');
+Route::get('/admin/pipelineload/checkMassMailValidity', [AdminBackEnd::class, 'CheckMassMailValidity'])->name('checkMassMailValidity');
+Route::post('/admin/pipelineload/sentProgressMassMail', [AdminBackEnd::class, 'SentProgressMassMail'])->name('sentProgressMassMail');
+
+Route::post('/admin/pipelineload/addEmailSubject', [AdminBackEnd::class, 'AddEmailSubject'])->name('addEmailSubject');
+Route::get('/admin/pipelineload/loadEmailSubject', [AdminBackEnd::class, 'LoadEmailSubject'])->name('loadEmailSubject');
+Route::post('/admin/pipelineload/updateEmailSubject', [AdminBackEnd::class, 'UpdateEmailSubject'])->name('updateEmailSubject');
+Route::post('/admin/pipelineload/disableEmailSubject', [AdminBackEnd::class, 'DisableEmailSubject'])->name('disableEmailSubject');
+
 Route::get('/track-email/{id}', [AdminBackEnd::class, 'EmailTracking'])->name('emailTracking');

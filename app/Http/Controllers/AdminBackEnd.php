@@ -13,6 +13,7 @@ use App\Models\CshEmailSignature;
 use App\Models\CshEmailTemplate;
 use App\Mail\SendCustomMail;
 use App\Models\CshUser;
+use App\Models\CshEmailSubject;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Mail;
 
@@ -327,8 +328,8 @@ class AdminBackEnd extends Controller
          $sent->save();
          $user = CshUser::where('user_id', $req->user_id)->first();
          $conf = CshEmailConfig::where('user_id', $req->user_id)->first();
-
-         Mail::to(explode('-', $req->recipient)[0])->send(new SendCustomMail($req->subject, $req->message, $sent->se_id, $conf->econf_from_address, $user->user_name));
+         $message =  str_replace('{{name}}', explode(' ', $user->user_name)[0], $req->message);
+         Mail::to(explode('-', $req->recipient)[0])->send(new SendCustomMail($req->subject, $message, $sent->se_id, $conf->econf_from_address, $user->user_name));
 
          return response()->json(['status'=>'success']);
     }
@@ -358,5 +359,55 @@ class AdminBackEnd extends Controller
         imagepng($img);
         imagedestroy($img);
         exit;
+    }
+
+    public function MassEmailLeads(Request $req){
+        $data = $req->filter === 'all' ? CshPipeline::where('user_id', $req->user_id)->get() : CshPipeline::where('user_id', $req->user_id)->where('pl_service_offer', $req->filter)->get();
+       
+        return response()->json(['data'=>$data]);
+    }
+
+    public function CheckMassMailValidity(Request $req){
+        $pl = CshPipeline::where('pl_id', $req->pl_id)->where('pl_service_offer', $req->offer)->first();
+        return response()->json(['status'=> $pl ? 'success' : 'failed']);
+    }
+
+    public function SentProgressMassMail(Request $req){
+        
+    }
+
+    public function AddEmailSubject(Request $req){
+       $subject = new CshEmailSubject();
+       $subject->user_id = $req->user_id;
+       $subject->emsub_content = $req->subjectContent;
+       $subject->emsub_service = $req->affiliatedService;
+       $subject->emsub_status = 1;
+       $subject->save();
+
+       return response()->json(['status'=>'success']);
+    }
+
+    public function LoadEmailSubject(Request $req){
+        return response()->json([
+            'data'=> $req->filter === 'all' ? CshEmailSubject::where('user_id', $req->user_id)->where('emsub_status', 1)->get() : CshEmailSubject::where('user_id', $req->user_id)->where('emsub_status', 1)->where('emsub_service', $req->filter)->get(),
+            'status'=>$req->filter === 'all' ? 'all' : 'not'
+        ]);
+    }
+
+    public function UpdateEmailSubject(Request $req){
+      CshEmailSubject::where('emsub_id', $req->emsub_id)->first()->update([
+         'emsub_content'=>$req->subjectContent,
+         'emsub_service'=>$req->affiliatedService,
+      ]);
+
+      return response()->json(['status'=>'success']);
+    }
+
+    public function DisableEmailSubject(Request $req){
+        CshEmailSubject::where('emsub_id', $req->emsub_id)->first()->update([
+            'emsub_status'=>0,
+         ]);
+   
+         return response()->json(['status'=>'success']);
     }
 }

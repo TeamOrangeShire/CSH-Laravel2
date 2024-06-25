@@ -356,7 +356,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Send Mail</h5>
-                <button id="closeAddLead" style="filter: brightness(0) invert(1);" type="button" class="btn-close"
+                <button id="closeSendMail" style="filter: brightness(0) invert(1);" type="button" class="btn-close"
                     data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -369,7 +369,7 @@
                                         class="icon-email"></i>Send Custom Mail</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="tab-twoAA" data-bs-toggle="tab" href="#twoAA"
+                                <a class="nav-link"  onclick="Pipeline.LoadEmailSubject('{{ route('loadEmailSubject') }}?user_id={{ $user }}&filter=all', '{{ route('disableEmailSubject') }}')" id="tab-twoAA" data-bs-toggle="tab" href="#massMailing"
                                     role="tab" aria-controls="twoAA" aria-selected="false"><i
                                         class="icon-alternate_email"></i>Mass Mailing</a>
                             </li>
@@ -387,52 +387,160 @@
                                         <form method="POST" id="sendCustomMail">
                                             <input type="hidden" name="user_id" value="{{ $user }}">
                                             @csrf
-                                        <div class="card mb-2">
-                                            <div class="card-body">
-                                                <div class="m-0">
-                                                    <label class="form-label">Recipient</label>
-                                                   <select name="recipient" class="form-control" id="">
-                                                       <option value="none" selected disabled>---Select Lead Recipient---</option>
-                                                       @php
-                                                           $leads = App\Models\CshPipeline::where('pl_active',1)->where('user_id', $user)->get();
-                                                       @endphp
-                                                       @foreach ($leads as $lead)
-                                                           <option value="{{ $lead->pl_email }}-{{ $lead->pl_id }}">{{ $lead->pl_email }}</option>
-                                                       @endforeach
-                                                   </select>
-                                                </div>
-                                                <div class="m-0">
-                                                    <label class="form-label">Subject</label>
-                                                    <input type="text" name="subject" class="form-control" placeholder="Subject email" />
-                                                </div>
-                                                <div class="m-0 mt-4">
-                                                    <label class="form-label">Message</label>
-                                                    <input type="hidden" name="message" id="inputHiddenMessage">
-                                                    <div id="sendCustomMessageBox"></div>
-                                                </div>
-                                                <div class="d-flex w-100 mt-4 justify-content-end">
-                                                   <button type="button" onclick="Pipeline.SendCustomEmail('{{ route('SendCustomMail') }}')" class="fs-5 btn btn-success"><i class="icon-send"></i> Send
-                                                   </button>
+                                            <div class="card mb-2">
+                                                <div class="card-body">
+                                                    <div class="m-0">
+                                                        <label class="form-label">Recipient</label>
+                                                        <select name="recipient" class="form-control" id="">
+                                                            <option value="none" selected disabled>---Select Lead
+                                                                Recipient---</option>
+                                                            @php
+                                                                $leads = App\Models\CshPipeline::where('pl_active', 1)
+                                                                    ->where('user_id', $user)
+                                                                    ->get();
+                                                            @endphp
+                                                            @foreach ($leads as $lead)
+                                                                <option
+                                                                    value="{{ $lead->pl_email }}-{{ $lead->pl_id }}">
+                                                                    {{ $lead->pl_email }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="m-0">
+                                                        <label class="form-label">Subject</label>
+                                                        <input type="text" name="subject" class="form-control"
+                                                            placeholder="Subject email" />
+                                                    </div>
+                                                    <div class="m-0 mt-4">
+                                                        <label class="form-label">Message</label>
+                                                        <input type="hidden" name="message" id="inputHiddenMessage">
+                                                        <div id="sendCustomMessageBox"></div>
+                                                    </div>
+                                                    <div class="d-flex w-100 mt-4 justify-content-end">
+                                                        <button type="button"
+                                                            onclick="Pipeline.SendCustomEmail('{{ route('SendCustomMail') }}')"
+                                                            class="fs-5 btn btn-success"><i class="icon-send"></i>
+                                                            Send
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </form>
+                                        </form>
                                         <!-- Card end -->
                                     </div>
-                                  
-                          
+
+
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="twoAA" role="tabpanel">
-                                <h3 class="text-danger">Some Description</h3>
+                            <div class="tab-pane fade" id="massMailing" role="tabpanel">
+                                <form method="POST" id="sendMassEmailLeads">
+                                    @csrf
+                                    <div class="row gx-2">
+                                        <div class="col-sm-8">
+                                            <!-- Card start -->
+                                            <div class="card mb-2">
+                                                <div class="card-body">
+                                                    <div class="table-responsive w-100">
+                                                        <table id="massEmailLeads" class="table table-striped w-100">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th><input type="checkbox"
+                                                                            class="form-check-input" value="">
+                                                                    </th>
+                                                                    <th>Company</th>
+                                                                    <th>Name</th>
+                                                                    <th>Email</th>
+                                                                    <th>Service Offer</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Card end -->
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <!-- Card start -->
+                                            <div class="card mb-2">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between w-100">
+
+                                                        <p class="lead">Settings </p>
+                                                        <p class="text-muted">Selected Lead: <span
+                                                                id="leadsSelectCounter">0</span>/15 </p>
+                                                        {{-- <button title="Settings" class="border-0 h-75 text-primary" style="background: transparent;"><i class="icon-settings"></i></button> --}}
+                                                    </div>
+
+                                                    <div class="m-0">
+                                                        <label class="form-label">Filter </label>
+                                                        <select class="form-select" id="selectServiceOfferMassMail"
+                                                            onchange="Pipeline.FilterMassMail('{{ route('massEmailLeads') }}','{{ $user }}', this, '{{ route('loadEmailSubject') }}', '{{ route('disableEmailSubject') }}')"
+                                                            name="filter" aria-label="Select Filter">
+                                                            <option value="all" selected>All</option>
+                                                            <option value="IT Service">IT Service</option>
+                                                            <option value="BPO">BPO</option>
+                                                            <option value="Software">Software</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="m-0 mt-2">
+                                                        <label class="form-label">Select Template </label>
+                                                        <select class="form-select" id="selectMassTemplate"
+                                                            name="template" aria-label="Select Template">
+                                                            <option value="none" disabled selected> --------Select
+                                                                Template-------- </option>
+                                                            @php
+                                                                $temps = App\Models\CshEmailTemplate::where(
+                                                                    'user_id',
+                                                                    $user,
+                                                                )
+                                                                    ->where('emtemp_status', 1)
+                                                                    ->get();
+                                                            @endphp
+                                                            @foreach ($temps as $temp)
+                                                                <option value="{{ $temp->emtemp_id }}">
+                                                                    {{ $temp->emtemp_name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="m-0 mt-4 mb-4">
+                                                        <div class="d-flex justify-content-between">
+                                                            <label class="form-label">Select Subject </label>
+                                                            <button type="button" data-bs-toggle="modal" data-bs-target="#addCustomSubject" class="border-0 text-primary"
+                                                                style="background: transparent"><i
+                                                                    class="icon-settings"></i> Customize Subject</button>
+                                                        </div>
+                                                        <select class="form-select" id="selectMassSubject"
+                                                            name="subject" aria-label="Select Subject">
+                                                         
+                                                        </select>
+
+                                                    </div>
+                                                    <div class="d-flex justify-content-between w-100">
+                                                        <button class="btn btn-outline-info"><i class="icon-eye"></i>
+                                                            Preview</button>
+                                                        <button class="btn btn-success " type="button"
+                                                            onclick="Pipeline.SendMultipleEmail('{{ route('sentProgressMassMail') }}', '{{ route('getLeadDetails') }}', '{{ route('checkMassMailValidity') }}')"><i
+                                                                class="icon-send"></i> Send All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Card end -->
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                             <div class="tab-pane fade" id="settingsMail" role="tabpanel">
                                 <div class="accordion" id="settingsMailAccordion">
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="emailTemplateHeading">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#emailTemplates" aria-expanded="false"
-                                                aria-controls="emailTemplates">
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#emailTemplates"
+                                                aria-expanded="false" aria-controls="emailTemplates">
                                                 <h5 class="m-0"><i class="icon-file_copy"></i> Email Templates</h5>
                                             </button>
                                         </h2>
@@ -442,12 +550,14 @@
                                             <div class="accordion-body">
                                                 <div class="w-100 d-flex justify-content-end">
 
-                                                    <button data-bs-toggle="modal" data-bs-target="#addEmailTemplate" onclick="Support.OpenAdd('tempName', 'emailTemplateEditor', 'updateEmailTempButton', 'saveEmailTempButton')" class="btn btn-success"><i class="icon-plus-circle"></i>
+                                                    <button data-bs-toggle="modal" data-bs-target="#addEmailTemplate"
+                                                        onclick="Support.OpenAdd('tempName', 'emailTemplateEditor', 'updateEmailTempButton', 'saveEmailTempButton')"
+                                                        class="btn btn-success"><i class="icon-plus-circle"></i>
                                                         Add Template</button>
                                                 </div>
 
                                                 <ul class="list-group mt-4" id="emailTemplateList">
-                                                  
+
 
                                                 </ul>
 
@@ -467,13 +577,16 @@
                                             <div class="accordion-body">
                                                 <div class="w-100 d-flex justify-content-end">
 
-                                                    <button data-bs-toggle="modal" onclick="Support.OpenAdd('sigName', 'emailSignatureEditor', 'updateEmailSigButton', 'saveEmailSigButton')" data-bs-target="#addEmailSignature" class="btn btn-success"><i class="icon-plus-circle"></i>
+                                                    <button data-bs-toggle="modal"
+                                                        onclick="Support.OpenAdd('sigName', 'emailSignatureEditor', 'updateEmailSigButton', 'saveEmailSigButton')"
+                                                        data-bs-target="#addEmailSignature" class="btn btn-success"><i
+                                                            class="icon-plus-circle"></i>
                                                         Add Signature</button>
                                                 </div>
 
 
                                                 <ul class="list-group mt-4" id="emailSignatureList">
-                                                 
+
                                                 </ul>
                                             </div>
                                         </div>
@@ -492,56 +605,87 @@
                                             <div class="accordion-body">
                                                 <form method="POST" id="smtpConfig">
                                                     @csrf
-                                                    <input type="hidden" name="user_id" value="{{ $user }}">
-                                                <h5 class="text-primary">
-                                                   Professional Mail Authentication
-                                                </h5>
-                                                  <div class="ps-4 w-100 mb-4">
-                                                    <div class="m-0">
-                                                        <label class="form-label">Mail Address</label>
-                                                        <input type="text" value="{{ $smtpConfig->econf_username }}" name="mailAddress" id="mailAddress" class="form-control" placeholder="Professional Email Address" />
-                                                        <small id="mailAddressE" style="display: none" class="text-danger">This is a required field</small>
-                                                    </div>
-                                                    <div class="m-0">
-                                                        <label class="form-label">Password</label>
-                                                        <div class="input-group">
-                                                            <input type="password" value="{{ $smtpConfig->econf_password }}" id="mailPassword" name="mailPassword" class="form-control" placeholder="Password" />
-                                                            <button class="btn btn-outline-dark" onclick="Support.ShowPass('mailPassword', this)" type="button">
-                                                              <i class="icon-eye"></i>
-                                                            </button>
+                                                    <input type="hidden" name="user_id"
+                                                        value="{{ $user }}">
+                                                    <h5 class="text-primary">
+                                                        Professional Mail Authentication
+                                                    </h5>
+                                                    <div class="ps-4 w-100 mb-4">
+                                                        <div class="m-0">
+                                                            <label class="form-label">Mail Address</label>
+                                                            <input type="text"
+                                                                value="{{ $smtpConfig->econf_username }}"
+                                                                name="mailAddress" id="mailAddress"
+                                                                class="form-control"
+                                                                placeholder="Professional Email Address" />
+                                                            <small id="mailAddressE" style="display: none"
+                                                                class="text-danger">This is a required field</small>
                                                         </div>
-                                                        <small id="mailPasswordE" style="display: none" class="text-danger">This is a required field</small>
+                                                        <div class="m-0">
+                                                            <label class="form-label">Password</label>
+                                                            <div class="input-group">
+                                                                <input type="password"
+                                                                    value="{{ $smtpConfig->econf_password }}"
+                                                                    id="mailPassword" name="mailPassword"
+                                                                    class="form-control" placeholder="Password" />
+                                                                <button class="btn btn-outline-dark"
+                                                                    onclick="Support.ShowPass('mailPassword', this)"
+                                                                    type="button">
+                                                                    <i class="icon-eye"></i>
+                                                                </button>
+                                                            </div>
+                                                            <small id="mailPasswordE" style="display: none"
+                                                                class="text-danger">This is a required field</small>
+                                                        </div>
                                                     </div>
-                                                  </div>
-                                                <h5 class="text-primary">
-                                                    SMTP Configuration
-                                                 </h5>
-                                                 <div class="ps-4 w-100 mb-4">
-                                                    <div class="m-0">
-                                                        <label class="form-label">From Address</label>
-                                                        <input type="text" value="{{ $smtpConfig->econf_from_address }}" id="fromAddress" name="fromAddress" class="form-control" placeholder="From Address" />
-                                                        <small id="fromAddressE" style="display: none" class="text-danger">This is a required field</small>
+                                                    <h5 class="text-primary">
+                                                        SMTP Configuration
+                                                    </h5>
+                                                    <div class="ps-4 w-100 mb-4">
+                                                        <div class="m-0">
+                                                            <label class="form-label">From Address</label>
+                                                            <input type="text"
+                                                                value="{{ $smtpConfig->econf_from_address }}"
+                                                                id="fromAddress" name="fromAddress"
+                                                                class="form-control" placeholder="From Address" />
+                                                            <small id="fromAddressE" style="display: none"
+                                                                class="text-danger">This is a required field</small>
+                                                        </div>
+                                                        <div class="m-0">
+                                                            <label class="form-label">SMTP Host</label>
+                                                            <input type="text"
+                                                                value="{{ $smtpConfig->econf_host }}" id="smtpHost"
+                                                                name="smtpHost" class="form-control"
+                                                                placeholder="SMTP Host" />
+                                                            <small id="smtpHostE" style="display: none"
+                                                                class="text-danger">This is a required field</small>
+                                                        </div>
+                                                        <div class="m-0">
+                                                            <label class="form-label">SMTP Port</label>
+                                                            <input type="text"
+                                                                value="{{ $smtpConfig->econf_port }}" name="smtpPort"
+                                                                id="smtpPort" class="form-control"
+                                                                placeholder="SMTP Port" />
+                                                            <small id="smtpPortE" style="display: none"
+                                                                class="text-danger">This is a required field</small>
+                                                        </div>
+                                                        <div class="m-0">
+                                                            <label class="form-label">SMTP Encryption</label>
+                                                            <input type="text"
+                                                                value="{{ $smtpConfig->econf_encryption }}"
+                                                                id="smtpEncrypt" name="smtpEncrypt"
+                                                                class="form-control" placeholder="SMTP Encryption" />
+                                                            <small id="smtpEncryptE" style="display: none"
+                                                                class="text-danger">This is a required field</small>
+                                                        </div>
                                                     </div>
-                                                    <div class="m-0">
-                                                        <label class="form-label">SMTP Host</label>
-                                                        <input type="text" value="{{ $smtpConfig->econf_host }}" id="smtpHost" name="smtpHost" class="form-control" placeholder="SMTP Host" />
-                                                        <small id="smtpHostE" style="display: none" class="text-danger">This is a required field</small>
-                                                    </div>
-                                                    <div class="m-0">
-                                                        <label class="form-label">SMTP Port</label>
-                                                        <input type="text" value="{{ $smtpConfig->econf_port }}" name="smtpPort" id="smtpPort" class="form-control" placeholder="SMTP Port" />
-                                                        <small id="smtpPortE" style="display: none" class="text-danger">This is a required field</small>
-                                                    </div>
-                                                    <div class="m-0">
-                                                        <label class="form-label">SMTP Encryption</label>
-                                                        <input type="text" value="{{ $smtpConfig->econf_encryption }}" id="smtpEncrypt" name="smtpEncrypt" class="form-control" placeholder="SMTP Encryption" />
-                                                        <small id="smtpEncryptE" style="display: none" class="text-danger">This is a required field</small>
-                                                    </div>
-                                                  </div>
 
-                                                  <div class="w-100 d-flex justify-content-end">
-                                                    <button type="button" onclick="Pipeline.UpdateSMTPConfig('{{ route('updateSMTPConfig') }}')" class="btn btn-success"><i class="icon-save1"></i> Save</button>
-                                                  </div>
+                                                    <div class="w-100 d-flex justify-content-end">
+                                                        <button type="button"
+                                                            onclick="Pipeline.UpdateSMTPConfig('{{ route('updateSMTPConfig') }}')"
+                                                            class="btn btn-success"><i class="icon-save1"></i>
+                                                            Save</button>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
@@ -566,7 +710,8 @@
                 <h5 id="updateTemplateHeader" class="modal-title" id="staticBackdropLabel">
                     Add Template
                 </h5>
-                <button style="filter: brightness(0) invert(1);" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button style="filter: brightness(0) invert(1);" type="button" class="btn-close"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-4">
@@ -574,42 +719,60 @@
                     <input type="text" id="tempName" class="form-control" placeholder="Template 1" />
                     <small style="display: none" class="text-danger" id="tempNameE">This field is required</small>
                 </div>
-                	<div class="custom-tabs-container">
-											<ul class="nav nav-tabs" id="customTab2" role="tablist">
-												<li class="nav-item" role="presentation">
-													<a class="nav-link active" id="tab-oneA" data-bs-toggle="tab" href="#addTempEditor" role="tab"
-														aria-controls="oneA" aria-selected="true"><i class="icon-edit"></i> Editor
-														</a>
-												</li>
-												<li class="nav-item" role="presentation">
-													<a class="nav-link" onclick="Support.OpenOutput('emailTemplateOutput', 'emailTemplateEditor')" id="tab-twoA" data-bs-toggle="tab" href="#addTempOutput" role="tab"
-														aria-controls="twoA" aria-selected="false"><i class="icon-type"></i> Output</a>
-												</li>
-											
-											</ul>
-											<div class="tab-content" id="customTabContent2">
-												<div class="tab-pane fade show active" id="addTempEditor" role="tabpanel">
-													<div id="emailTemplateEditor"></div>
-												</div>
-												<div class="tab-pane fade" id="addTempOutput" role="tabpanel">
-												      <div class="card">
-                                                        <div class="card-body" id="emailTemplateOutput"></div>
-                                                    </div>
-												</div>
-											
-											</div>
-										</div>
+                <div class="d-flex justify-content-end w-100">
+                    <div class="d-flex gap-4">
+                        <button onclick="Support.AddPlaceholder('#addTempEditor', '{reciever name}')"
+                            class="btn btn-outline-success"><i class="icon-control_point_duplicate"></i> Reciever
+                            Placeholder</button>
+                        <button onclick="Support.AddPlaceholder('#addTempEditor', '{sender name}')"
+                            class="btn btn-outline-success"><i class="icon-control_point_duplicate"></i> Sender
+                            Placeholder</button>
+                    </div>
+                </div>
+                <div class="custom-tabs-container">
+                    <ul class="nav nav-tabs" id="customTab2" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="tab-oneA" data-bs-toggle="tab" href="#addTempEditor"
+                                role="tab" aria-controls="oneA" aria-selected="true"><i class="icon-edit"></i>
+                                Editor
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link"
+                                onclick="Support.OpenOutput('emailTemplateOutput', 'emailTemplateEditor')"
+                                id="tab-twoA" data-bs-toggle="tab" href="#addTempOutput" role="tab"
+                                aria-controls="twoA" aria-selected="false"><i class="icon-type"></i> Output</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content" id="customTabContent2">
+                        <div class="tab-pane fade show active" id="addTempEditor" role="tabpanel">
+                            <div id="emailTemplateEditor"></div>
+                        </div>
+                        <div class="tab-pane fade" id="addTempOutput" role="tabpanel">
+                            <div class="card">
+                                <div class="card-body" id="emailTemplateOutput"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-             
-                <button type="button" id="closeUpdateTempButton" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#sendMail">
+
+                <button type="button" id="closeUpdateTempButton" class="btn btn-secondary" data-bs-toggle="modal"
+                    data-bs-target="#sendMail">
                     Back
                 </button>
-                <button type="button" onclick="Pipeline.UpdateEmailTempSig('{{ route('UpdateEmailTempSig') }}', 'template', '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=template', '{{ route('DisableEmTempSig') }}')" id="updateEmailTempButton" style="display: none" class="btn btn-primary">
-                    <i class="icon-save"></i>   Update Template
-                   </button>
-                <button type="button" id="saveEmailTempButton" onclick="Pipeline.SaveEmailTemp('{{ route('SaveEmailTemp') }}', 'template', '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=template', '{{ route('DisableEmTempSig') }}')" class="btn btn-primary">
-                 <i class="icon-save"></i>   Save
+                <button type="button"
+                    onclick="Pipeline.UpdateEmailTempSig('{{ route('UpdateEmailTempSig') }}', 'template', '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=template', '{{ route('DisableEmTempSig') }}')"
+                    id="updateEmailTempButton" style="display: none" class="btn btn-primary">
+                    <i class="icon-save"></i> Update Template
+                </button>
+                <button type="button" id="saveEmailTempButton"
+                    onclick="Pipeline.SaveEmailTemp('{{ route('SaveEmailTemp') }}', 'template', '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=template', '{{ route('DisableEmTempSig') }}')"
+                    class="btn btn-primary">
+                    <i class="icon-save"></i> Save
                 </button>
             </div>
         </div>
@@ -624,7 +787,8 @@
                 <h5 id="updateSignatureHeader" class="modal-title" id="staticBackdropLabel">
                     Add Signature
                 </h5>
-                <button style="filter: brightness(0) invert(1);" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button style="filter: brightness(0) invert(1);" type="button" class="btn-close"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-4">
@@ -632,44 +796,165 @@
                     <input type="text" class="form-control" id="sigName" placeholder="Signature #1" />
                     <small style="display: none" class="text-danger" id="sigNameE">This field is required</small>
                 </div>
-                	<div class="custom-tabs-container">
-											<ul class="nav nav-tabs" id="customTab2" role="tablist">
-												<li class="nav-item" role="presentation">
-													<a class="nav-link active" id="tab-oneA" data-bs-toggle="tab" href="#addSignEditor" onclick="Support.TabSignature('editor')" role="tab"
-														aria-controls="oneA" aria-selected="true"><i class="icon-edit"></i> Editor
-														</a>
-												</li>
-												<li class="nav-item" role="presentation">
-													<a class="nav-link" id="tab-twoA" data-bs-toggle="tab" onclick="Support.OpenOutput('emailSignatureOutput', 'emailSignatureEditor')" href="#addSignOutput" role="tab"
-														aria-controls="twoA" aria-selected="false"><i class="icon-type"></i> Output</a>
-												</li>
-											
-											</ul>
-											<div class="tab-content" id="customTabContent2">
-												<div class="tab-pane fade show active" id="addSignEditor" role="tabpanel">
-													<div id="emailSignatureEditor"></div>
-												</div>
-												<div class="tab-pane fade" id="addSignOutput" role="tabpanel">
-													<div class="card">
-                                                        <div class="card-body" id="emailSignatureOutput"></div>
-                                                    </div>
-												</div>
-												
-											</div>
-										</div>
+                <div class="custom-tabs-container">
+                    <ul class="nav nav-tabs" id="customTab2" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="tab-oneA" data-bs-toggle="tab" href="#addSignEditor"
+                                onclick="Support.TabSignature('editor')" role="tab" aria-controls="oneA"
+                                aria-selected="true"><i class="icon-edit"></i> Editor
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="tab-twoA" data-bs-toggle="tab"
+                                onclick="Support.OpenOutput('emailSignatureOutput', 'emailSignatureEditor')"
+                                href="#addSignOutput" role="tab" aria-controls="twoA" aria-selected="false"><i
+                                    class="icon-type"></i> Output</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content" id="customTabContent2">
+                        <div class="tab-pane fade show active" id="addSignEditor" role="tabpanel">
+                            <div id="emailSignatureEditor"></div>
+                        </div>
+                        <div class="tab-pane fade" id="addSignOutput" role="tabpanel">
+                            <div class="card">
+                                <div class="card-body" id="emailSignatureOutput"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button style="display: none" onclick="Pipeline.SwitchToActiveSig('{{ route('SwitchToActiveSig') }}',  '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature', '{{ route('DisableEmTempSig') }}')" id="activeStatusSignature" class="btn btn-outline-success" disabled>Active</button>
-                <button id="closeUpdateSigButton" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#sendMail">
+                <button style="display: none"
+                    onclick="Pipeline.SwitchToActiveSig('{{ route('SwitchToActiveSig') }}',  '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature', '{{ route('DisableEmTempSig') }}')"
+                    id="activeStatusSignature" class="btn btn-outline-success" disabled>Active</button>
+                <button id="closeUpdateSigButton" type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                    data-bs-target="#sendMail">
                     Close
                 </button>
-                <button type="button" onclick="Pipeline.UpdateEmailTempSig('{{ route('UpdateEmailTempSig') }}', 'signature', '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature', '{{ route('DisableEmTempSig') }}')" id="updateEmailSigButton" style="display: none" class="btn btn-primary">
-                    <i class="icon-save"></i>   Update Signature
+                <button type="button"
+                    onclick="Pipeline.UpdateEmailTempSig('{{ route('UpdateEmailTempSig') }}', 'signature', '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature', '{{ route('DisableEmTempSig') }}')"
+                    id="updateEmailSigButton" style="display: none" class="btn btn-primary">
+                    <i class="icon-save"></i> Update Signature
                 </button>
-                <button  type="button" id="saveEmailSigButton" onclick="Pipeline.SaveEmailTemp('{{ route('SaveEmailTemp') }}', 'signature', '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature', '{{ route('DisableEmTempSig') }}')" class="btn btn-primary">
-                    <i class="icon-save"></i>   Save
+                <button type="button" id="saveEmailSigButton"
+                    onclick="Pipeline.SaveEmailTemp('{{ route('SaveEmailTemp') }}', 'signature', '{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature', '{{ route('DisableEmTempSig') }}')"
+                    class="btn btn-primary">
+                    <i class="icon-save"></i> Save
                 </button>
             </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addCustomSubject" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Subject List
+                </h5>
+                <button style="filter: brightness(0) invert(1);" type="button" class="btn-close"data-bs-toggle="modal" data-bs-target="#sendMail" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <h5 class="card-header">Add Subject</h5>
+                    <div class="card-body">
+                        <form method="POST" id="addEmailSubject">
+                            @csrf
+                            <input type="hidden" name="user_id" value="{{ $user }}">
+                            <div class="m-0">
+                                <label class="form-label">Subject Content</label>
+                                <input type="text" name="subjectContent" id="addEmailSubjectContent" class="form-control" placeholder="Subject Content"/>
+                                <small id="addEmailSubjectContentE" style="display: none" class="text-danger">Nothing to add please type something</small>
+                            </div>
+                            <div class="m-0 mt-2">
+                                <label class="form-label">Affiliated Service (Optional)</label>
+                                <select id="affiliatedServiceAdd" name="affiliatedService" class="form-select" aria-label="Default select example">
+                                    <option selected="None">None</option>
+                                    <option value="IT Service">IT Service</option>
+                                    <option value="BPO">BPO</option>
+                                    <option value="Software">Software</option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-end w-100 mt-4">
+                                 <button type="button" onclick="Pipeline.AddEmailSubject('{{ route('addEmailSubject') }}', '{{ route('loadEmailSubject') }}?user_id={{ $user }}&filter=all')" class="btn btn-success"><i class="icon-plus"></i> Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="mt-4 card">
+                   <h5 class="card-header">Subject List</h5>
+                   <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="subjectListDataTable" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Subject Content</th>
+                                    <th>Affiliated Service</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                   </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#sendMail">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="updateEmailSubject" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Update Subject
+                </h5>
+                <button id="closeUpdateEmailSubject" style="filter: brightness(0) invert(1);" type="button" data-bs-target="#addCustomSubject" class="btn-close" data-bs-toggle="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" id="updateEmailSubject">
+                            @csrf
+                            <input type="hidden" name="emsub_id" id="updateEmsubId">
+                            <div class="m-0">
+                                <label class="form-label">Subject Content</label>
+                                <input type="text" name="subjectContent" id="updateEmailSubjectContent" class="form-control" placeholder="Subject Content"/>
+                                <small id="updateEmailSubjectContentE" style="display: none" class="text-danger">Nothing to add please type something</small>
+                            </div>
+                            <div class="m-0 mt-2">
+                                <label class="form-label">Affiliated Service (Optional)</label>
+                                <select id="updateaffiliatedServiceAdd" name="affiliatedService" class="form-select" aria-label="Default select example">
+                                    <option selected="None">None</option>
+                                    <option value="IT Service">IT Service</option>
+                                    <option value="BPO">BPO</option>
+                                    <option value="Software">Software</option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-end w-100 mt-4">
+                                 <button type="button" onclick="Pipeline.UpdateEmailSubject('{{ route('updateEmailSubject') }}', '{{ route('loadEmailSubject') }}?user_id={{ $user }}&filter=all', '{{ route('disableEmailSubject') }}')" class="btn btn-success"><i class="icon-edit"></i> Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+           
+            </div>
+          
         </div>
     </div>
 </div>
@@ -702,4 +987,18 @@
     @csrf
     <input type="hidden" name="user_id" value="{{ $user }}">
     <input type="hidden" name="id" id="switchToActiveId">
+</form>
+
+<form id="sendMultipleMailQueue" method="POST">
+    @csrf
+
+    <input type="hidden" name="user_id" value="{{ $user }}">
+    <input type="hidden" name="pl_id" id="sendMultpleMailPLID">
+    <input type="hidden" name="template_id" id="sendMultpleMailTempId">
+    <input type="hidden" name="subject_id" id="sendMultpleMailSubjectId">
+</form>
+
+<form id="disableEmailSubject" method="POST">
+    @csrf
+    <input type="hidden" name="emsub_id" id="disableEmsubId">
 </form>

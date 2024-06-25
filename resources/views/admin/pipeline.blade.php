@@ -9,7 +9,7 @@
 	<body>
 
         @include('admin.components.loading')
-
+		@include('admin.components.queueMail')
 		<!-- Page wrapper start -->
 		<div class="page-wrapper">
 
@@ -104,6 +104,7 @@
 			Pipeline.LoadTempSig("{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature", "signature", "{{ route('DisableEmTempSig') }}");
 			Pipeline.LoadTempSig("{{ route('LoadTempSig') }}?user_id={{ $user }}&type=template", "template", "{{ route('DisableEmTempSig') }}");
 			Pipeline.LoadActiveSignature("{{ route('LoadActiveSignature') }}?user_id={{ $user }}");
+			LoadLeadMassEmail("{{ route('massEmailLeads') }}?user_id={{ $user }}&filter=all");
             LoadLead("{{ route('loadPipeline') }}?state={{ $state }}&user_id={{ $user }}", "{{ route('getLeadDetails') }}", "{{ route('disableLead') }}");
         }
     </script>

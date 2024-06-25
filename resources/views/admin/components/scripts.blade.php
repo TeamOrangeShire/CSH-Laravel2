@@ -11,7 +11,6 @@
 		<!-- Data Tables -->
 		<script src="{{ asset('assets/vendor/datatables/dataTables.min.js') }}"></script>
 		<script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap.min.js') }}"></script>
-		<script src="{{ asset('assets/vendor/datatables/custom/custom-datatables.js') }}"></script>
 		<!-- DataTable Buttons -->
 		<script src="{{ asset('assets/vendor/datatables/buttons/dataTables.buttons.min.js') }}"></script>
 		<script src="{{ asset('assets/vendor/datatables/buttons/jszip.min.js') }}"></script>

@@ -68,6 +68,71 @@ const Support = {
     },
       AsText: (id, value) => {
         document.getElementById(id).textContent = value;
+    }, SelectAll: (input, rows) => {
+        if(input.checked){
+            const checkboxes = document.querySelectorAll(rows);
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (i < 15) {
+                    checkboxes[i].checked = true;
+                } else {
+                    break;
+                }
+                document.getElementById('leadsSelectCounter').textContent = i+1;  
+            }
+        }else{
+            document.querySelectorAll(rows).forEach(e=>{
+                e.checked = false
+            });
+            document.getElementById('leadsSelectCounter').textContent = 0;  
+        }
+    }, UpdateSelectedLeads: (select, inp) => {
+        var checkboxes = document.querySelectorAll(`input[name="${select}"]`);
+        var checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+        var count = checkedCheckboxes.length;
+        if(count > 15){
+            alertify.set('notifier', 'position', 'top-center');
+            alertify.error('Error: You have reached the maximum number of leads to send mail');
+
+            inp.checked = false;
+        }else{
+            document.getElementById('leadsSelectCounter').textContent = count;  
+        }
+
+       
+    },AddPlaceholder: (editor, value) => {
+        const editableDiv = document.querySelector(editor +'.note-editable'); 
+        const sel = window.getSelection();
+        const range = sel.getRangeAt(0);
+        const startPos = range.startOffset;
+
+        range.deleteContents();
+        const newElem = document.createElement('span');
+        newElem.innerHTML = value;
+        range.insertNode(newElem);
+
+        range.setStartAfter(newElem);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        editableDiv.focus();
+
+        const cursorPosition = startPos + htmlToInsert.length;
+        const newRange = document.createRange();
+        newRange.setStart(editableDiv.childNodes[0], cursorPosition);
+        newRange.setEnd(editableDiv.childNodes[0], cursorPosition);
+        sel.removeAllRanges();
+        sel.addRange(newRange);
+        editableDiv.focus();
+    }, ShowDetails: (but, id) => {
+        const list = document.getElementById(id);
+
+        if(list.style.display === 'none'){
+            list.style.display = '';
+            but.textContent = 'Hide Details';
+        }else{
+            list.style.display = 'none';
+            but.textContent = 'Show Details';
+        }
     }
 
 }

@@ -1,4 +1,5 @@
 let table;
+let tablesSubject;
 let csvData;
 const Pipeline = {
     ShowLead: route => {
@@ -418,10 +419,241 @@ const Pipeline = {
               }
             },error: xhr=> console.log(xhr.responseText),
         })
+    }, FilterMassMail: (route, user, filter, subject, subdis) => {
+        const fil = `${route}?user_id=${user}&filter=${filter.value}`;
+        const sub = `${subject}?user_id=${user}&filter=${filter.value}`;
+        LoadLeadMassEmail(fil);
+        Pipeline.LoadEmailSubject(sub, subdis);
+    },AddEmailSubject: (route, load) => {
+       if(Support.CheckError('addEmailSubjectContent', 'addEmailSubjectContentE') === 1){
+         Support.OpenDiv('mainLoader', 'grid');
+
+         $.ajax({
+            type: "POST",
+            url: route,
+            data: $('form#addEmailSubject').serialize(),
+            success: res=>{
+              if(res.status === 'success'){
+                Support.CloseDiv('mainLoader');
+                alertify.set('notifier', 'position', 'top-right');
+                alertify.success('Successfully Added Email Subject');
+
+                document.getElementById('addEmailSubjectContent').value = '';
+                document.getElementById('affiliatedServiceAdd').value = 'None';
+                Pipeline.LoadEmailSubject(load);
+              }
+            },error: xhr=> console.log(xhr.responseText),
+        });
+       }
+    },GetEmailSubject: (id, content, affiliate)=> {
+       Support.AsVal('updateEmsubId', id);
+       Support.AsVal('updateEmailSubjectContent', content);
+       Support.AsVal('updateaffiliatedServiceAdd', affiliate);
+    },UpdateEmailSubject: (route, load, disable) => {
+        if(Support.CheckError('updateEmailSubjectContent', 'updateEmailSubjectContentE') === 1){
+            Support.OpenDiv('mainLoader', 'grid');
+   
+            $.ajax({
+               type: "POST",
+               url: route,
+               data: $('form#updateEmailSubject').serialize(),
+               success: res=>{
+                 if(res.status === 'success'){
+                   Support.CloseDiv('mainLoader');
+                   alertify.set('notifier', 'position', 'top-right');
+                   alertify.success('Successfully Added Email Subject');
+                   document.getElementById('closeUpdateEmailSubject').click();
+                   Pipeline.LoadEmailSubject(load, disable);
+                 }
+               },error: xhr=> console.log(xhr.responseText),
+           });
+          }
+    },
+    DisableEmailSubject: (route, load, id) => {
+        Support.AsVal('disableEmsubId', id);
+        alertify.confirm("Delete Subject", "Are you sure do you want to delete this email subject?", 
+            ()=>{
+                Support.OpenDiv('mainLoader', 'grid');
+                $.ajax({
+                    type: "POST",
+                    url: route,
+                    data: $('form#disableEmailSubject').serialize(),
+                    success: res=>{
+                      if(res.status === 'success'){
+                        Support.CloseDiv('mainLoader');
+                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.success('Successfully Deleted Email Subject');
+                        Pipeline.LoadEmailSubject(load, route);
+                      }
+                    },error: xhr=> console.log(xhr.responseText),
+                });
+            },()=> console.log('cancel'));
+    },
+    LoadEmailSubject: (route, disable) => {
+        $.ajax({
+            type: "GET",
+            url: route,
+            dataType: "json",
+            success: res => {
+                const list = document.getElementById('selectMassSubject');
+                res.status === 'all' ? list.innerHTML = ` <option value="none" disabled selected> -------Select Subject------- </option>` : list.innerHTML = '';
+                res.data.forEach(e=>{
+                    list.innerHTML += `<option value="${e.emsub_id}">
+                    <p>${e.emsub_content.length > 25 ? e.emsub_content.substring(0, 25) + '.....' : e.emsub_content} (<span class="text-muted">${e.emsub_service}</span>)</p></option>`
+                })
+                if (!$.fn.DataTable.isDataTable('#subjectListDataTable')) {
+                    tablesSubject = $('#subjectListDataTable').DataTable({
+                        data: res.data,
+                        columns: [
+                            { title: "Subject Content", data: "emsub_content" },
+                            { title: "Affiliated Service", data: "emsub_service" },
+                            {
+                                title: "Actions",
+                                data: null,
+                                render: function (data, type, row) {
+                                    return `
+                             <button onclick="Pipeline.GetEmailSubject('${data.emsub_id}', '${data.emsub_content}', '${data.emsub_service}')" data-bs-toggle="modal" data-bs-target="#updateEmailSubject" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-bs-custom-class="custom-tooltip-primary"
+                                data-bs-title="Edit">
+                                <i class="icon-check-circle"></i>
+                            </button>
+    
+                            <button onclick="Pipeline.DisableEmailSubject('${disable}', '${route}', '${data.emsub_id}')" class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-bs-custom-class="custom-tooltip-danger"
+                                data-bs-title="Delete">
+                                <i class="icon-trash"></i>
+                            </button>
+                            `;
+                                },
+                                orderable: false
+                            }
+                        ],
+                        autoWidth: false
+                    });
+                } else {
+                    tablesSubject.clear().rows.add(res.data).draw();
+                }
+    
+            }, error: xhr => {
+                console.log(xhr.responseText);
+            }
+        });
+
+    },
+    SendMultipleEmail: (route, load, validity) => {
+        var checkboxes = document.querySelectorAll('input[name="selectedLeads[]"]');
+        var checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+        var count = checkedCheckboxes.length;
+        const temp = document.getElementById('selectMassTemplate');
+
+        if(count === 0 || temp.value === 'none'){
+           alertify.alert('Failed to proccess','No Selected Template or Leads please complete the details before proceeding');
+        }else{
+            alertify.confirm('labels changed!').set('labels', {ok:'Proceeed!', cancel:'Wait lemme Check!'}); 
+            alertify.confirm(`Send ${count} Mail`, "Do you confirm that the settings you set are all correct? Please review it before proceeding..",
+            async ()=> {
+            alertify.set('notifier', 'position', 'top-center');
+            alertify.message('Please Wait...');
+            const allEmailsValid = await Pipeline.CheckMultipleEmailValidity(validity, document.getElementById('selectServiceOfferMassMail').value);
+            if(allEmailsValid && document.getElementById('selectServiceOfferMassMail').value != 'all'){
+                document.getElementById('closeSendMail').click();
+                Support.OpenDiv('mainLoader', 'grid');
+                let ready = 1;
+                const list = document.getElementById('progressQueueMailList');
+                list.innerHTML = '';
+                checkedCheckboxes.forEach(e=>{
+                    $.ajax({
+                       type: "GET",
+                       url: `${load}?pl_id=${e.value}`,
+                       dataType: "json",
+                       success: res=> {
+                           list.innerHTML += ` <li id='mailQueueList${res.pipeline.pl_id}' class="list-group-item d-flex justify-content-between align-items-center">
+                                ${res.pipeline.pl_name} (${res.pipeline.pl_company_name})
+                            <div class="loaderMailQueue">
+                                    <div class="bar1"></div>
+                                    <div class="bar2"></div>
+                                    <div class="bar3"></div>
+                                    <div class="bar4"></div>
+                                    <div class="bar5"></div>
+                                    <div class="bar6"></div>
+                                    <div class="bar7"></div>
+                                    <div class="bar8"></div>
+                                    <div class="bar9"></div>
+                                    <div class="bar10"></div>
+                                    <div class="bar11"></div>
+                                    <div class="bar12"></div>
+                                </div>
+                            </li>`;
+        
+                         if(ready === checkedCheckboxes.length){
+                            Support.CloseDiv('mainLoader');
+                            Support.OpenDiv('progressEmailQueue', 'grid');
+                            const each = 100 / checkedCheckboxes.length;
+                            document.getElementById('progressTotalMail').textContent = checkedCheckboxes.length;
+                            let stat = 0;
+                            checkedCheckboxes.forEach(e=>{
+                               document.getElementById('sendMultpleMailPLID').value = e.value;
+                               stat += Pipeline.CheckMultipleEmailValidity(route);
+                               const percent = stat * each;
+                               
+                               document.getElementById('massMailProgressPercentage').textContent = percent.toFixed(2);
+                               document.getElementById('massMailProgressBar').style.width = percent;
+                               document.getElementById('progressSentMail').textContent = stat;
+                            });
+                         }
+                         ready++;
+                       }, error: xhr=> console.log(xhr.responseText)
+                    });
+                 });
+            }else{
+              alertify.alert('Error: Check the service offer', 'Please make sure you are offering the same service on all your selected leads and make sure the filter is not set to all');
+            }
+         
+          }, ()=> console.log('cancel')
+        );
+        }
+    }, SendMultipleMailQueue: route => {
+      console.log(route);
+
+
+    }, CheckMultipleEmailValidity: async  (route, offer) => {
+        var checkboxes = document.querySelectorAll('input[name="selectedLeads[]"]');
+        var checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+
+        let validity = 0;
+
+        const promises = checkedCheckboxes.map(e => {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    type: "GET",
+                    url: `${route}?pl_id=${e.value}&offer=${offer}`,
+                    dataType: "json",
+                    success: res => {
+                        if (res.status === 'success') {
+                            validity++;
+                        }
+                        resolve();
+                    },
+                    error: xhr => {
+                        console.log(xhr.responseText);
+                        reject();
+                    }
+                });
+            });
+        });
+        try {
+            await Promise.all(promises);
+            return validity === checkedCheckboxes.length;
+        } catch (error) {
+            console.error("Error in validating emails", error);
+            return false;
+        }    
+       
     }
 
 } 
 let tables;
+let tablesMass;
 function LoadLead(route, getDetail, disable) {
     $.ajax({
         type: "GET",
@@ -478,11 +710,46 @@ function LoadLead(route, getDetail, disable) {
         }
     });
 }
+function LoadLeadMassEmail(route) {
+    $.ajax({
+        type: "GET",
+        url: route,
+        dataType: "json",
+        success: res => {
+            if (!$.fn.DataTable.isDataTable('#massEmailLeads')) {
+                tablesMass = $('#massEmailLeads').DataTable({
+                    data: res.data,
+                    columns: [
+                        {
+                            title: `<input type='checkbox' onclick="Support.SelectAll(this, '.allLeadsEmail')" id='selectAll' class='form-check-input'>`,
+                            data: null,
+                            render: data => {
+                                return `<input type="checkbox" onchange="Support.UpdateSelectedLeads('selectedLeads[]', this)" name="selectedLeads[]" class="form-check-input allLeadsEmail" value="${data.pl_id}">`
+                            }
+                        },
+                        { title: "Company", data: "pl_company_name" },
+                        { title: "Name", data: "pl_name" },
+                        { title: "Email", data: "pl_email" },
+                        { title: "Service Offer", data: "pl_service_offer" },
+                      
+                    ],
+                    autoWidth: false,
+                    
+                });
+            } else {
+                tablesMass.clear().rows.add(res.data).draw();
+            }
+
+        }, error: xhr => {
+            console.log(xhr.responseText);
+        }
+    });
+}
 
 $(document).ready(function () {
     $('#emailSignatureEditor').summernote({
         placeholder: 'Edit your email Signature here',
-        height: 300,                 // set editor height
+        height: 300,              // set editor height
         minHeight: null,             // set minimum height of editor
         maxHeight: null,             // set maximum height of editor    
         toolbar: [
@@ -500,7 +767,8 @@ $(document).ready(function () {
     });
     $('#emailTemplateEditor').summernote({
         placeholder: 'Edit your email template here',
-        height: 300,                 // set editor height
+        height: 300,            
+        tabsize: 2,     // set editor height
         minHeight: null,             // set minimum height of editor
         maxHeight: null,             // set maximum height of edit
         toolbar: [

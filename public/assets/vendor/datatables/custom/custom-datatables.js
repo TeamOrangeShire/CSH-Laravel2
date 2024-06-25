@@ -14,13 +14,14 @@ $(function () {
 
 // Vertical Scroll
 $(function () {
-	$("#scrollVertical").DataTable({
+	$("#massEmailLeads").DataTable({
 		scrollY: "207px",
 		scrollCollapse: true,
 		paging: false,
 		bInfo: false,
 	});
 });
+
 
 // Highlighting rows and columns
 $(function () {
