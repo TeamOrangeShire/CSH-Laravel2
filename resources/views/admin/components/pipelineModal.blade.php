@@ -494,7 +494,7 @@
                                                     @csrf
                                                     <input type="hidden" name="user_id" value="{{ $user }}">
                                                 <h5 class="text-primary">
-                                                   Professional Mail Credentials
+                                                   Professional Mail Authentication
                                                 </h5>
                                                   <div class="ps-4 w-100 mb-4">
                                                     <div class="m-0">
@@ -517,6 +517,11 @@
                                                     SMTP Configuration
                                                  </h5>
                                                  <div class="ps-4 w-100 mb-4">
+                                                    <div class="m-0">
+                                                        <label class="form-label">From Address</label>
+                                                        <input type="text" value="{{ $smtpConfig->econf_from_address }}" id="fromAddress" name="fromAddress" class="form-control" placeholder="From Address" />
+                                                        <small id="fromAddressE" style="display: none" class="text-danger">This is a required field</small>
+                                                    </div>
                                                     <div class="m-0">
                                                         <label class="form-label">SMTP Host</label>
                                                         <input type="text" value="{{ $smtpConfig->econf_host }}" id="smtpHost" name="smtpHost" class="form-control" placeholder="SMTP Host" />

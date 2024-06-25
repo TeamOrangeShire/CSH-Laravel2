@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
@@ -19,11 +20,15 @@ class SendCustomMail extends Mailable
     public $mess;
     public $subject;
     public $id;
-    public function __construct($subject, $mess, $id)
+    public $fromAddress;
+    public $name;
+    public function __construct($subject, $mess, $id, $fromAddress, $name)
     {
         $this->mess = $mess;
         $this->subject = $subject;
         $this->id = $id;
+        $this->fromAddress = $fromAddress;
+        $this->name = $name;
     }
 
     /**
@@ -32,6 +37,7 @@ class SendCustomMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address($this->fromAddress, $this->name),
             subject: $this->subject,
         );
     }

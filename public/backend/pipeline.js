@@ -198,8 +198,9 @@ const Pipeline = {
         validity += Support.CheckError('smtpHost', 'smtpHostE');
         validity += Support.CheckError('smtpPort', 'smtpPortE');
         validity += Support.CheckError('smtpEncrypt', 'smtpEncryptE');
+        validity += Support.CheckError('fromAddress', 'fromAddressE');
 
-        if (validity === 5) {
+        if (validity === 6) {
             document.getElementById('mainLoader').style.display = 'grid';
 
             $.ajax({

@@ -12,6 +12,7 @@ use App\Models\CshSentMail;
 use App\Models\CshEmailSignature;
 use App\Models\CshEmailTemplate;
 use App\Mail\SendCustomMail;
+use App\Models\CshUser;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Mail;
 
@@ -244,7 +245,7 @@ class AdminBackEnd extends Controller
           'econf_host'=>$req->smtpHost,
           'econf_port'=>$req->smtpPort,
           'econf_encryption'=>$req->smtpEncrypt,
-          'econf_from_address'=>$req->mailAddress,
+          'econf_from_address'=>$req->fromAddress,
         ]);
 
         return response()->json(['status'=>'success']);
@@ -324,7 +325,10 @@ class AdminBackEnd extends Controller
          $sent->se_level = '1';
          $sent->se_status = '1';
          $sent->save();
-         Mail::to(explode('-', $req->recipient)[0])->send(new SendCustomMail($req->subject, $req->message, $sent->se_id));
+         $user = CshUser::where('user_id', $req->user_id)->first();
+         $conf = CshEmailConfig::where('user_id', $req->user_id)->first();
+
+         Mail::to(explode('-', $req->recipient)[0])->send(new SendCustomMail($req->subject, $req->message, $sent->se_id, $conf->econf_from_address, $user->user_name));
 
          return response()->json(['status'=>'success']);
     }
