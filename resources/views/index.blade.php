@@ -18,7 +18,7 @@
       <div id="home">
         <!-- Top Banner--> 
         <!-- Page Header-->
-      @include('Components.nav')
+      @include('Components.nav',['title'=>'Core Support Hub'] )
 
         <!-- Swiper-->
         <section class="section swiper-container swiper-slider swiper-slider-classic" data-loop="true" data-autoplay="4859" data-simulate-touch="true" data-direction="vertical" data-nav="false">

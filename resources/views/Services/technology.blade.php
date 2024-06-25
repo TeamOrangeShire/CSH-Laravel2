@@ -17,7 +17,7 @@
       <div id="home">
         <!-- Top Banner--> 
         <!-- Page Header-->
-    @include('Components.services_nav')
+   @include('Components.nav',['title'=>'bpo'])
       </div>
 
       <!-- Cta-->
