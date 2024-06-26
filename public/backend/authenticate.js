@@ -36,8 +36,9 @@ function VerifySignUp(){
     validity += Support.CheckError('password', 'passwordE');
     validity += Support.CheckError('position', 'positionE');
     validity += Support.CheckError('name', 'nameE');
+    validity += Support.CheckError('IDNum', 'IDNumE');
 
-    if(validity === 4){
+    if(validity === 5){
         $('#AdminConfirm').modal('show');
     }
 }

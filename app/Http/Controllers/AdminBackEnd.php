@@ -17,6 +17,8 @@ use App\Models\CshEmailSubject;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Mail;
 
+use DateTime;
+
 class AdminBackEnd extends Controller
 {
     public function ScanAttendance(Request $req){
@@ -56,6 +58,8 @@ class AdminBackEnd extends Controller
                 $check->update([
                    'att_time_out'=> Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A'),
                    'att_total_time'=>$totalTime,
+                   'att_total_hours'=> $time['hours'],
+                   'att_total_minutes'=> $time['minutes'],
                    'att_status'=>1,
                 ]);
 
@@ -381,6 +385,9 @@ class AdminBackEnd extends Controller
         $sig = CshEmailSignature::where('emsig_status', 2)->where('user_id', $req->user_id)->first();
         $subject = CshEmailSubject::where('emsub_id', $req->subject_id)->first();
         $lead = CshPipeline::where('pl_id', $req->pl_id)->first();
+        $lead->update([
+          'pl_status'=> 'Prospect',
+        ]);
         $conc_mess = $temp->emtemp_content . "<br>" . $sig->emsig_content;
         $replacements = [
             '{reciever name}' => explode(' ', $lead->pl_name)[0],
@@ -449,5 +456,42 @@ class AdminBackEnd extends Controller
         $template = $temp->emtemp_content  . $sig->emsig_content;
 
         return response()->json(['template'=>$template, 'sub'=> $sub->emsub_content]);
+    }
+
+    public function AttMonLoad(Request $req){
+        $employee = CshUser::where('user_status', 1)
+        ->where('user_type', 'Employee')
+        ->get();
+
+    foreach ($employee as $emp) {
+        $attend = CshAttendance::where('user_id', $emp->user_id)->get();
+        $totalHours = 0;
+        $totalMinutes = 0;
+
+        foreach ($attend as $att) {
+
+            $date = DateTime::createFromFormat('d/m/Y', $att->att_date);
+
+            $month = $req->month;
+            $year = $req->year;
+
+            if ($date && $date->format('m') == $month && $date->format('Y') == $year) {
+                $totalHours += $att->att_total_hours;
+                $totalMinutes += $att->att_total_minutes;
+            }
+        }
+
+        $additionalHours = intdiv($totalMinutes, 60);
+        $remainingMinutes = $totalMinutes % 60;
+        $fractionalHours = $remainingMinutes / 60;
+
+        $totalTime = $totalHours + $additionalHours + $fractionalHours;
+        $monthName = DateTime::createFromFormat('!m', $month)->format('F');
+        $emp->totalHours = $totalTime;
+        $emp->month = $monthName;
+        
+    }
+
+     return response()->json(['data'=>$employee]);
     }
 }

@@ -11,6 +11,7 @@ class CshUser extends Model
     protected $table = 'csh_user';
     protected $primaryKey = 'user_id';
     protected $fillable = [
+       'user_emp_id',
        'user_name',
        'user_username',
        'user_password',

@@ -21,6 +21,13 @@
                             </a>
                             <h2 class="mt-4 mb-4 text-center">Core Support Hub Admin Sign up</h2>
                             <div class="mb-3">
+                                <label class="form-label">ID Number</label>
+                                <input type="text" name="IDNum" id="IDNum" class="form-control"
+                                    placeholder="Enter your ID Number" />
+                                <small id="IDNumE" style="display: none" class="text-danger">(Please provide a
+                                    Name)</small>
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label">Name</label>
                                 <input type="text" name="name" id="name" class="form-control"
                                     placeholder="Enter your Name" />

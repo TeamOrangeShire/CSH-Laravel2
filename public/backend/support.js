@@ -171,7 +171,10 @@ const Support = {
     }else{
         Support.Snackbar('No selected Template or subject');
     }
+   },SetMonth: (current, select) => {
+      const sel = document.getElementById(select);
 
+      sel.value = current;
    }
 }
 

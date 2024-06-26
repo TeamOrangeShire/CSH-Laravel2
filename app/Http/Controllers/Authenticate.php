@@ -45,6 +45,7 @@ class Authenticate extends Controller
 
     public function AdminSignup(Request $req){
         $user = new CshUser();
+        $user->user_emp_id = $req->IDNum;
         $user->user_name = $req->name;
         $user->user_username = $req->username;
         $user->user_password = Hash::make($req->password);
@@ -82,6 +83,24 @@ class Authenticate extends Controller
     $userId = $req->cookie('admin_id');
         if($userId){
           return view('admin.attendance', ['user'=>$userId]);
+        }else{
+          return redirect()->route('adminLogin');
+        }
+  }
+
+  public function AttendanceMonitoring(Request $req){
+    $userId = $req->cookie('admin_id');
+        if($userId){
+          return view('admin.attendanceMonitoring', ['user'=>$userId]);
+        }else{
+          return redirect()->route('adminLogin');
+        }
+  }
+
+  public function EmailMonitoring(Request $req){
+    $userId = $req->cookie('admin_id');
+        if($userId){
+          return view('admin.emailMonitoring', ['user'=>$userId]);
         }else{
           return redirect()->route('adminLogin');
         }

@@ -38,6 +38,8 @@ Route::get('/admin/login', function () { return view('admin.login');})->name('ad
 Route::get('/admin/signup', function () { return view('admin.signup');})->name('adminSignup');
 Route::get('/admin/pipeline/{state}', [Authenticate::class, 'PipeLine'])->name('pipeline');
 Route::get('/admin/attendance', [Authenticate::class, 'Attendance'])->name('adminAttendance');
+Route::get('/admin/monitoring/attendance', [Authenticate::class, 'AttendanceMonitoring'])->name('adminAttendanceMonitoring');
+Route::get('/admin/monitoring/email', [Authenticate::class, 'EmailMonitoring'])->name('adminEmailMonitoring');
 Route::get('/admin/user', [Authenticate::class, 'User'])->name('user');
 Route::get('/admin/user/settings', [Authenticate::class, 'UserSetting'])->name('userSetting');
 
@@ -73,4 +75,6 @@ Route::post('/admin/pipelineload/updateEmailSubject', [AdminBackEnd::class, 'Upd
 Route::post('/admin/pipelineload/disableEmailSubject', [AdminBackEnd::class, 'DisableEmailSubject'])->name('disableEmailSubject');
 Route::get('/admin/pipelineload/getTempView', [AdminBackEnd::class, 'GetTempView'])->name('getTempView');
 
+Route::get('/admin/monitoring/email/load', [AdminBackEnd::class, 'LoadSentEmail'])->name('loadSentEmail');
+Route::get('/admin/monitoring/attendance/load', [AdminBackEnd::class, 'AttMonLoad'])->name('attMonLoad');
 Route::get('/track-email/{id}', [AdminBackEnd::class, 'EmailTracking'])->name('emailTracking');
