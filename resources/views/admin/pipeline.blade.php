@@ -9,7 +9,7 @@
 	<body>
 
         @include('admin.components.loading')
-		@include('admin.components.queueMail')
+		@include('admin.components.queuemail')
 		@include('admin.components.snackbar')
 		@include('admin.components.minimize')
 		<!-- Page wrapper start -->
