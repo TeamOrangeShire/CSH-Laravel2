@@ -133,7 +133,45 @@ const Support = {
             list.style.display = 'none';
             but.textContent = 'Show Details';
         }
+    }, Snackbar: content => {
+        const div = document.getElementById('snackBardiv');
+        const text = document.getElementById('snackBarContent');
+        text.textContent = content;
+        div.style.display = 'flex';
+
+        setTimeout(()=>{
+          div.style.animation = 'hideSnack 1s';
+          setTimeout(()=>{
+            div.style.display = 'none';
+          }, 1000);
+        },2000);
+    }
+   ,Minimize: () => {
+      Support.CloseDiv('progressEmailQueue');
+      Support.OpenDiv('minimizeProgressEmailQueue', 'flex');
+   },Maximize: ()=>{
+    Support.CloseDiv('minimizeProgressEmailQueue');
+    Support.OpenDiv('progressEmailQueue', 'grid');
+   }, OpenPreview: (route, user) => {
+    const temp = document.getElementById('selectMassTemplate');
+    const subject = document.getElementById('selectMassSubject');
+    
+    if(temp.value != 'none' && subject.value != 'none'){
+        var myModal = new bootstrap.Modal(document.getElementById('previewTempModal'));
+        myModal.show();
+       $.ajax({
+         type: "GET",
+         url: `${route}?temp_id=${temp.value}&sub_id=${subject.value}&user_id=${user}`,
+         dataType: "json",
+         success: res=> {
+            Support.AsText('subPreviewMassEmail',res.sub)
+            document.getElementById('tempPreviewMassEmail').innerHTML = res.template;
+         }, error: xhr => console.log(xhr.responseText),
+       });
+    }else{
+        Support.Snackbar('No selected Template or subject');
     }
 
+   }
 }
 

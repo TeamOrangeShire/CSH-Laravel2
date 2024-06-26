@@ -70,6 +70,6 @@ function EmailCred($id){
         Config::set('mail.mailers.smtp.username', $credentials->econf_username);
         Config::set('mail.mailers.smtp.password', $credentials->econf_password);
         Config::set('mail.mailers.smtp.encryption', $credentials->econf_encryption);
-        Config::set('mail.from.address', $credentials->econf_username);
+        Config::set('mail.from.address', $credentials->econf_from_address);
         Config::set('mail.from.name', config('app.name'));
 }

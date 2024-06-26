@@ -183,7 +183,7 @@
 
 <div class="modal fade" id="addCSVLeads" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog " role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add Leads Using CSV/Excel</h5>
@@ -352,7 +352,7 @@
 
 <div class="modal fade" id="sendMail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-fullscreen" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Send Mail</h5>
@@ -369,8 +369,10 @@
                                         class="icon-email"></i>Send Custom Mail</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link"  onclick="Pipeline.LoadEmailSubject('{{ route('loadEmailSubject') }}?user_id={{ $user }}&filter=all', '{{ route('disableEmailSubject') }}')" id="tab-twoAA" data-bs-toggle="tab" href="#massMailing"
-                                    role="tab" aria-controls="twoAA" aria-selected="false"><i
+                                <a class="nav-link"
+                                    onclick="Pipeline.LoadEmailSubject('{{ route('loadEmailSubject') }}?user_id={{ $user }}&filter=all', '{{ route('disableEmailSubject') }}'); LoadLeadMassEmail('{{ route('massEmailLeads') }}?user_id={{ $user }}&filter=all')"
+                                    id="tab-twoAA" data-bs-toggle="tab" href="#massMailing" role="tab"
+                                    aria-controls="twoAA" aria-selected="false"><i
                                         class="icon-alternate_email"></i>Mass Mailing</a>
                             </li>
                             <li class="nav-item" role="presentation">
@@ -402,7 +404,7 @@
                                                             @foreach ($leads as $lead)
                                                                 <option
                                                                     value="{{ $lead->pl_email }}-{{ $lead->pl_id }}">
-                                                                    {{ $lead->pl_email }}</option>
+                                                                    {{ $lead->pl_email }} ({{ $lead->pl_name }}) - {{ $lead->pl_company_name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -435,6 +437,7 @@
                             <div class="tab-pane fade" id="massMailing" role="tabpanel">
                                 <form method="POST" id="sendMassEmailLeads">
                                     @csrf
+                                    
                                     <div class="row gx-2">
                                         <div class="col-sm-8">
                                             <!-- Card start -->
@@ -510,18 +513,22 @@
                                                     <div class="m-0 mt-4 mb-4">
                                                         <div class="d-flex justify-content-between">
                                                             <label class="form-label">Select Subject </label>
-                                                            <button type="button" data-bs-toggle="modal" data-bs-target="#addCustomSubject" class="border-0 text-primary"
+                                                            <button type="button" data-bs-toggle="modal"
+                                                                data-bs-target="#addCustomSubject"
+                                                                class="border-0 text-primary"
                                                                 style="background: transparent"><i
-                                                                    class="icon-settings"></i> Customize Subject</button>
+                                                                    class="icon-settings"></i> Customize
+                                                                Subject</button>
                                                         </div>
                                                         <select class="form-select" id="selectMassSubject"
                                                             name="subject" aria-label="Select Subject">
-                                                         
+
                                                         </select>
 
                                                     </div>
                                                     <div class="d-flex justify-content-between w-100">
-                                                        <button class="btn btn-outline-info"><i class="icon-eye"></i>
+                                                        <button type="button" onclick="Support.OpenPreview('{{ route('getTempView') }}', '{{ $user }}')"
+                                                            class="btn btn-outline-info"><i class="icon-eye"></i>
                                                             Preview</button>
                                                         <button class="btn btn-success " type="button"
                                                             onclick="Pipeline.SendMultipleEmail('{{ route('sentProgressMassMail') }}', '{{ route('getLeadDetails') }}', '{{ route('checkMassMailValidity') }}')"><i
@@ -538,7 +545,9 @@
                                 <div class="accordion" id="settingsMailAccordion">
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="emailTemplateHeading">
-                                            <button class="accordion-button collapsed" type="button"
+                                            <button
+                                                onclick="Pipeline.LoadTempSig('{{ route('LoadTempSig') }}?user_id={{ $user }}&type=template', 'template', '{{ route('DisableEmTempSig') }}')"
+                                                class="accordion-button collapsed" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#emailTemplates"
                                                 aria-expanded="false" aria-controls="emailTemplates">
                                                 <h5 class="m-0"><i class="icon-file_copy"></i> Email Templates</h5>
@@ -566,7 +575,9 @@
                                     </div>
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="emailSignatureTitle">
-                                            <button class="accordion-button collapsed" type="button"
+                                            <button
+                                                onclick="Pipeline.LoadTempSig('{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature', 'signature', '{{ route('DisableEmTempSig') }}')"
+                                                class="accordion-button collapsed" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#emailSignature"
                                                 aria-expanded="false" aria-controls="emailSignature">
                                                 <h5 class="m-0"><i class="icon-wysiwyg"></i> Email Signature</h5>
@@ -857,7 +868,8 @@
                 <h5 class="modal-title" id="staticBackdropLabel">
                     Subject List
                 </h5>
-                <button style="filter: brightness(0) invert(1);" type="button" class="btn-close"data-bs-toggle="modal" data-bs-target="#sendMail" aria-label="Close"></button>
+                <button style="filter: brightness(0) invert(1);" type="button"
+                    class="btn-close"data-bs-toggle="modal" data-bs-target="#sendMail" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="card">
@@ -868,12 +880,15 @@
                             <input type="hidden" name="user_id" value="{{ $user }}">
                             <div class="m-0">
                                 <label class="form-label">Subject Content</label>
-                                <input type="text" name="subjectContent" id="addEmailSubjectContent" class="form-control" placeholder="Subject Content"/>
-                                <small id="addEmailSubjectContentE" style="display: none" class="text-danger">Nothing to add please type something</small>
+                                <input type="text" name="subjectContent" id="addEmailSubjectContent"
+                                    class="form-control" placeholder="Subject Content" />
+                                <small id="addEmailSubjectContentE" style="display: none" class="text-danger">Nothing
+                                    to add please type something</small>
                             </div>
                             <div class="m-0 mt-2">
                                 <label class="form-label">Affiliated Service (Optional)</label>
-                                <select id="affiliatedServiceAdd" name="affiliatedService" class="form-select" aria-label="Default select example">
+                                <select id="affiliatedServiceAdd" name="affiliatedService" class="form-select"
+                                    aria-label="Default select example">
                                     <option selected="None">None</option>
                                     <option value="IT Service">IT Service</option>
                                     <option value="BPO">BPO</option>
@@ -881,29 +896,31 @@
                                 </select>
                             </div>
                             <div class="d-flex justify-content-end w-100 mt-4">
-                                 <button type="button" onclick="Pipeline.AddEmailSubject('{{ route('addEmailSubject') }}', '{{ route('loadEmailSubject') }}?user_id={{ $user }}&filter=all')" class="btn btn-success"><i class="icon-plus"></i> Add</button>
+                                <button type="button"
+                                    onclick="Pipeline.AddEmailSubject('{{ route('addEmailSubject') }}', '{{ route('loadEmailSubject') }}?user_id={{ $user }}&filter=all')"
+                                    class="btn btn-success"><i class="icon-plus"></i> Add</button>
                             </div>
                         </form>
                     </div>
                 </div>
                 <div class="mt-4 card">
-                   <h5 class="card-header">Subject List</h5>
-                   <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="subjectListDataTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Subject Content</th>
-                                    <th>Affiliated Service</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    <h5 class="card-header">Subject List</h5>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="subjectListDataTable" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Subject Content</th>
+                                        <th>Affiliated Service</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                   </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -924,7 +941,9 @@
                 <h5 class="modal-title" id="staticBackdropLabel">
                     Update Subject
                 </h5>
-                <button id="closeUpdateEmailSubject" style="filter: brightness(0) invert(1);" type="button" data-bs-target="#addCustomSubject" class="btn-close" data-bs-toggle="modal" aria-label="Close"></button>
+                <button id="closeUpdateEmailSubject" style="filter: brightness(0) invert(1);" type="button"
+                    data-bs-target="#addCustomSubject" class="btn-close" data-bs-toggle="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="card">
@@ -934,12 +953,15 @@
                             <input type="hidden" name="emsub_id" id="updateEmsubId">
                             <div class="m-0">
                                 <label class="form-label">Subject Content</label>
-                                <input type="text" name="subjectContent" id="updateEmailSubjectContent" class="form-control" placeholder="Subject Content"/>
-                                <small id="updateEmailSubjectContentE" style="display: none" class="text-danger">Nothing to add please type something</small>
+                                <input type="text" name="subjectContent" id="updateEmailSubjectContent"
+                                    class="form-control" placeholder="Subject Content" />
+                                <small id="updateEmailSubjectContentE" style="display: none"
+                                    class="text-danger">Nothing to add please type something</small>
                             </div>
                             <div class="m-0 mt-2">
                                 <label class="form-label">Affiliated Service (Optional)</label>
-                                <select id="updateaffiliatedServiceAdd" name="affiliatedService" class="form-select" aria-label="Default select example">
+                                <select id="updateaffiliatedServiceAdd" name="affiliatedService" class="form-select"
+                                    aria-label="Default select example">
                                     <option selected="None">None</option>
                                     <option value="IT Service">IT Service</option>
                                     <option value="BPO">BPO</option>
@@ -947,14 +969,16 @@
                                 </select>
                             </div>
                             <div class="d-flex justify-content-end w-100 mt-4">
-                                 <button type="button" onclick="Pipeline.UpdateEmailSubject('{{ route('updateEmailSubject') }}', '{{ route('loadEmailSubject') }}?user_id={{ $user }}&filter=all', '{{ route('disableEmailSubject') }}')" class="btn btn-success"><i class="icon-edit"></i> Update</button>
+                                <button type="button"
+                                    onclick="Pipeline.UpdateEmailSubject('{{ route('updateEmailSubject') }}', '{{ route('loadEmailSubject') }}?user_id={{ $user }}&filter=all', '{{ route('disableEmailSubject') }}')"
+                                    class="btn btn-success"><i class="icon-edit"></i> Update</button>
                             </div>
                         </form>
                     </div>
                 </div>
-           
+
             </div>
-          
+
         </div>
     </div>
 </div>
@@ -1002,3 +1026,34 @@
     @csrf
     <input type="hidden" name="emsub_id" id="disableEmsubId">
 </form>
+
+
+<div class="modal fade" id="previewTempModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Preview Template
+                </h5>
+                <button style="filter: brightness(0) invert(1);" type="button" class="btn-close" data-bs-target="#sendMail" data-bs-toggle="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               <div class="card">
+                <div class="card-header">
+                    <h5 class="lead">Subject: <span id="subPreviewMassEmail"></span></h5>
+                </div>
+                <div class="card-body" id="tempPreviewMassEmail">
+                    
+                </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+
+                <button data-bs-toggle="modal" data-bs-target="#sendMail" type="button" class="btn btn-primary">
+                  Okay
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

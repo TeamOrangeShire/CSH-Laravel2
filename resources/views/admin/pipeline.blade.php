@@ -10,6 +10,8 @@
 
         @include('admin.components.loading')
 		@include('admin.components.queueMail')
+		@include('admin.components.snackbar')
+		@include('admin.components.minimize')
 		<!-- Page wrapper start -->
 		<div class="page-wrapper">
 
@@ -50,7 +52,7 @@
                                         <div class="d-flex w-100 justify-content-between mb-4">
                                             <div class="card-title">Pipeline Module</div>
                                              <div class="d-flex gap-4">
-                                                <button data-bs-toggle="modal" data-bs-target="#sendMail" class="btn btn-primary"><i class="icon-mail"></i> Send Mail</button>
+                                                <button data-bs-toggle="modal" onclick="Pipeline.LoadActiveSignature('{{ route('LoadActiveSignature') }}?user_id={{ $user }}')" data-bs-target="#sendMail" class="btn btn-primary"><i class="icon-mail"></i> Send Mail</button>
                                                 <button data-bs-toggle="modal" data-bs-target="#addCSVLeads" class="btn btn-primary"><i class="icon-file-text"></i> Add CSV/Excel</button>
                                                 <button data-bs-toggle="modal" data-bs-target="#addLeads" class="btn btn-primary"><i class="icon-plus-circle"></i> Add Leads</button>
                                              </div>
@@ -101,10 +103,6 @@
     <script src="{{ asset('backend/pipeline.js') }}"></script>
     <script>
         window.onload = ()=>{
-			Pipeline.LoadTempSig("{{ route('LoadTempSig') }}?user_id={{ $user }}&type=signature", "signature", "{{ route('DisableEmTempSig') }}");
-			Pipeline.LoadTempSig("{{ route('LoadTempSig') }}?user_id={{ $user }}&type=template", "template", "{{ route('DisableEmTempSig') }}");
-			Pipeline.LoadActiveSignature("{{ route('LoadActiveSignature') }}?user_id={{ $user }}");
-			LoadLeadMassEmail("{{ route('massEmailLeads') }}?user_id={{ $user }}&filter=all");
             LoadLead("{{ route('loadPipeline') }}?state={{ $state }}&user_id={{ $user }}", "{{ route('getLeadDetails') }}", "{{ route('disableLead') }}");
         }
     </script>

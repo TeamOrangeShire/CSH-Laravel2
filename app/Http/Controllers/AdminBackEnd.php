@@ -348,7 +348,7 @@ class AdminBackEnd extends Controller
     }
 
     public function EmailTracking($id){
-        $email = CshSentMail::find($id);
+        $email = CshSentMail::where('se_id', $id)->first();
         if ($email) {
           $email->update(['se_status'=>2]);
         }
@@ -373,7 +373,37 @@ class AdminBackEnd extends Controller
     }
 
     public function SentProgressMassMail(Request $req){
+        EmailCred($req->user_id);
+
+        $user = CshUser::where('user_id', $req->user_id)->first();
+        $conf = CshEmailConfig::where('user_id', $req->user_id)->first();
+        $temp = CshEmailTemplate::where('emtemp_id', $req->template_id)->first();
+        $sig = CshEmailSignature::where('emsig_status', 2)->where('user_id', $req->user_id)->first();
+        $subject = CshEmailSubject::where('emsub_id', $req->subject_id)->first();
+        $lead = CshPipeline::where('pl_id', $req->pl_id)->first();
+        $conc_mess = $temp->emtemp_content . "<br>" . $sig->emsig_content;
+        $replacements = [
+            '{reciever name}' => explode(' ', $lead->pl_name)[0],
+            '{sender name}' => explode(' ', $user->user_name)[0],
+        ];
+        $message = str_replace(array_keys($replacements), array_values($replacements), $conc_mess);
         
+         $sent = new CshSentMail();
+         $sent->pl_id = $req->pl_id;
+         $sent->se_subject = $subject->emsub_content;
+         $sent->se_message = $message;
+         $sent->se_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+         $sent->se_level = '1';
+         $sent->se_status = '1';
+         $sent->save();
+
+         $mail = Mail::to($lead->pl_email)->send(new SendCustomMail($subject->emsub_content, $message, $sent->se_id, $conf->econf_from_address, $user->user_name));
+         if($mail){
+            return response()->json(['status'=>'success']);
+         }else{
+            CshSentMail::where('se_id', $sent->se_id)->first()->delete();
+            return response()->json(['status'=>'fail']);
+         }
     }
 
     public function AddEmailSubject(Request $req){
@@ -409,5 +439,15 @@ class AdminBackEnd extends Controller
          ]);
    
          return response()->json(['status'=>'success']);
+    }
+
+    public function GetTempView(Request $req){
+        $temp = CshEmailTemplate::where('emtemp_id', $req->temp_id)->first();
+        $sub = CshEmailSubject::where('emsub_id', $req->sub_id)->first();
+        $sig = CshEmailSignature::where('user_id', $req->user_id)->where('emsig_status', 2)->first();
+
+        $template = $temp->emtemp_content  . $sig->emsig_content;
+
+        return response()->json(['template'=>$template, 'sub'=> $sub->emsub_content]);
     }
 }

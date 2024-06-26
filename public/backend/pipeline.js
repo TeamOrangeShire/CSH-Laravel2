@@ -276,8 +276,7 @@ const Pipeline = {
                                             onclick="EditTempSig('signature', '${e.emsig_id}', '#emailSignatureEditor', '${route}', '${dis}')" 
                                             data-bs-target="#addEmailSignature" class="btn btn-outline-primary"><i
                                             class="icon-edit"></i> Edit</button>
-                                            <button class="btn btn-outline-info"><i
-                                            class="icon-eye"></i> View</button>
+                                       
                                             <button  onclick="Pipeline.DisableTempSig('${dis}', '${e.emsig_id}', 'signature', '${route}')" class="btn btn-outline-danger"><i
                                             class="icon-trash"></i> Delete</button>
                                             </div>
@@ -305,8 +304,7 @@ const Pipeline = {
                                             onclick="EditTempSig('template', '${e.emtemp_id}', '#emailTemplateEditor')" 
                                             class="btn btn-outline-primary"><i
                                             class="icon-edit"></i> Edit</button>
-                                            <button class="btn btn-outline-info"><i
-                                            class="icon-eye"></i> View</button>
+                                           
                                             <button onclick="Pipeline.DisableTempSig('${dis}', '${e.emtemp_id}', 'template', 'na', 'na')" class="btn btn-outline-danger"><i
                                             class="icon-trash"></i> Delete</button>
                                             </div>
@@ -560,6 +558,7 @@ const Pipeline = {
                 Support.OpenDiv('mainLoader', 'grid');
                 let ready = 1;
                 const list = document.getElementById('progressQueueMailList');
+                document.getElementById('massMailProgressBar').style.width = "0%";
                 list.innerHTML = '';
                 checkedCheckboxes.forEach(e=>{
                     $.ajax({
@@ -588,17 +587,80 @@ const Pipeline = {
                          if(ready === checkedCheckboxes.length){
                             Support.CloseDiv('mainLoader');
                             Support.OpenDiv('progressEmailQueue', 'grid');
+                            document.getElementById('loaderMailQueueID').innerHTML = `<div class="bar1"></div>
+                                    <div class="bar2"></div>
+                                    <div class="bar3"></div>
+                                    <div class="bar4"></div>
+                                    <div class="bar5"></div>
+                                    <div class="bar6"></div>
+                                    <div class="bar7"></div>
+                                    <div class="bar8"></div>
+                                    <div class="bar9"></div>
+                                    <div class="bar10"></div>
+                                    <div class="bar11"></div>
+                                    <div class="bar12"></div>`;
+                                document.getElementById('loaderMailQueueID2').innerHTML = `<div class="bar1"></div>
+                                    <div class="bar2"></div>
+                                    <div class="bar3"></div>
+                                    <div class="bar4"></div>
+                                    <div class="bar5"></div>
+                                    <div class="bar6"></div>
+                                    <div class="bar7"></div>
+                                    <div class="bar8"></div>
+                                    <div class="bar9"></div>
+                                    <div class="bar10"></div>
+                                    <div class="bar11"></div>
+                                    <div class="bar12"></div>`;        
                             const each = 100 / checkedCheckboxes.length;
                             document.getElementById('progressTotalMail').textContent = checkedCheckboxes.length;
-                            let stat = 0;
-                            checkedCheckboxes.forEach(e=>{
-                               document.getElementById('sendMultpleMailPLID').value = e.value;
-                               stat += Pipeline.CheckMultipleEmailValidity(route);
-                               const percent = stat * each;
-                               
-                               document.getElementById('massMailProgressPercentage').textContent = percent.toFixed(2);
-                               document.getElementById('massMailProgressBar').style.width = percent;
-                               document.getElementById('progressSentMail').textContent = stat;
+                            document.getElementById('minimizeProgressTotalMail').textContent = checkedCheckboxes.length;
+
+                            var stat = 0;
+                            let success = 0;
+                            checkedCheckboxes.forEach( e => {
+                               Support.AsVal('sendMultpleMailPLID', e.value);
+                               Support.AsVal('sendMultpleMailTempId', document.getElementById('selectMassTemplate').value);
+                               Support.AsVal('sendMultpleMailSubjectId', document.getElementById('selectMassSubject').value);
+                              
+                               $.ajax({
+                                 type: "POST",
+                                 url: route,
+                                 data: $('form#sendMultipleMailQueue').serialize(),
+                                 success: res=> {
+                                    stat++;
+                                    const percent = stat * each;
+                                    if(res.status === 'success'){
+                                        success++;
+                                        document.getElementById('massMailProgressPercentage').textContent = percent.toFixed(2);
+                                        document.getElementById('massMailProgressBar').style.width = percent + "%";
+                                        document.getElementById('progressSentMail').textContent = stat;
+                                        document.getElementById('minimizeProgressSentMail').textContent = stat;
+                                        const li = document.getElementById(`mailQueueList${e.value}`);
+                                        const child = li.querySelector('.loaderMailQueue');
+                                        child.remove();
+                                        li.innerHTML += '<i class="text-success icon-check-circle"></i>';
+
+                                        if(stat === checkedCheckboxes.length){
+                                            document.getElementById('loaderMailQueueID').innerHTML= '<i class="text-success icon-check-circle"></i>';
+                                            document.getElementById('loaderMailQueueID2').innerHTML= '<i class="text-success icon-check-circle"></i>';
+                                            Support.OpenDiv('closeMinimizeProgressMailButton', '');
+                                            Support.OpenDiv('closeProgressMailButton', '');
+                                            Support.CloseDiv('minimizeProgressMailButton');
+                                            Support.CloseDiv('maximizeProgressMailButton');
+                                        }
+                                    }else{
+                                        const li = document.getElementById(`mailQueueList${e.value}`);
+                                        const child = li.querySelector('.loaderMailQueue');
+                                       
+                                        child.innerHTML = `<div class="d-flex gap-4">
+                                        <p class="text-danger">Failed</p><button class="border-0 bg-transparent" 
+                                        onclick="Pipeline.Resend('${route}','${e.value}', '${document.getElementById('selectMassTemplate').value}', '${document.getElementById('selectMassSubject').value}','${each}', '${success}')"><i class="text-danger icon-replay"></i></button>
+                                        </div>`;
+                                    }
+                                 }, error: xhr => console.log(xhr.responseText),
+                               });
+                              
+                          
                             });
                          }
                          ready++;
@@ -612,11 +674,46 @@ const Pipeline = {
           }, ()=> console.log('cancel')
         );
         }
-    }, SendMultipleMailQueue: route => {
-      console.log(route);
+    },Resend: (route, pl_id, temp, sub, each, stat) => {
+        Support.AsVal('sendMultpleMailPLID', pl_id);
+        Support.AsVal('sendMultpleMailTempId', temp);
+        Support.AsVal('sendMultpleMailSubjectId', sub);
+        const percent = each * stat;
 
+        document.getElementById('massMailProgressPercentage').textContent = percent.toFixed(2);
+        document.getElementById('massMailProgressBar').style.width = percent + "%";
+        document.getElementById('progressSentMail').textContent = stat;
+        document.getElementById('minimizeProgressSentMail').textContent = stat;
 
-    }, CheckMultipleEmailValidity: async  (route, offer) => {
+        const li = document.getElementById(`mailQueueList${pl_id}`);
+        const child = li.querySelector('.loaderMailQueue');
+        child.innerHTML =`<div class="bar1"></div>
+                                    <div class="bar2"></div>
+                                    <div class="bar3"></div>
+                                    <div class="bar4"></div>
+                                    <div class="bar5"></div>
+                                    <div class="bar6"></div>
+                                    <div class="bar7"></div>
+                                    <div class="bar8"></div>
+                                    <div class="bar9"></div>
+                                    <div class="bar10"></div>
+                                    <div class="bar11"></div>
+                                    <div class="bar12"></div>`;
+        $.ajax({
+            type: "POST",
+            url: route, 
+            data: $('form#sendMultipleMailQueue').serialize(),
+            success: res=> {
+              if(res.status === 'success'){
+                const li = document.getElementById(`mailQueueList${pl_id}`);
+                const child = li.querySelector('.loaderMailQueue');
+                child.remove();
+                li.innerHTML += '<i class="text-success icon-check-circle"></i>';
+              }
+            }, error: xhr => console.log(xhr.responseText)
+        })
+    }, 
+    CheckMultipleEmailValidity: async  (route, offer) => {
         var checkboxes = document.querySelectorAll('input[name="selectedLeads[]"]');
         var checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
 

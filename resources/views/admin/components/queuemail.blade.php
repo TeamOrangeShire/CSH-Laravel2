@@ -7,6 +7,7 @@
         position: fixed;
         background-color: rgba(0,0,0,0.4);
         backdrop-filter: blur(3px);
+        flex-direction: column;
     }
     .loaderMailQueue {
   position: relative;
@@ -103,8 +104,13 @@
 <div id="progressEmailQueue" style="display: none">
     <div class="card mx-auto shadow-sm rounded w-50 bg-secondary" >
         <div class="card-header d-flex justify-content-between align-items-center border-0">
-            <h3 class="h6 lead mb-0">Progress</h3>
-             <i class="icon-info"></i>
+            
+            <div class="d-flex gap-2">
+              <i class="icon-info fs-3"></i>
+              <h3 class="h6 lead mb-0">Progress</h3>
+            </div>
+            <button title="Close" id="closeProgressMailButton" onclick="Support.CloseDiv('progressEmailQueue')" style="display: none" class="border-0 bg-transparent card-title fs-3"><i class="icon-x-circle"></i></button>
+            <button title="Minimize" id="minimizeProgressMailButton" onclick="Support.Minimize()" class="border-0 bg-transparent card-title fs-3"><i class="icon-minus-circle"></i></button>
         </div>
         <div class="card-body">
             <p class="card-text text-muted small mb-2">
@@ -114,7 +120,7 @@
                 <div class="progress-bar bg-success" role="progressbar" id="massMailProgressBar" style="width: 0%; transition: width 0.2s" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-3">
-                <div class="d-flex gap-2"> <div class="loaderMailQueue">
+                <div class="d-flex gap-2"> <div class="loaderMailQueue" id="loaderMailQueueID">
                   <div class="bar1"></div>
                   <div class="bar2"></div>
                   <div class="bar3"></div>
@@ -143,8 +149,3 @@
     </div>
     
 </div>
-{{-- 
-<li class="list-group-item d-flex justify-content-between align-items-center">
-  A second list item
-  <i class="text-success icon-check-circle"></i>
-</li> --}}

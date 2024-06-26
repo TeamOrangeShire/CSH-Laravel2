@@ -71,5 +71,6 @@ Route::post('/admin/pipelineload/addEmailSubject', [AdminBackEnd::class, 'AddEma
 Route::get('/admin/pipelineload/loadEmailSubject', [AdminBackEnd::class, 'LoadEmailSubject'])->name('loadEmailSubject');
 Route::post('/admin/pipelineload/updateEmailSubject', [AdminBackEnd::class, 'UpdateEmailSubject'])->name('updateEmailSubject');
 Route::post('/admin/pipelineload/disableEmailSubject', [AdminBackEnd::class, 'DisableEmailSubject'])->name('disableEmailSubject');
+Route::get('/admin/pipelineload/getTempView', [AdminBackEnd::class, 'GetTempView'])->name('getTempView');
 
 Route::get('/track-email/{id}', [AdminBackEnd::class, 'EmailTracking'])->name('emailTracking');
