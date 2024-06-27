@@ -6,7 +6,7 @@
 </head>
 
 <body>
-
+    @include('admin.components.loading')
     <!-- Page wrapper start -->
     <div class="page-wrapper">
 
@@ -50,7 +50,7 @@
                                        <div class="d-flex w-100 justify-content-end">
                                         <div class="m-0">
 											<label class="form-label">Filter By Service Offer</label>
-											<select class="form-select" onclick="" aria-label="serviceOffer">
+											<select class="form-select" onchange="Support.Filter('{{ route('loadSentEmail') }}', '{{ $user }}', this)" aria-label="serviceOffer">
 												<option value="all" selected>All</option>
 												<option value="IT Service">IT Service</option>
 												<option value="BPO">BPO</option>
@@ -64,23 +64,16 @@
 											<table id="emailMonitoring" class="table table-striped">
 												<thead>
 													<tr>
-														<th>Name</th>
-														<th>Position</th>
-														<th>Office</th>
-														<th>Age</th>
-														<th>Start date</th>
-														<th>Salary</th>
+														<th>Company</th>
+														<th>Contact Person</th>
+														<th>Email</th>
+														<th>Service Offer</th>
+														<th>Date Sent</th>
+														<th>Level</th>
+                                                        <th>Status</th>
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<td>Tiger Nixon</td>
-														<td>System Architect</td>
-														<td>Edinburgh</td>
-														<td>61</td>
-														<td>2021/04/25</td>
-														<td>$320,800</td>
-													</tr>
                                                 </tbody>
                                             </table>
                                         </div>

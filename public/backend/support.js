@@ -175,6 +175,103 @@ const Support = {
       const sel = document.getElementById(select);
 
       sel.value = current;
+   }, Clear: id=> {
+    document.getElementById(id).value = '';
+   }, UpdatePic: (event, id, placeholder, route) => {
+    const input = event.target;
+    const file = input.files[0];
+
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const imageElement = document.getElementById(id);
+            imageElement.remove();
+
+            // Initialize Croppie
+            const croppieContainer = document.getElementById('croppie-container');
+            croppieContainer.innerHTML = ''; 
+            const croppieInstance = new Croppie(croppieContainer, {
+                viewport: { width: 300, height: 300 },
+                boundary: { width: 400, height: 400 },
+                showZoomer: true,
+                url: e.target.result
+            });
+
+            // Add a button to get the cropped image
+            const cropButton = document.getElementById('saveProfile');
+            cropButton.onclick = function() {
+                croppieInstance.result({
+                    type: 'canvas',
+                    size: 'viewport'
+                }).then(function(croppedImage) {
+
+                    const byteString = atob(croppedImage.split(',')[1]);
+                    const mimeString = croppedImage.split(',')[0].split(':')[1].split(';')[0];
+                    const ab = new ArrayBuffer(byteString.length);
+                    const ia = new Uint8Array(ab);
+                    for (let i = 0; i < byteString.length; i++) {
+                        ia[i] = byteString.charCodeAt(i);
+                    }
+                    const blob = new Blob([ab], { type: mimeString });
+
+                    // Create a File object
+                    const newFile = new File([blob], file.name, { type: mimeString });
+
+                    // Update hidden input with cropped image file
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(newFile);
+                    document.getElementById('profile').files = dataTransfer.files;
+                    Support.OpenDiv('mainLoader', 'grid');
+                    var formData = new FormData($('form#updateProfilePicForm')[0]);
+                    $.ajax({
+                       type: "POST", 
+                       url: route,
+                       data: formData,
+                       processData: false,
+                       contentType: false,
+                       success: res=> {
+                        Support.CloseDiv('mainLoader');
+                        alertify.set('notifier', 'position', 'top-right');
+                          if(res.status === 'success'){
+                             alertify.success('Profile Picture Successfully Updated')
+                          }else if(res.status === 'invalid type'){
+                            alertify.error('Invalid type please choose jpg, jpeg or png image');
+                          }else{
+                            alertify.error('Image is too big please choose below 10MB image');
+                          }
+                       }, error: xhr=> console.log(xhr.responseText),
+                    });
+                });
+            };
+
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        document.getElementById(id).src = placeholder;
+        alert('Please select a valid image file.');
+    }
+
+   }, Logout: (route, login) => {
+    
+    Support.OpenDiv('mainLoader', 'grid');
+
+    $.ajax({
+      type: "POST",
+      url: route,
+      data: $('form#userLogoutForm').serialize(),
+      success: res => {
+
+        if(res.status === 'success'){
+            window.location.href = login;
+        }
+        
+      }, error: xhr => console.log(xhr.responseText)
+    });
+   }, Filter: (route, user, filter) => {
+     const load = `${route}?user_id=${user}&filter=${filter.value}`;
+     LoadAll(load);
    }
 }
 

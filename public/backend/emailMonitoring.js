@@ -9,18 +9,22 @@ function LoadAll(route){
                 table = $('#emailMonitoring').DataTable({
                     data: res.data,
                     columns: [
-                        {
-                            title: `<input type='checkbox' onclick="Support.SelectAll(this, '.allLeadsEmail')" id='selectAll' class='form-check-input'>`,
+                   
+                        { title: "Company", data: "company" },
+                        { title: "Contact Person", data: "name" },
+                        { title: "Email", data: "email" },
+                        { title: "Sevice Offer", data: "se_offer" },
+                        { title: "Date Sent", data: "se_date" },
+                        { title: "Level", data: "se_level" },
+                        { title: "Status ", 
                             data: null,
                             render: data => {
-                                return `<input type="checkbox" onchange="Support.UpdateSelectedLeads('selectedLeads[]', this)" name="selectedLeads[]" class="form-check-input allLeadsEmail" value="${data.pl_id}">`
+                                
+                                return `<div class="badge
+                                 bg-${data.se_status == 1 ? 'danger' : 'success'}
+                                  w-100"><h4 class="lead">${data.se_status == 1 ? 'Not Yet' : 'Seen'}</h4></div>`;
                             }
-                        },
-                        { title: "Company", data: "pl_company_name" },
-                        { title: "Name", data: "pl_name" },
-                        { title: "Email", data: "pl_email" },
-                        { title: "Service Offer", data: "pl_service_offer" },
-                      
+                         },
                     ],
                     autoWidth: false,
                     

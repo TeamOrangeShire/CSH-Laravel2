@@ -24,7 +24,7 @@ const Att = {
                             },
                             { title: "Job Title", data: "user_position" },
                             { title: "Total Hours", data: "totalHours" },
-                            { title: "Month", data: "month" },
+                            { title: "Salary", data: "month" },
                           
                         ],
                         autoWidth: false,

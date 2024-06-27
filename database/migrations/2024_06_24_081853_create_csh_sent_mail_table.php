@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id('se_id');
             $table->unsignedBigInteger('pl_id');
             $table->foreign('pl_id')->references('pl_id')->on('csh_pipeline');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('user_id')->on('csh_user');
+            $table->string('se_offer');
             $table->longtext('se_message');
             $table->string('se_subject');
             $table->string('se_date');

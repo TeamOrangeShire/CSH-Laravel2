@@ -24,6 +24,7 @@
             @php
                 $user = App\Models\CshUser::where('user_id', $user)->first();
             @endphp
+          
             <div class="col-md-9 col-10">
                 <!-- App header actions start -->
                 <div class="header-actions d-flex align-items-center justify-content-end">
@@ -40,8 +41,11 @@
                             <a class="dropdown-item d-flex align-items-center py-2" href="{{route('userSetting')}}"><i
                                     class="icon-settings fs-4 me-3"></i>Account
                                 Settings</a>
-                            <a class="dropdown-item d-flex align-items-center py-2" href="login.html"><i
-                                    class="icon-log-out fs-4 me-3"></i>Logout</a>
+                                <form method="POST" id="userLogoutForm">
+                                    @csrf
+                                </form>
+                            <button onclick="Support.Logout('{{ route('userLogout') }}', '{{ route('adminLogin') }}')" class="dropdown-item d-flex align-items-center py-2" href="login.html"><i
+                                    class="icon-log-out fs-4 me-3"></i>Logout</button>
                         </div>
                     </div>
 

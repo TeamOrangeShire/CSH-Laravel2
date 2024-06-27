@@ -6,7 +6,7 @@
 </head>
 
 <body>
-
+    @include('admin.components.loading')
     <!-- Page wrapper start -->
     <div class="page-wrapper">
 

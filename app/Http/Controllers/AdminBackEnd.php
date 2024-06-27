@@ -15,6 +15,8 @@ use App\Mail\SendCustomMail;
 use App\Models\CshUser;
 use App\Models\CshEmailSubject;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
 
 use DateTime;
@@ -397,6 +399,8 @@ class AdminBackEnd extends Controller
         
          $sent = new CshSentMail();
          $sent->pl_id = $req->pl_id;
+         $sent->user_id = $req->user_id;
+         $sent->se_offer = $lead->pl_service_offer;
          $sent->se_subject = $subject->emsub_content;
          $sent->se_message = $message;
          $sent->se_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
@@ -493,5 +497,67 @@ class AdminBackEnd extends Controller
     }
 
      return response()->json(['data'=>$employee]);
+    }
+
+    public function UpUserDetails(Request $req){
+        CshUser::where('user_id', $req->user_id)->first()
+        ->update([
+            'user_name'=>$req->fullname,
+            'user_username'=> $req->username,
+            'user_emp_id'=> $req->employeeId,
+            'user_position'=>$req->position,
+        ]);
+
+        return response()->json(['status'=>'success']);
+    }
+
+    public function ChangePassword(Request $req){
+        $user = CshUser::where('user_id', $req->user_id)->first();
+
+        if(Hash::check($req->currentPass, $user->user_password)){
+            $user->update(['user_password'=> Hash::make($req->newPass)]);
+            return response()->json(['status'=>'success']);
+        }else{
+            return response()->json(['status'=>'failed']);
+        }
+    }
+
+    public function ChangeProfilePic(Request $req){
+        $user = CshUser::where('user_id', $req->user_id)->first();
+
+        $pic = $req->file('profile');
+
+        if(!in_array($pic->getClientOriginalExtension(), ['jpg', 'jpeg', 'png'])){
+            return response()->json(['status'=>'invalid type']);
+        }
+
+        if($pic->getSize() > 10485760){
+            return response()->json(['status'=>'too big']);
+        }
+        $filename ='User'. $user->user_id . ".".$pic->getClientOriginalExtension();
+        $pic->move(public_path('assets/user'),  $filename);
+        $user->update([
+            'user_pic'=>$filename,
+        ]);
+
+        return response()->json(['status'=>'success']);
+    }
+
+    public function UserLogout(Request $req){
+
+        return response()->json(['status'=> 'success'])->cookie(cookie()->forget('admin_id'));
+    }
+
+    public function LoadSentEmail(Request $req){
+       $mail = $req->filter === 'all' ? CshSentMail::where('user_id', $req->user_id)->get() : CshSentMail::where('user_id', $req->user_id)->where('se_offer', $req->filter)->get();
+       
+       foreach($mail as $m){
+         $lead = CshPipeline::where('pl_id', $m->pl_id)->first();
+         $m->company = $lead->pl_company_name;
+         $m->name = $lead->pl_name;
+         $m->email = $lead->pl_email;
+       }
+
+       return response()->json(['data'=>$mail]);
     }
 }

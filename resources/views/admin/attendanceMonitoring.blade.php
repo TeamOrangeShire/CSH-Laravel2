@@ -6,7 +6,7 @@
 </head>
 
 <body>
-
+    @include('admin.components.loading')
     <!-- Page wrapper start -->
     <div class="page-wrapper">
 
@@ -89,7 +89,7 @@
                                                         <th>Name</th>
                                                         <th>Job Title</th>
                                                         <th>Total Hours</th>
-                                                        <th>Month</th>
+                                                        <th>Salary</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
