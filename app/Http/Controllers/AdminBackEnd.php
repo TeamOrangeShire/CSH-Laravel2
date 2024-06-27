@@ -100,31 +100,31 @@ class AdminBackEnd extends Controller
             $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Lead')->where('pl_active', 1)->get();
             break;
         case "PROSPECTS":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Prospect')->where('pl_active', 1)->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Prospect')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
             break;
         case "DISCUSSION":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Discussion')->where('pl_active', 1)->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Discussion')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
             break;
         case "PROPOSAL":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Proposal')->where('pl_active', 1)->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Proposal')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
             break;
         case "NEGOTIATION":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Negotiation')->where('pl_active', 1)->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Negotiation')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
             break;
         case "CONTRACT":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Contract')->where('pl_active', 1)->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Contract')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
             break;
         case "WON":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Won')->where('pl_active', 1)->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Won')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
             break;
         case "LOST":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Lost')->where('pl_active', 1)->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Lost')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
             break;
         case "DNC":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'DNC')->where('pl_active', 1)->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'DNC')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
             break;
         default:
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_active', 1)->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
             break;
       }
 

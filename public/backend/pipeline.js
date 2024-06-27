@@ -153,44 +153,49 @@ const Pipeline = {
                 }
             });
         }
-    }, SaveCSVData: (route, load, getDetail, disable) => {
+    }, SaveCSVData: async(route, load, getDetail, disable) => {
         const length = csvData.company.length;
         const each = (1 / length) * 100;
         const progressBar = document.getElementById('progressBar');
         const progressStatus = document.getElementById('progressStatus');
         const totalData = document.getElementById('totalData');
         const savedData = document.getElementById('savedData');
-
-
+    
         for (let i = 0; i < length; i++) {
             Support.AsVal('companyNameAdd', csvData.company[i]);
             Support.AsVal('nameAdd', csvData.name[i]);
             Support.AsVal('emailAdd', csvData.email[i]);
+    
             const percentInit = (i + 1) * each;
             const percent = percentInit.toFixed(2);
-            $.ajax({
-                type: "POST",
-                url: route,
-                data: $('form#addLeadForm').serialize(),
-                success: res => {
-                    if (res.status === 'success') {
-                        progressBar.style.width = percent + "%";
-                        progressStatus.textContent = percent;
-                        totalData.textContent = length;
-                        savedData.textContent = i + 1;
-                        if (percent > 99) {
-                            document.getElementById('savingLeadsTitle').textContent = 'DONE!!'
-                            document.getElementById('doneButton').style.display = 'flex';
-                        }
-
+    
+            try {
+                const res = await $.ajax({
+                    type: "POST",
+                    url: route,
+                    data: $('form#addLeadForm').serialize(),
+                });
+    
+                if (res.status === 'success') {
+                    progressBar.style.width = percent + "%";
+                    progressStatus.textContent = percent;
+                    totalData.textContent = length;
+                    savedData.textContent = i + 1;
+    
+                    if (percent > 99) {
+                        document.getElementById('savingLeadsTitle').textContent = 'DONE!!';
+                        document.getElementById('doneButton').style.display = 'flex';
                     }
-                }, error: xhr => {
-                    console.log(xhr.responseText);
                 }
-            })
+            } catch (error) {
+                console.error(error.responseText);
+            }
+    
+            // Delay before the next request
+            await new Promise(resolve => setTimeout(resolve, 750));
         }
+    
         LoadLead(load, getDetail, disable);
-
     }, UpdateSMTPConfig: route => {
         let validity = 0;
 
