@@ -116,7 +116,7 @@
                                         Cancel
                                     </button>
                                     <button
-                                        onclick="Pipeline.UpdateLead('{{ route('updateLead') }}', '{{ route('loadPipeline') }}?state={{ $state }}&user_id={{ $user }}', '{{ route('getLeadDetails') }}')"
+                                        onclick="Pipeline.UpdateLead('{{ route('updateLead') }}', '{{ route('loadPipeline') }}?state={{ $state }}&user_id={{ $user }}', '{{ route('getLeadDetails') }}', '{{ route('disableLead') }}', '{{ route('loadMailLevel') }}')"
                                         type="button" class="btn btn-success">
                                         Submit
                                     </button>
@@ -168,7 +168,7 @@
 
                         <div class="w-100 d-flex justify-content-end">
                             <button
-                                onclick="Pipeline.AddLead('{{ route('addLead') }}', '{{ route('loadPipeline') }}?state={{ $state }}&user_id={{ $user }}', '{{ route('getLeadDetails') }}', '{{ route('disableLead') }}')"
+                                onclick="Pipeline.AddLead('{{ route('addLead') }}', '{{ route('loadPipeline') }}?state={{ $state }}&user_id={{ $user }}', '{{ route('getLeadDetails') }}', '{{ route('disableLead') }}', '{{ route('loadMailLevel') }}')"
                                 type="button" class="btn btn-success">
                                 Add
                             </button>
@@ -303,7 +303,7 @@
             </div>
             <div class="modal-footer flex-nowrap p-0">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#savingDataleads"
-                    onclick="Pipeline.SaveCSVData('{{ route('addLead') }}', '{{ route('loadPipeline') }}?state={{ $state }}&user_id={{ $user }}', '{{ route('getLeadDetails') }}', '{{ route('disableLead') }}')"
+                    onclick="Pipeline.SaveCSVData('{{ route('addLead') }}', '{{ route('loadPipeline') }}?state={{ $state }}&user_id={{ $user }}', '{{ route('getLeadDetails') }}', '{{ route('disableLead') }}', '{{ route('loadMailLevel') }}')"
                     class="btn text-primary fs-6 col-6 m-0 border-end">
                     <strong>Yes, Please</strong>
                 </button>
@@ -404,7 +404,8 @@
                                                             @foreach ($leads as $lead)
                                                                 <option
                                                                     value="{{ $lead->pl_email }}-{{ $lead->pl_id }}">
-                                                                    {{ $lead->pl_email }} ({{ $lead->pl_name }}) - {{ $lead->pl_company_name }}</option>
+                                                                    {{ $lead->pl_email }} ({{ $lead->pl_name }}) -
+                                                                    {{ $lead->pl_company_name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -437,7 +438,7 @@
                             <div class="tab-pane fade" id="massMailing" role="tabpanel">
                                 <form method="POST" id="sendMassEmailLeads">
                                     @csrf
-                                    
+
                                     <div class="row gx-2">
                                         <div class="col-sm-8">
                                             <!-- Card start -->
@@ -527,7 +528,8 @@
 
                                                     </div>
                                                     <div class="d-flex justify-content-between w-100">
-                                                        <button type="button" onclick="Support.OpenPreview('{{ route('getTempView') }}', '{{ $user }}')"
+                                                        <button type="button"
+                                                            onclick="Support.OpenPreview('{{ route('getTempView') }}', '{{ $user }}')"
                                                             class="btn btn-outline-info"><i class="icon-eye"></i>
                                                             Preview</button>
                                                         <button class="btn btn-success " type="button"
@@ -1036,23 +1038,62 @@
                 <h5 class="modal-title" id="staticBackdropLabel">
                     Preview Template
                 </h5>
-                <button style="filter: brightness(0) invert(1);" type="button" class="btn-close" data-bs-target="#sendMail" data-bs-toggle="modal" aria-label="Close"></button>
+                <button style="filter: brightness(0) invert(1);" type="button" class="btn-close"
+                    data-bs-target="#sendMail" data-bs-toggle="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-               <div class="card">
-                <div class="card-header">
-                    <h5 class="lead">Subject: <span id="subPreviewMassEmail"></span></h5>
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="lead">Subject: <span id="subPreviewMassEmail"></span></h5>
+                    </div>
+                    <div class="card-body" id="tempPreviewMassEmail">
+
+                    </div>
                 </div>
-                <div class="card-body" id="tempPreviewMassEmail">
-                    
-                </div>
-               </div>
             </div>
             <div class="modal-footer">
 
-                <button data-bs-toggle="modal" data-bs-target="#sendMail" type="button" class="btn btn-primary">
-                  Okay
+                <button data-bs-toggle="modal" data-bs-target="#sendMail" type="button"
+                    class="btn btn-primary">
+                    Okay
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="MailLevelProgress" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="MailLevelProgress" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Mail Progress
+                </h5>
+                <button type="button"  style="filter: brightness(0) invert(1);" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle m-0">
+                        <thead>
+                            <tr>
+                                <th>Mail Levels</th>
+                                <th>Date Send</th>
+                                <th>Status</th>
+                                <th>View</th>
+                            </tr>
+                        </thead>
+                        <tbody id="MailLevelProgressTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+               
             </div>
         </div>
     </div>

@@ -16,7 +16,7 @@ use App\Models\CshUser;
 use App\Models\CshEmailSubject;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Cookie;
+use App\Models\CshMailLevel;
 use Illuminate\Support\Facades\Mail;
 
 use DateTime;
@@ -97,34 +97,124 @@ class AdminBackEnd extends Controller
     public function LoadPipeline(Request $req){
       switch($req->state){
         case "LEADS":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Lead')->where('pl_active', 1)->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Lead')->where('pl_active', 1)->orderBy('updated_at', 'desc')->get();
+            foreach($data as $d){
+                $check = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                if($check){
+                    $d->email_num = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                }else{
+                    $d->email_num = 0;
+                }
+               
+            }
             break;
         case "PROSPECTS":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Prospect')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Prospect')->where('pl_active', 1)->orderBy('updated_at', 'desc')->get();
+            foreach($data as $d){
+                $check = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                if($check){
+                    $d->email_num = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                }else{
+                    $d->email_num = 0;
+                }
+               
+            }
             break;
         case "DISCUSSION":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Discussion')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Discussion')->where('pl_active', 1)->orderBy('updated_at', 'desc')->get();
+            foreach($data as $d){
+                $check = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                if($check){
+                    $d->email_num = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                }else{
+                    $d->email_num = 0;
+                }
+               
+            }
             break;
         case "PROPOSAL":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Proposal')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Proposal')->where('pl_active', 1)->orderBy('updated_at', 'desc')->get();
+            foreach($data as $d){
+                $check = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                if($check){
+                    $d->email_num = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                }else{
+                    $d->email_num = 0;
+                }
+               
+            }
             break;
         case "NEGOTIATION":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Negotiation')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Negotiation')->where('pl_active', 1)->orderBy('updated_at', 'desc')->get();
+            foreach($data as $d){
+                $check = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                if($check){
+                    $d->email_num = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                }else{
+                    $d->email_num = 0;
+                }
+               
+            }
             break;
         case "CONTRACT":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Contract')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Contract')->where('pl_active', 1)->orderBy('updated_at', 'desc')->get();
+            foreach($data as $d){
+                $check = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                if($check){
+                    $d->email_num = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                }else{
+                    $d->email_num = 0;
+                }
+               
+            }
             break;
         case "WON":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Won')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Won')->where('pl_active', 1)->orderBy('updated_at', 'desc')->get();
+            foreach($data as $d){
+                $check = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                if($check){
+                    $d->email_num = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                }else{
+                    $d->email_num = 0;
+                }
+               
+            }
             break;
         case "LOST":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Lost')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Lost')->where('pl_active', 1)->orderBy('updated_at', 'desc')->get();
+            foreach($data as $d){
+                $check = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                if($check){
+                    $d->email_num = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                }else{
+                    $d->email_num = 0;
+                }
+               
+            }
             break;
         case "DNC":
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'DNC')->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'DNC')->where('pl_active', 1)->orderBy('updated_at', 'desc')->get();
+            foreach($data as $d){
+                $check = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                if($check){
+                    $d->email_num = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                }else{
+                    $d->email_num = 0;
+                }
+               
+            }
             break;
         default:
-            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_active', 1)->orderBy('created_at', 'desc')->get();
+            $data = CshPipeline::where('user_id', $req->user_id)->where('pl_active', 1)->orderBy('updated_at', 'desc')->get();
+            foreach($data as $d){
+                $check = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                if($check){
+                    $d->email_num = CshSentMail::where('user_id', $req->user_id)->where('pl_id', $d->pl_id)->get()->count();
+                }else{
+                    $d->email_num = 0;
+                }
+               
+            }
             break;
       }
 
@@ -410,6 +500,16 @@ class AdminBackEnd extends Controller
         $sent->se_status = '1';
         $sent->save();
 
+        $level = new CshMailLevel();
+        $level->pl_id = $req->pl_id;
+        $level->ml_date1 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+        $level->ml_date2 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(3)->format('d/m/Y');
+        $level->ml_date3 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(6)->format('d/m/Y');
+        $level->ml_date4 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(9)->format('d/m/Y');
+        $level->ml_date5 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(12)->format('d/m/Y');
+        $level->ml_level = '1';
+        $level->save();
+
         Mail::to($lead->pl_email)->send(new SendCustomMail($subject->emsub_content, $message, $sent->se_id, $conf->econf_from_address, $user->user_name));
 
         return response()->json(['status' => 'success']);
@@ -418,7 +518,9 @@ class AdminBackEnd extends Controller
         if (isset($sent) && $sent->exists) {
             $sent->delete();
         }
-
+        if (isset($level) && $level->exists) {
+            $level->delete();
+        }
         return response()->json(['status' => 'fail']);
     }
     }
@@ -607,5 +709,31 @@ class AdminBackEnd extends Controller
         $user->$monthName = $totalTime;
         }
         return response()->json(['users'=>$user]);
+    }
+
+    public function LoadMailLevel(Request $req){
+        $schedule = CshMailLevel::where('pl_id', $req->pl_id)->first();
+        $schedule->status1 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date1)->where('se_level', 1)->first() ?
+        'Sent' : 'Not Yet';
+        $schedule->status2 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date2)->where('se_level', 2)->first() ?
+        'Sent' : 'Not Yet';
+        $schedule->status3 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date3)->where('se_level', 3)->first() ?
+        'Sent' : 'Not Yet';
+        $schedule->status4 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date4)->where('se_level', 4)->first() ?
+        'Sent' : 'Not Yet';
+        $schedule->status5 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date5)->where('se_level', 5)->first() ?
+        'Sent' : 'Not Yet';
+
+        $schedule->view1 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date1)->where('se_level', 1)->where('se_status',2)->first() ?
+        'Seen' : 'Not Yet';
+        $schedule->view2 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date2)->where('se_level', 2)->where('se_status',2)->first() ?
+        'Seen' : 'Not Yet';
+        $schedule->view3 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date3)->where('se_level', 3)->where('se_status',2)->first() ?
+        'Seen' : 'Not Yet';
+        $schedule->view4 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date4)->where('se_level', 4)->where('se_status',2)->first() ?
+        "Seen" : 'Not Yet';
+        $schedule->view5 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date5)->where('se_level', 5)->where('se_status',2)->first() ?
+        'Seen' : 'Not Yet';
+        return response()->json(['schedule'=>$schedule]);
     }
 }

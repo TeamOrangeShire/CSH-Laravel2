@@ -272,6 +272,39 @@ const Support = {
    }, Filter: (route, user, filter) => {
      const load = `${route}?user_id=${user}&filter=${filter.value}`;
      LoadAll(load);
-   }
+   }, Order: (text, type) => {
+    
+    if(type == 'text'){
+        switch(text){
+            case 1:
+                return '1st Email';
+            case 2:
+                return '2nd Email';
+            case 3:
+                return '3rd Email';
+            case 4:
+                return '4th Email';
+            case 5:
+                return '5th Email';
+            default:
+                return '0 Email Sent';
+        }
+    }else{
+        switch(text){
+            case 1:
+                return 'dark';
+            case 2:
+                return 'warning';
+            case 3:
+                return 'info';
+            case 4:
+                return 'success';
+            case 5:
+                return 'success';
+            default:
+                return 'danger';
+        }
+    }
+   }, 
 }
 

@@ -103,7 +103,7 @@
     <script src="{{ asset('backend/pipeline.js') }}"></script>
     <script>
         window.onload = ()=>{
-            LoadLead("{{ route('loadPipeline') }}?state={{ $state }}&user_id={{ $user }}", "{{ route('getLeadDetails') }}", "{{ route('disableLead') }}");
+            LoadLead("{{ route('loadPipeline') }}?state={{ $state }}&user_id={{ $user }}", "{{ route('getLeadDetails') }}", "{{ route('disableLead') }}", "{{ route('loadMailLevel') }}");
         }
     </script>
 	</body>

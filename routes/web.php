@@ -74,6 +74,7 @@ Route::get('/admin/pipelineload/loadEmailSubject', [AdminBackEnd::class, 'LoadEm
 Route::post('/admin/pipelineload/updateEmailSubject', [AdminBackEnd::class, 'UpdateEmailSubject'])->name('updateEmailSubject');
 Route::post('/admin/pipelineload/disableEmailSubject', [AdminBackEnd::class, 'DisableEmailSubject'])->name('disableEmailSubject');
 Route::get('/admin/pipelineload/getTempView', [AdminBackEnd::class, 'GetTempView'])->name('getTempView');
+Route::get('/admin/pipelineload/loadSentMail', [AdminBackEnd::class, 'LoadMailLevel'])->name('loadMailLevel');
 
 Route::get('/admin/monitoring/email/load', [AdminBackEnd::class, 'LoadSentEmail'])->name('loadSentEmail');
 Route::get('/admin/monitoring/attendance/load', [AdminBackEnd::class, 'AttMonLoad'])->name('attMonLoad');

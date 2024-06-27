@@ -1,6 +1,7 @@
 let table;
 let tablesSubject;
 let csvData;
+let mailLevels;
 const Pipeline = {
     ShowLead: route => {
         $.ajax({
@@ -38,7 +39,7 @@ const Pipeline = {
             }
         });
     },
-    UpdateLead: (route, load, detail) => {
+    UpdateLead: (route, load, detail, disable, level) => {
         document.getElementById('mainLoader').style.display = 'grid';
         $.ajax({
             type: "POST",
@@ -50,14 +51,14 @@ const Pipeline = {
                     alertify.set('notifier', 'position', 'top-center');
                     alertify.success('Successfully Updated lead');
                     document.getElementById('closeUpdatelead').click();
-                    LoadLead(load, detail);
+                    LoadLead(load, detail, disable, level);
                 }
             }, error: xhr => {
                 console.log(xhr.responseText);
             }
         });
     },
-    DisableLead: (route, load, detail, id) => {
+    DisableLead: (route, load, detail, id, level) => {
         Support.AsVal('disablePl_id', id);
         alertify.confirm("Remove Lead?", "Are you sure you want to delete this lead?",
             () => {
@@ -72,7 +73,7 @@ const Pipeline = {
                             alertify.set('notifier', 'position', 'top-center');
                             alertify.success('Successfully Updated lead');
                             document.getElementById('closeUpdatelead').click();
-                            LoadLead(load, detail, route);
+                            LoadLead(load, detail, route, level);
                         }
                     }, error: xhr => {
                         console.log(xhr.responseText);
@@ -81,7 +82,7 @@ const Pipeline = {
             }, () => console.log('cancel')
         )
     },
-    AddLead: (route, load, detail) => {
+    AddLead: (route, load, detail, disable, level) => {
         if (document.getElementById('companyNameAdd').value == '' && document.getElementById('nameAdd').value == '' && document.getElementById('emailAdd').value == '') {
             alertify.alert('No Data Found', 'Opps.... Please provide altleast one information to proceed');
         } else {
@@ -101,7 +102,7 @@ const Pipeline = {
                         document.getElementById('emailAdd').value = '';
                         $('#sentEmail').DataTable().destroy();
                         document.getElementById('closeAddLead').click();
-                        LoadLead(load, detail);
+                        LoadLead(load, detail, disable, level);
                     }
                 }, error: xhr => {
                     console.log(xhr.responseText);
@@ -153,35 +154,35 @@ const Pipeline = {
                 }
             });
         }
-    }, SaveCSVData: async(route, load, getDetail, disable) => {
+    }, SaveCSVData: async (route, load, getDetail, disable, level) => {
         const length = csvData.company.length;
         const each = (1 / length) * 100;
         const progressBar = document.getElementById('progressBar');
         const progressStatus = document.getElementById('progressStatus');
         const totalData = document.getElementById('totalData');
         const savedData = document.getElementById('savedData');
-    
+
         for (let i = 0; i < length; i++) {
             Support.AsVal('companyNameAdd', csvData.company[i]);
             Support.AsVal('nameAdd', csvData.name[i]);
             Support.AsVal('emailAdd', csvData.email[i]);
-    
+
             const percentInit = (i + 1) * each;
             const percent = percentInit.toFixed(2);
-    
+
             try {
                 const res = await $.ajax({
                     type: "POST",
                     url: route,
                     data: $('form#addLeadForm').serialize(),
                 });
-    
+
                 if (res.status === 'success') {
                     progressBar.style.width = percent + "%";
                     progressStatus.textContent = percent;
                     totalData.textContent = length;
                     savedData.textContent = i + 1;
-    
+
                     if (percent > 99) {
                         document.getElementById('savingLeadsTitle').textContent = 'DONE!!';
                         document.getElementById('doneButton').style.display = 'flex';
@@ -190,12 +191,12 @@ const Pipeline = {
             } catch (error) {
                 console.error(error.responseText);
             }
-    
+
             // Delay before the next request
             await new Promise(resolve => setTimeout(resolve, 750));
         }
-    
-        LoadLead(load, getDetail, disable);
+
+        LoadLead(load, getDetail, disable, level);
     }, UpdateSMTPConfig: route => {
         let validity = 0;
 
@@ -322,15 +323,15 @@ const Pipeline = {
         }
     }, UpdateEmailTempSig: (route, type, load, dis) => {
         Support.AsVal('tempSigTypeUpdate', type);
-        if(type === 'signature'){
-            if(Support.CheckError('sigName', 'sigNameE')===1){
+        if (type === 'signature') {
+            if (Support.CheckError('sigName', 'sigNameE') === 1) {
                 Support.AsVal('tempSigNameUpdate', document.getElementById('sigName').value);
                 Support.AsVal('tempSigContentUpdate', $('#emailSignatureEditor').summernote('code'));
                 var notif = 'Email Signature is successfully updated';
                 var close = 'closeUpdateTempButton';
             }
-        }else{
-            if(Support.CheckError('tempName', 'tempNameE')===1){
+        } else {
+            if (Support.CheckError('tempName', 'tempNameE') === 1) {
                 Support.AsVal('tempSigNameUpdate', document.getElementById('tempName').value);
                 Support.AsVal('tempSigContentUpdate', $('#emailTemplateEditor').summernote('code'));
                 var notif = 'Email Template is successfully updated';
@@ -341,11 +342,11 @@ const Pipeline = {
         Support.OpenDiv('mainLoader', 'grid');
 
         $.ajax({
-            type:"POST",
+            type: "POST",
             url: route,
             data: $('form#emailTempSigUpdate').serialize(),
-            success: res=>{
-                if(res.status === 'success'){
+            success: res => {
+                if (res.status === 'success') {
                     Support.CloseDiv('mainLoader');
                     alertify.set('notifier', 'position', 'top-right');
                     alertify.success(notif);
@@ -355,55 +356,55 @@ const Pipeline = {
             }, error: xhr => console.log(xhr.responseText)
         })
     }, DisableTempSig: (route, id, type, load) => {
-       alertify.confirm('Confirm Delete', `Are you sure do you want to delete this ${type}?`,
-        ()=>{
-          Support.AsVal('disEmTempSigId', id);
-          Support.AsVal('disEmTempSigType', type);
+        alertify.confirm('Confirm Delete', `Are you sure do you want to delete this ${type}?`,
+            () => {
+                Support.AsVal('disEmTempSigId', id);
+                Support.AsVal('disEmTempSigType', type);
 
-          Support.OpenDiv('mainLoader', 'grid');
+                Support.OpenDiv('mainLoader', 'grid');
 
-          $.ajax({
-            type: "POST",
-            url: route,
-            data: $('form#disableEmTempSig').serialize(),
-            success: res=>{
-               if(res.status === 'success'){
-                Support.CloseDiv('mainLoader');
-                alertify.set('notifier', 'position', 'top-right');
-                alertify.error(`${type} is successfully deleted`);
-                Pipeline.LoadTempSig(load, type, route)
-               }
-            }, error: xhr => console.log(xhr),
-          });
-        }, ()=> console.log('cancel')
-       )
+                $.ajax({
+                    type: "POST",
+                    url: route,
+                    data: $('form#disableEmTempSig').serialize(),
+                    success: res => {
+                        if (res.status === 'success') {
+                            Support.CloseDiv('mainLoader');
+                            alertify.set('notifier', 'position', 'top-right');
+                            alertify.error(`${type} is successfully deleted`);
+                            Pipeline.LoadTempSig(load, type, route)
+                        }
+                    }, error: xhr => console.log(xhr),
+                });
+            }, () => console.log('cancel')
+        )
     }, SwitchToActiveSig: (route, load, dis) => {
         alertify.confirm("Switch Active Signature", "Are you sure do you want to switch to this email signature?",
-            ()=>{
-             Support.OpenDiv('mainLoader', 'grid');
-             $.ajax({
-               type: "POST",
-               url: route,
-               data: $('form#switchToActiveForm').serialize(),
-               success: res=>{
-                if(res.status === 'success'){
-                    Support.CloseDiv('mainLoader');
-                    Pipeline.LoadTempSig(load, 'signature', dis);
-                    document.getElementById('closeUpdateSigButton').click();
-                }
-               }, error: xhr => console.log(xhr.responseText),
-             });
+            () => {
+                Support.OpenDiv('mainLoader', 'grid');
+                $.ajax({
+                    type: "POST",
+                    url: route,
+                    data: $('form#switchToActiveForm').serialize(),
+                    success: res => {
+                        if (res.status === 'success') {
+                            Support.CloseDiv('mainLoader');
+                            Pipeline.LoadTempSig(load, 'signature', dis);
+                            document.getElementById('closeUpdateSigButton').click();
+                        }
+                    }, error: xhr => console.log(xhr.responseText),
+                });
             },
-            ()=>console.log('cancel'),
+            () => console.log('cancel'),
         )
-    }, LoadActiveSignature: route =>{
+    }, LoadActiveSignature: route => {
         $('#sendCustomMessageBox').summernote('code', '');
         $.ajax({
-            type:"GET",
+            type: "GET",
             url: route,
             dataType: "json",
-            success: res=>{
-                if(res.status === 'success'){
+            success: res => {
+                if (res.status === 'success') {
                     $('#sendCustomMessageBox').summernote('pasteHTML', '<pre><code><br><br>' + res.data.emsig_content + '</code></pre>');
                 }
             }, error: xhr => console.log(xhr.responseText),
@@ -415,83 +416,83 @@ const Pipeline = {
             type: "POST",
             url: route,
             data: $('form#sendCustomMail').serialize(),
-            success: res=>{
-              if(res.status === 'success'){
-                Support.CloseDiv('mainLoader');
-                alertify.set('notifier', 'position', 'top-right');
-                alertify.success('Message Sent');
-              }
-            },error: xhr=> console.log(xhr.responseText),
+            success: res => {
+                if (res.status === 'success') {
+                    Support.CloseDiv('mainLoader');
+                    alertify.set('notifier', 'position', 'top-right');
+                    alertify.success('Message Sent');
+                }
+            }, error: xhr => console.log(xhr.responseText),
         })
     }, FilterMassMail: (route, user, filter, subject, subdis) => {
         const fil = `${route}?user_id=${user}&filter=${filter.value}`;
         const sub = `${subject}?user_id=${user}&filter=${filter.value}`;
         LoadLeadMassEmail(fil);
         Pipeline.LoadEmailSubject(sub, subdis);
-    },AddEmailSubject: (route, load) => {
-       if(Support.CheckError('addEmailSubjectContent', 'addEmailSubjectContentE') === 1){
-         Support.OpenDiv('mainLoader', 'grid');
-
-         $.ajax({
-            type: "POST",
-            url: route,
-            data: $('form#addEmailSubject').serialize(),
-            success: res=>{
-              if(res.status === 'success'){
-                Support.CloseDiv('mainLoader');
-                alertify.set('notifier', 'position', 'top-right');
-                alertify.success('Successfully Added Email Subject');
-
-                document.getElementById('addEmailSubjectContent').value = '';
-                document.getElementById('affiliatedServiceAdd').value = 'None';
-                Pipeline.LoadEmailSubject(load);
-              }
-            },error: xhr=> console.log(xhr.responseText),
-        });
-       }
-    },GetEmailSubject: (id, content, affiliate)=> {
-       Support.AsVal('updateEmsubId', id);
-       Support.AsVal('updateEmailSubjectContent', content);
-       Support.AsVal('updateaffiliatedServiceAdd', affiliate);
-    },UpdateEmailSubject: (route, load, disable) => {
-        if(Support.CheckError('updateEmailSubjectContent', 'updateEmailSubjectContentE') === 1){
+    }, AddEmailSubject: (route, load) => {
+        if (Support.CheckError('addEmailSubjectContent', 'addEmailSubjectContentE') === 1) {
             Support.OpenDiv('mainLoader', 'grid');
-   
+
             $.ajax({
-               type: "POST",
-               url: route,
-               data: $('form#updateEmailSubject').serialize(),
-               success: res=>{
-                 if(res.status === 'success'){
-                   Support.CloseDiv('mainLoader');
-                   alertify.set('notifier', 'position', 'top-right');
-                   alertify.success('Successfully Added Email Subject');
-                   document.getElementById('closeUpdateEmailSubject').click();
-                   Pipeline.LoadEmailSubject(load, disable);
-                 }
-               },error: xhr=> console.log(xhr.responseText),
-           });
-          }
+                type: "POST",
+                url: route,
+                data: $('form#addEmailSubject').serialize(),
+                success: res => {
+                    if (res.status === 'success') {
+                        Support.CloseDiv('mainLoader');
+                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.success('Successfully Added Email Subject');
+
+                        document.getElementById('addEmailSubjectContent').value = '';
+                        document.getElementById('affiliatedServiceAdd').value = 'None';
+                        Pipeline.LoadEmailSubject(load);
+                    }
+                }, error: xhr => console.log(xhr.responseText),
+            });
+        }
+    }, GetEmailSubject: (id, content, affiliate) => {
+        Support.AsVal('updateEmsubId', id);
+        Support.AsVal('updateEmailSubjectContent', content);
+        Support.AsVal('updateaffiliatedServiceAdd', affiliate);
+    }, UpdateEmailSubject: (route, load, disable) => {
+        if (Support.CheckError('updateEmailSubjectContent', 'updateEmailSubjectContentE') === 1) {
+            Support.OpenDiv('mainLoader', 'grid');
+
+            $.ajax({
+                type: "POST",
+                url: route,
+                data: $('form#updateEmailSubject').serialize(),
+                success: res => {
+                    if (res.status === 'success') {
+                        Support.CloseDiv('mainLoader');
+                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.success('Successfully Added Email Subject');
+                        document.getElementById('closeUpdateEmailSubject').click();
+                        Pipeline.LoadEmailSubject(load, disable);
+                    }
+                }, error: xhr => console.log(xhr.responseText),
+            });
+        }
     },
     DisableEmailSubject: (route, load, id) => {
         Support.AsVal('disableEmsubId', id);
-        alertify.confirm("Delete Subject", "Are you sure do you want to delete this email subject?", 
-            ()=>{
+        alertify.confirm("Delete Subject", "Are you sure do you want to delete this email subject?",
+            () => {
                 Support.OpenDiv('mainLoader', 'grid');
                 $.ajax({
                     type: "POST",
                     url: route,
                     data: $('form#disableEmailSubject').serialize(),
-                    success: res=>{
-                      if(res.status === 'success'){
-                        Support.CloseDiv('mainLoader');
-                        alertify.set('notifier', 'position', 'top-right');
-                        alertify.success('Successfully Deleted Email Subject');
-                        Pipeline.LoadEmailSubject(load, route);
-                      }
-                    },error: xhr=> console.log(xhr.responseText),
+                    success: res => {
+                        if (res.status === 'success') {
+                            Support.CloseDiv('mainLoader');
+                            alertify.set('notifier', 'position', 'top-right');
+                            alertify.success('Successfully Deleted Email Subject');
+                            Pipeline.LoadEmailSubject(load, route);
+                        }
+                    }, error: xhr => console.log(xhr.responseText),
                 });
-            },()=> console.log('cancel'));
+            }, () => console.log('cancel'));
     },
     LoadEmailSubject: (route, disable) => {
         $.ajax({
@@ -501,7 +502,7 @@ const Pipeline = {
             success: res => {
                 const list = document.getElementById('selectMassSubject');
                 res.status === 'all' ? list.innerHTML = ` <option value="none" disabled selected> -------Select Subject------- </option>` : list.innerHTML = '';
-                res.data.forEach(e=>{
+                res.data.forEach(e => {
                     list.innerHTML += `<option value="${e.emsub_id}">
                     <p>${e.emsub_content.length > 25 ? e.emsub_content.substring(0, 25) + '.....' : e.emsub_content} (<span class="text-muted">${e.emsub_service}</span>)</p></option>`
                 })
@@ -537,7 +538,7 @@ const Pipeline = {
                 } else {
                     tablesSubject.clear().rows.add(res.data).draw();
                 }
-    
+
             }, error: xhr => {
                 console.log(xhr.responseText);
             }
@@ -550,29 +551,29 @@ const Pipeline = {
         var count = checkedCheckboxes.length;
         const temp = document.getElementById('selectMassTemplate');
 
-        if(count === 0 || temp.value === 'none'){
-           alertify.alert('Failed to proccess','No Selected Template or Leads please complete the details before proceeding');
-        }else{
-            alertify.confirm('labels changed!').set('labels', {ok:'Proceeed!', cancel:'Wait lemme Check!'}); 
+        if (count === 0 || temp.value === 'none') {
+            alertify.alert('Failed to proccess', 'No Selected Template or Leads please complete the details before proceeding');
+        } else {
+            alertify.confirm('labels changed!').set('labels', { ok: 'Proceeed!', cancel: 'Wait lemme Check!' });
             alertify.confirm(`Send ${count} Mail`, "Do you confirm that the settings you set are all correct? Please review it before proceeding..",
-            async ()=> {
-            alertify.set('notifier', 'position', 'top-center');
-            alertify.message('Please Wait...');
-            const allEmailsValid = await Pipeline.CheckMultipleEmailValidity(validity, document.getElementById('selectServiceOfferMassMail').value);
-            if(allEmailsValid && document.getElementById('selectServiceOfferMassMail').value != 'all'){
-                document.getElementById('closeSendMail').click();
-                Support.OpenDiv('mainLoader', 'grid');
-                let ready = 1;
-                const list = document.getElementById('progressQueueMailList');
-                document.getElementById('massMailProgressBar').style.width = "0%";
-                list.innerHTML = '';
-                checkedCheckboxes.forEach(e=>{
-                    $.ajax({
-                       type: "GET",
-                       url: `${load}?pl_id=${e.value}`,
-                       dataType: "json",
-                       success: res=> {
-                           list.innerHTML += ` <li id='mailQueueList${res.pipeline.pl_id}' class="list-group-item d-flex justify-content-between align-items-center">
+                async () => {
+                    alertify.set('notifier', 'position', 'top-center');
+                    alertify.message('Please Wait...');
+                    const allEmailsValid = await Pipeline.CheckMultipleEmailValidity(validity, document.getElementById('selectServiceOfferMassMail').value);
+                    if (allEmailsValid && document.getElementById('selectServiceOfferMassMail').value != 'all') {
+                        document.getElementById('closeSendMail').click();
+                        Support.OpenDiv('mainLoader', 'grid');
+                        let ready = 1;
+                        const list = document.getElementById('progressQueueMailList');
+                        document.getElementById('massMailProgressBar').style.width = "0%";
+                        list.innerHTML = '';
+                        checkedCheckboxes.forEach(e => {
+                            $.ajax({
+                                type: "GET",
+                                url: `${load}?pl_id=${e.value}`,
+                                dataType: "json",
+                                success: res => {
+                                    list.innerHTML += ` <li id='mailQueueList${res.pipeline.pl_id}' class="list-group-item d-flex justify-content-between align-items-center">
                                 ${res.pipeline.pl_name} (${res.pipeline.pl_company_name})
                             <div class="loaderMailQueue">
                                     <div class="bar1"></div>
@@ -589,11 +590,11 @@ const Pipeline = {
                                     <div class="bar12"></div>
                                 </div>
                             </li>`;
-        
-                         if(ready === checkedCheckboxes.length){
-                            Support.CloseDiv('mainLoader');
-                            Support.OpenDiv('progressEmailQueue', 'grid');
-                            document.getElementById('loaderMailQueueID').innerHTML = `<div class="bar1"></div>
+
+                                    if (ready === checkedCheckboxes.length) {
+                                        Support.CloseDiv('mainLoader');
+                                        Support.OpenDiv('progressEmailQueue', 'grid');
+                                        document.getElementById('loaderMailQueueID').innerHTML = `<div class="bar1"></div>
                                     <div class="bar2"></div>
                                     <div class="bar3"></div>
                                     <div class="bar4"></div>
@@ -605,7 +606,7 @@ const Pipeline = {
                                     <div class="bar10"></div>
                                     <div class="bar11"></div>
                                     <div class="bar12"></div>`;
-                                document.getElementById('loaderMailQueueID2').innerHTML = `<div class="bar1"></div>
+                                        document.getElementById('loaderMailQueueID2').innerHTML = `<div class="bar1"></div>
                                     <div class="bar2"></div>
                                     <div class="bar3"></div>
                                     <div class="bar4"></div>
@@ -616,71 +617,71 @@ const Pipeline = {
                                     <div class="bar9"></div>
                                     <div class="bar10"></div>
                                     <div class="bar11"></div>
-                                    <div class="bar12"></div>`;        
-                            const each = 100 / checkedCheckboxes.length;
-                            document.getElementById('progressTotalMail').textContent = checkedCheckboxes.length;
-                            document.getElementById('minimizeProgressTotalMail').textContent = checkedCheckboxes.length;
+                                    <div class="bar12"></div>`;
+                                        const each = 100 / checkedCheckboxes.length;
+                                        document.getElementById('progressTotalMail').textContent = checkedCheckboxes.length;
+                                        document.getElementById('minimizeProgressTotalMail').textContent = checkedCheckboxes.length;
 
-                            var stat = 0;
-                            let success = 0;
-                            checkedCheckboxes.forEach( e => {
-                               Support.AsVal('sendMultpleMailPLID', e.value);
-                               Support.AsVal('sendMultpleMailTempId', document.getElementById('selectMassTemplate').value);
-                               Support.AsVal('sendMultpleMailSubjectId', document.getElementById('selectMassSubject').value);
-                              
-                               $.ajax({
-                                 type: "POST",
-                                 url: route,
-                                 data: $('form#sendMultipleMailQueue').serialize(),
-                                 success: res=> {
-                                    stat++;
-                                    const percent = stat * each;
-                                    if(res.status === 'success'){
-                                        success++;
-                                        document.getElementById('massMailProgressPercentage').textContent = percent.toFixed(2);
-                                        document.getElementById('massMailProgressBar').style.width = percent + "%";
-                                        document.getElementById('progressSentMail').textContent = stat;
-                                        document.getElementById('minimizeProgressSentMail').textContent = stat;
-                                        const li = document.getElementById(`mailQueueList${e.value}`);
-                                        const child = li.querySelector('.loaderMailQueue');
-                                        child.remove();
-                                        li.innerHTML += '<i class="text-success icon-check-circle"></i>';
+                                        var stat = 0;
+                                        let success = 0;
+                                        checkedCheckboxes.forEach(e => {
+                                            Support.AsVal('sendMultpleMailPLID', e.value);
+                                            Support.AsVal('sendMultpleMailTempId', document.getElementById('selectMassTemplate').value);
+                                            Support.AsVal('sendMultpleMailSubjectId', document.getElementById('selectMassSubject').value);
 
-                                        if(stat === checkedCheckboxes.length){
-                                            document.getElementById('loaderMailQueueID').innerHTML= '<i class="text-success icon-check-circle"></i>';
-                                            document.getElementById('loaderMailQueueID2').innerHTML= '<i class="text-success icon-check-circle"></i>';
-                                            Support.OpenDiv('closeMinimizeProgressMailButton', '');
-                                            Support.OpenDiv('closeProgressMailButton', '');
-                                            Support.CloseDiv('minimizeProgressMailButton');
-                                            Support.CloseDiv('maximizeProgressMailButton');
-                                        }
-                                    }else{
-                                        const li = document.getElementById(`mailQueueList${e.value}`);
-                                        const child = li.querySelector('.loaderMailQueue');
-                                       
-                                        child.innerHTML = `<div class="d-flex gap-4">
+                                            $.ajax({
+                                                type: "POST",
+                                                url: route,
+                                                data: $('form#sendMultipleMailQueue').serialize(),
+                                                success: res => {
+                                                    stat++;
+                                                    const percent = stat * each;
+                                                    if (res.status === 'success') {
+                                                        success++;
+                                                        document.getElementById('massMailProgressPercentage').textContent = percent.toFixed(2);
+                                                        document.getElementById('massMailProgressBar').style.width = percent + "%";
+                                                        document.getElementById('progressSentMail').textContent = stat;
+                                                        document.getElementById('minimizeProgressSentMail').textContent = stat;
+                                                        const li = document.getElementById(`mailQueueList${e.value}`);
+                                                        const child = li.querySelector('.loaderMailQueue');
+                                                        child.remove();
+                                                        li.innerHTML += '<i class="text-success icon-check-circle"></i>';
+
+                                                        if (stat === checkedCheckboxes.length) {
+                                                            document.getElementById('loaderMailQueueID').innerHTML = '<i class="text-success icon-check-circle"></i>';
+                                                            document.getElementById('loaderMailQueueID2').innerHTML = '<i class="text-success icon-check-circle"></i>';
+                                                            Support.OpenDiv('closeMinimizeProgressMailButton', '');
+                                                            Support.OpenDiv('closeProgressMailButton', '');
+                                                            Support.CloseDiv('minimizeProgressMailButton');
+                                                            Support.CloseDiv('maximizeProgressMailButton');
+                                                        }
+                                                    } else {
+                                                        const li = document.getElementById(`mailQueueList${e.value}`);
+                                                        const child = li.querySelector('.loaderMailQueue');
+
+                                                        child.innerHTML = `<div class="d-flex gap-4">
                                         <p class="text-danger">Failed</p><button class="border-0 bg-transparent" 
                                         onclick="Pipeline.Resend('${route}','${e.value}', '${document.getElementById('selectMassTemplate').value}', '${document.getElementById('selectMassSubject').value}','${each}', '${success}')"><i class="text-danger icon-replay"></i></button>
                                         </div>`;
+                                                    }
+                                                }, error: xhr => console.log(xhr.responseText),
+                                            });
+
+
+                                        });
                                     }
-                                 }, error: xhr => console.log(xhr.responseText),
-                               });
-                              
-                          
+                                    ready++;
+                                }, error: xhr => console.log(xhr.responseText)
                             });
-                         }
-                         ready++;
-                       }, error: xhr=> console.log(xhr.responseText)
-                    });
-                 });
-            }else{
-              alertify.alert('Error: Check the service offer', 'Please make sure you are offering the same service on all your selected leads and make sure the filter is not set to all');
-            }
-         
-          }, ()=> console.log('cancel')
-        );
+                        });
+                    } else {
+                        alertify.alert('Error: Check the service offer', 'Please make sure you are offering the same service on all your selected leads and make sure the filter is not set to all');
+                    }
+
+                }, () => console.log('cancel')
+            );
         }
-    },Resend: (route, pl_id, temp, sub, each, stat) => {
+    }, Resend: (route, pl_id, temp, sub, each, stat) => {
         Support.AsVal('sendMultpleMailPLID', pl_id);
         Support.AsVal('sendMultpleMailTempId', temp);
         Support.AsVal('sendMultpleMailSubjectId', sub);
@@ -693,7 +694,7 @@ const Pipeline = {
 
         const li = document.getElementById(`mailQueueList${pl_id}`);
         const child = li.querySelector('.loaderMailQueue');
-        child.innerHTML =`<div class="bar1"></div>
+        child.innerHTML = `<div class="bar1"></div>
                                     <div class="bar2"></div>
                                     <div class="bar3"></div>
                                     <div class="bar4"></div>
@@ -707,19 +708,64 @@ const Pipeline = {
                                     <div class="bar12"></div>`;
         $.ajax({
             type: "POST",
-            url: route, 
+            url: route,
             data: $('form#sendMultipleMailQueue').serialize(),
-            success: res=> {
-              if(res.status === 'success'){
-                const li = document.getElementById(`mailQueueList${pl_id}`);
-                const child = li.querySelector('.loaderMailQueue');
-                child.remove();
-                li.innerHTML += '<i class="text-success icon-check-circle"></i>';
-              }
+            success: res => {
+                if (res.status === 'success') {
+                    const li = document.getElementById(`mailQueueList${pl_id}`);
+                    const child = li.querySelector('.loaderMailQueue');
+                    child.remove();
+                    li.innerHTML += '<i class="text-success icon-check-circle"></i>';
+                }
             }, error: xhr => console.log(xhr.responseText)
         })
-    }, 
-    CheckMultipleEmailValidity: async  (route, offer) => {
+    }, ShowMailProgress: (route, id) => {
+        const load = `${route}?pl_id=${id}`;
+
+        $.ajax({
+            type: "GET",
+            url: load,
+            dataType: "json",
+            success: res => {
+                const data = res.schedule;
+                const list = document.getElementById('MailLevelProgressTable');
+                list.innerHTML = `<tr>
+						           <td>1</td>
+									<td>${data.ml_date1}</td>
+									<td>${data.status1}</td>
+									<td>${data.view1}</td>
+										</tr>
+                                        <tr>
+						           <td>2</td>
+									<td>${data.ml_date2}</td>
+									<td>${data.status2}</td>
+									<td>${data.view2}</td>
+										</tr>
+                                        <tr>
+						           <td>3</td>
+									<td>${data.ml_date3}</td>
+									<td>${data.status3}</td>
+									<td>${data.view3}</td>
+										</tr>
+                                        <tr>
+						           <td>4</td>
+									<td>${data.ml_date4}</td>
+									<td>${data.status4}</td>
+									<td>${data.view4}</td>
+										</tr>
+                                        <tr>
+						           <td>5</td>
+									<td>${data.ml_date5}</td>
+									<td>${data.status5}</td>
+									<td>${data.view5}</td>
+										</tr>`;
+
+            }, error: xhr => {
+                console.log(xhr.responseText);
+            }
+        });
+    },
+    CheckMultipleEmailValidity: async (route, offer) => {
         var checkboxes = document.querySelectorAll('input[name="selectedLeads[]"]');
         var checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
 
@@ -750,14 +796,14 @@ const Pipeline = {
         } catch (error) {
             console.error("Error in validating emails", error);
             return false;
-        }    
-       
+        }
+
     }
 
-} 
+}
 let tables;
 let tablesMass;
-function LoadLead(route, getDetail, disable) {
+function LoadLead(route, getDetail, disable, level) {
     $.ajax({
         type: "GET",
         url: route,
@@ -780,7 +826,12 @@ function LoadLead(route, getDetail, disable) {
                                 return `<span class="badge fs-6 bg-${Support.CheckStatus(data.pl_status)}">${data.pl_status}</span>`
                             }
                         },
-                        { title: "Email Status", data: "pl_position" },
+                        {
+                            title: "Email Status", data: null,
+                            render: data => {
+                                return `<button onclick="Pipeline.ShowMailProgress('${level}', '${data.pl_id}')" data-bs-toggle="modal" data-bs-target="#MailLevelProgress" class="btn btn-outline-${Support.Order(data.email_num, 'button')} w-100">${Support.Order(data.email_num, 'text')}</button>`;
+                            }
+                        },
                         {
                             title: "Actions",
                             data: null,
@@ -792,7 +843,7 @@ function LoadLead(route, getDetail, disable) {
                             <i class="icon-check-circle"></i>
                         </button>
 
-                        <button onclick="Pipeline.DisableLead('${disable}', '${route}','${getDetail}', '${data.pl_id}')" class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip"
+                        <button onclick="Pipeline.DisableLead('${disable}', '${route}','${getDetail}', '${data.pl_id}', '${level}')" class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip"
                             data-bs-placement="top" data-bs-custom-class="custom-tooltip-danger"
                             data-bs-title="Delete">
                             <i class="icon-trash"></i>
@@ -834,10 +885,10 @@ function LoadLeadMassEmail(route) {
                         { title: "Name", data: "pl_name" },
                         { title: "Email", data: "pl_email" },
                         { title: "Service Offer", data: "pl_service_offer" },
-                      
+
                     ],
                     autoWidth: false,
-                    
+
                 });
             } else {
                 tablesMass.clear().rows.add(res.data).draw();
@@ -870,7 +921,7 @@ $(document).ready(function () {
     });
     $('#emailTemplateEditor').summernote({
         placeholder: 'Edit your email template here',
-        height: 300,            
+        height: 300,
         tabsize: 2,     // set editor height
         minHeight: null,             // set minimum height of editor
         maxHeight: null,             // set maximum height of edit
@@ -908,24 +959,24 @@ $(document).ready(function () {
     });
 });
 
-function EditTempSig(type, id, editor){
+function EditTempSig(type, id, editor) {
     const route = document.getElementById('getTempSigRoute').value + "?sigTemp=" + id + "&type=" + type;
-    
+
     $.ajax({
         type: "GET",
         url: route,
         dataType: 'json',
-        success: res=>{
+        success: res => {
             $(editor).summernote('code', '');
-            if(type === 'signature'){
+            if (type === 'signature') {
                 const status = document.getElementById('activeStatusSignature');
                 status.style.display = '';
-                if(res.data.emsig_status === 2){
-                   status.disabled = true;
-                   status.classList.add('btn-outline-success');
-                   status.classList.remove('btn-outline-danger');
-                   status.textContent = 'Active';
-                }else{
+                if (res.data.emsig_status === 2) {
+                    status.disabled = true;
+                    status.classList.add('btn-outline-success');
+                    status.classList.remove('btn-outline-danger');
+                    status.textContent = 'Active';
+                } else {
                     status.disabled = false;
                     status.classList.remove('btn-outline-success');
                     status.classList.add('btn-outline-danger');
@@ -938,7 +989,7 @@ function EditTempSig(type, id, editor){
                 document.getElementById('sigName').value = res.data.emsig_name;
                 $(editor).summernote('pasteHTML', '<pre><code>' + res.data.emsig_content + '</code></pre>');
                 document.getElementById('sigTempIdUpdate').value = res.data.emsig_id;
-            }else{
+            } else {
                 Support.AsText('updateTemplateHeader', 'Update Template');
                 Support.OpenDiv('updateEmailTempButton', '');
                 Support.CloseDiv('saveEmailTempButton');

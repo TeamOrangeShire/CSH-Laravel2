@@ -16,7 +16,7 @@ class CshSentMail extends Model
        'se_offer',
        'se_message',
        'se_subject',
-       'se_date ',
+       'se_date',
        'se_level',
        'se_status',
     ];
