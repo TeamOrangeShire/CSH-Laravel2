@@ -100,7 +100,7 @@
                                 <span>All</span></a>
                         </li>
                         <li>
-                            <a class="dropdown-item current-page"  href="{{ route('pipeline', ['state'=> 'leads']) }}">
+                            <a class="dropdown-item"  href="{{ route('pipeline', ['state'=> 'leads']) }}">
                                 <span>Leads</span></a>
                         </li>
                         <li>

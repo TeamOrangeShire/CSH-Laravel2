@@ -116,11 +116,19 @@ class Authenticate extends Controller
         }
   }
 
+  public function EmpProfile(Request $req){
+    $userId = $req->cookie('admin_id');
+        if($userId){
+          return view('admin.empProfile', ['user'=>$userId, 'employee'=>$req->user]);
+        }else{
+          return redirect()->route('adminLogin');
+        }
+  }
+
   public function User(Request $req){
     $userId = $req->cookie('admin_id');
         if($userId){
-          $state = $req->route('state');
-          return view('admin.user', ['user'=>$userId, 'state'=>strtoupper($state)]);
+          return view('admin.user', ['user'=>$userId]);
         }else{
           return redirect()->route('adminLogin');
         }
@@ -128,8 +136,7 @@ class Authenticate extends Controller
   public function UserSetting(Request $req){
     $userId = $req->cookie('admin_id');
         if($userId){
-          $state = $req->route('state');
-          return view('admin.userSetting', ['user'=>$userId, 'state'=>strtoupper($state)]);
+          return view('admin.userSetting', ['user'=>$userId]);
         }else{
           return redirect()->route('adminLogin');
         }

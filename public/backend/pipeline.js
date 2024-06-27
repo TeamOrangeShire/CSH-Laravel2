@@ -392,6 +392,7 @@ const Pipeline = {
             ()=>console.log('cancel'),
         )
     }, LoadActiveSignature: route =>{
+        $('#sendCustomMessageBox').summernote('code', '');
         $.ajax({
             type:"GET",
             url: route,

@@ -50,7 +50,7 @@
                                         <div class="d-flex gap-4">
                                             <div class="m-0">
                                                 <label class="form-label">Year</label>
-                                                <select onchange="Att.Filter('{{ route('attMonLoad') }}', '{{ asset('assets/user/') }}')" id="attYear" class="form-select" aria-label="Default select example">
+                                                <select onchange="Att.Filter('{{ route('attMonLoad') }}', '{{ asset('assets/user/') }}', '{{ route('empProfile') }}')" id="attYear" class="form-select" aria-label="Default select example">
                                                     <option selected value="2024">2024</option>
                                                     <option value="2025">2025</option>
                                                     <option value="2026">2026</option>
@@ -62,7 +62,7 @@
                                             </div>
                                             <div class="m-0">
                                                 <label class="form-label">Month</label>
-                                                <select onchange="Att.Filter('{{ route('attMonLoad') }}', '{{ asset('assets/user/') }}')" id="attMonth" class="form-select" aria-label="Attendance Month">
+                                                <select onchange="Att.Filter('{{ route('attMonLoad') }}', '{{ asset('assets/user/') }}', '{{ route('empProfile') }}')" id="attMonth" class="form-select" aria-label="Attendance Month">
                                                     <option value="01">January</option>
                                                     <option value="02">February</option>
                                                     <option value="03">March</option>
@@ -123,7 +123,7 @@
   <script>
     window.onload = ()=> {
         Support.SetMonth('{{  Carbon\Carbon::now()->format('m')}}','attMonth');
-        Att.LoadTable("{{ route('attMonLoad') }}?year={{ Carbon\Carbon::now()->year }}&month={{ Carbon\Carbon::now()->month }}", "{{ asset('assets/user/') }}");
+        Att.LoadTable("{{ route('attMonLoad') }}?year={{ Carbon\Carbon::now()->year }}&month={{ Carbon\Carbon::now()->month }}", "{{ asset('assets/user/') }}", "{{ route('empProfile') }}");
     }
   </script>
 </body>

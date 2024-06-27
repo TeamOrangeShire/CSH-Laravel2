@@ -42,7 +42,7 @@ Route::get('/admin/monitoring/attendance', [Authenticate::class, 'AttendanceMoni
 Route::get('/admin/monitoring/email', [Authenticate::class, 'EmailMonitoring'])->name('adminEmailMonitoring');
 Route::get('/admin/user', [Authenticate::class, 'User'])->name('user');
 Route::get('/admin/user/settings', [Authenticate::class, 'UserSetting'])->name('userSetting');
-
+Route::get('/admin/monitoring/attendance/employee', [Authenticate::class, 'EmpProfile'])->name('empProfile');
 //Admin Routes BackEnd
 Route::post('/admin/login/authenticate', [Authenticate::class, 'AdminLogin'])->name('login');
 Route::post('/admin/login/signup', [Authenticate::class, 'AdminSignup'])->name('signup');
@@ -81,6 +81,6 @@ Route::get('/admin/monitoring/attendance/load', [AdminBackEnd::class, 'AttMonLoa
 Route::post('/admin/user/settings/updateUserDetails', [AdminBackEnd::class, 'UpUserDetails'])->name('upUserDetails');
 Route::post('/admin/user/settings/changePassword', [AdminBackEnd::class, 'ChangePassword'])->name('changePassword');
 Route::post('/admin/user/settings/changeProfilePic', [AdminBackEnd::class, 'ChangeProfilePic'])->name('changeProfilePic');
-
+Route::get('/admin/monitoring/attendance/employee/loadgraph', [AdminBackEnd::class, 'LoadUserGraphs'])->name('loadUserGraphs');
 Route::get('/track-email/{id}', [AdminBackEnd::class, 'EmailTracking'])->name('emailTracking');
 Route::post('/admin/logout', [AdminBackEnd::class, 'UserLogout'])->name('userLogout');

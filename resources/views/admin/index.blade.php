@@ -42,7 +42,7 @@
 
 						@php
 							$status = App\Models\CshAttendance::where('user_id', $user)->where('att_status', 0)->first();
-							$pipe = App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1);
+							
 						@endphp
 		<!-- Row start -->
 		<div class="row gx-2">
@@ -74,7 +74,7 @@
 							</div>
 							<div class="ms-2">
 								@php
-									$leads = $pipe->where('pl_status', 'Lead')->get()->count();
+									$leads = App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Lead')->get()->count();
 								@endphp
 								<h3 class="m-0 fw-semibold">{{ $leads }}</h3>
 								<h6 class="m-0 fw-light text-light">Leads</h6>
@@ -89,7 +89,7 @@
 							</div>
 							<div class="ms-2">
 								@php
-									$prospect = $pipe->where('pl_status', 'Prospect')->get()->count();
+									$prospect = App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Prospect')->get()->count();
 								@endphp
 								<h3 class="m-0 fw-semibold">{{ $prospect }}</h3>
 								<h6 class="m-0 fw-light text-light">Prospect</h6>
@@ -104,7 +104,7 @@
 							</div>
 							<div class="ms-2">
 								@php
-									$discussion = $pipe->where('pl_status', 'Discussion')->get()->count();
+									$discussion =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Discussion')->get()->count();
 								@endphp
 								<h3 class="m-0 fw-semibold">{{ $discussion }}</h3>
 								<h6 class="m-0 fw-light text-light">Discussion</h6>
@@ -119,7 +119,7 @@
 							</div>
 							<div class="ms-2">
 								@php
-								$proposal = $pipe->where('pl_status', 'Proposal')->get()->count();
+								$proposal =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Proposal')->get()->count();
 							   @endphp
 							<h3 class="m-0 fw-semibold">{{ $proposal }}</h3>
 								<h6 class="m-0 fw-light text-light">Proposal</h6>
@@ -134,7 +134,7 @@
 							</div>
 							<div class="ms-2">
 								@php
-								$negotiation = $pipe->where('pl_status', 'Negotiation')->get()->count();
+								$negotiation =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Negotiation')->get()->count();
 							   @endphp
 							<h3 class="m-0 fw-semibold">{{ $negotiation }}</h3>
 								<h6 class="m-0 fw-light text-light">Negotiations</h6>
@@ -149,7 +149,7 @@
 							</div>
 							<div class="ms-2">
 								@php
-								$contract = $pipe->where('pl_status', 'Contract')->get()->count();
+								$contract =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Contract')->get()->count();
 							   @endphp
 							    <h3 class="m-0 fw-semibold">{{ $contract }}</h3>
 								<h6 class="m-0 fw-light text-light">Contract</h6>
@@ -164,7 +164,7 @@
 							</div>
 							<div class="ms-2">
 								@php
-								$won = $pipe->where('pl_status', 'Won')->get()->count();
+								$won =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Won')->get()->count();
 							   @endphp
 							    <h3 class="m-0 fw-semibold">{{ $won }}</h3>
 								<h6 class="m-0 fw-light text-light">Won</h6>
@@ -179,7 +179,7 @@
 							</div>
 							<div class="ms-2">
 								@php
-								$lost = $pipe->where('pl_status', 'Lost')->get()->count();
+								$lost =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Lost')->get()->count();
 							   @endphp
 							    <h3 class="m-0 fw-semibold">{{ $lost }}</h3>
 								<h6 class="m-0 fw-light text-light">Lost</h6>
@@ -194,7 +194,7 @@
 							</div>
 							<div class="ms-2">
 								@php
-								$dnc = $pipe->where('pl_status', 'DNC')->get()->count();
+								$dnc =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'DNC')->get()->count();
 							   @endphp
 							    <h3 class="m-0 fw-semibold">{{ $dnc }}</h3>
 								<h6 class="m-0 fw-light text-light">DNC</h6>
