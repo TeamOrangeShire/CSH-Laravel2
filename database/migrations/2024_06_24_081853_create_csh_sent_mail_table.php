@@ -21,6 +21,10 @@ return new class extends Migration
             $table->longtext('se_message');
             $table->string('se_subject');
             $table->string('se_date');
+            $table->unsignedBigInteger('emtemp_id');
+            $table->foreign('emtemp_id')->references('emtemp_id')->on('csh_email_template');
+            $table->unsignedBigInteger('emsub_id');
+            $table->foreign('emsub_id')->references('emsub_id')->on('csh_email_subject');
             $table->string('se_level');
             $table->string('se_status');
             $table->timestamps();

@@ -37,14 +37,14 @@ class AdminBackEnd extends Controller
                 $att->user_id = $user;
                 $att->att_time_in = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
                 $att->att_time_out = '';
-                $att->att_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+                $att->att_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('F j, Y');
                 $att->att_total_time = '';
                 $att->att_status = 0;
                 $att->save();
                 
                 $status = 'success';
                 $action = 'login';
-                $data = [Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A'), Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y')];
+                $data = [Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A'), Carbon::now()->setTimezone('Asia/Hong_Kong')->format('F j, Y')];
             }
           
         }
@@ -418,7 +418,7 @@ class AdminBackEnd extends Controller
          $sent->pl_id = explode('-', $req->recipient)[1];
          $sent->se_subject = $req->subject;
          $sent->se_message = $req->message;
-         $sent->se_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+         $sent->se_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('F j, Y');
          $sent->se_level = '1';
          $sent->se_status = '1';
          $sent->save();
@@ -495,18 +495,20 @@ class AdminBackEnd extends Controller
         $sent->se_offer = $lead->pl_service_offer;
         $sent->se_subject = $subject->emsub_content;
         $sent->se_message = $message;
-        $sent->se_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+        $sent->se_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('F j, Y');
         $sent->se_level = '1';
+        $sent->emtemp_id = $req->template_id;
+        $sent->emsub_id = $req->subject_id;
         $sent->se_status = '1';
         $sent->save();
 
         $level = new CshMailLevel();
         $level->pl_id = $req->pl_id;
-        $level->ml_date1 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
-        $level->ml_date2 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(3)->format('d/m/Y');
-        $level->ml_date3 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(6)->format('d/m/Y');
-        $level->ml_date4 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(9)->format('d/m/Y');
-        $level->ml_date5 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(12)->format('d/m/Y');
+        $level->ml_date1 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->format('F j, Y');
+        $level->ml_date2 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(3)->format('F j, Y');
+        $level->ml_date3 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(6)->format('F j, Y');
+        $level->ml_date4 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(9)->format('F j, Y');
+        $level->ml_date5 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(12)->format('F j, Y');
         $level->ml_level = '1';
         $level->save();
 

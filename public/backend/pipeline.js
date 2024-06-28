@@ -183,7 +183,7 @@ const Pipeline = {
                     totalData.textContent = length;
                     savedData.textContent = i + 1;
 
-                    if (percent > 99) {
+                    if (percent > 99.9999999) {
                         document.getElementById('savingLeadsTitle').textContent = 'DONE!!';
                         document.getElementById('doneButton').style.display = 'flex';
                     }
