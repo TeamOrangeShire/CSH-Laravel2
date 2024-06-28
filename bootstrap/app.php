@@ -25,6 +25,6 @@ return Application::configure(basePath: dirname(__DIR__))
             foreach($pipeline as $pl){
                 SendEmailJob::dispatch($pl->pl_id);
             }
-        })->timezone('Asia/Hong_Kong')->daily()->between('1:00', '3:00');;
+        })->timezone('Asia/Hong_Kong')->everyMinute();
     })->create();
 

@@ -39,8 +39,22 @@ class SendEmailJob implements ShouldQueue
     {
         $person = CshPipeline::where('pl_id', $this->pl_id)->where('pl_active', 1)->first();
         $mailLevel = CshSentMail::where('pl_id', $person->pl_id)->get()->count();
+        $dateLevel = CshMailLevel::where('pl_id',$person->pl_id)->first();
+        switch($mailLevel + 1){
+            case 2:
+                $dateNow = $dateLevel->ml_date2;
+                break;
+            case 3:
+                $dateNow = $dateLevel->ml_date3;
+                break;
+            case 4:
+                $dateNow = $dateLevel->ml_date4;
+                break;
+            case 5:
+                $dateNow = $dateLevel->ml_date5;
+        }
         EmailCred($person->user_id);
-        if($mailLevel < 5){
+        if($mailLevel < 5  && $dateNow == Carbon::now()->setTimezone('Asia/Hong_Kong')->format('F j, Y')){
             try {
                 $user = CshUser::where('user_id', $person->user_id)->first();
                 $conf = CshEmailConfig::where('user_id', $person->user_id)->first();
