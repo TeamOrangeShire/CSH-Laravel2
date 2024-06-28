@@ -9,6 +9,9 @@ use App\Jobs\SendEmailJob;
 use App\Models\CshUser;
 
 return Application::configure(basePath: dirname(__DIR__))
+->registered(function ($app) {
+    $app->usePublicPath(path: realpath(base_path('/../public_html')));
+})
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
