@@ -7,12 +7,12 @@
 <div id="bg" class="d-lg-none d-sm-block justify-content-between align-items-center w-100 border fixed-bottom bg-primary z-1" style="height: 8%">
 <div class="d-flex justify-content-between h-100 align-items-center w-100">
     <div style="width: 40%" class="h-100 d-flex justify-content-center my-auto">
-        <a href="{{ route('admin') }}" class="btn btn-primary text-white rounded-circle bg-secondary"> <i style="font-size:1.5rem" class="icon-home"></i> </a>
-        <a href="{{ route('adminAttendance') }}" class="btn btn-primary text-white rounded-circle"> <i style="font-size:1.5rem" class="icon-how_to_reg"></i> </a>
+        <button onclick="Support.Goto('{{ route('admin') }}')" type="button" class="btn btn-primary text-white rounded-circle"> <i style="font-size:1.5rem" class="icon-home"></i> </button>
+        <button onclick="Support.Goto('{{ route('adminAttendance') }}')" type="button" class="btn btn-primary text-white rounded-circle"> <i style="font-size:1.5rem" class="icon-how_to_reg"></i> </button>
     </div>
     <div style="width: 40%" class="h-100 d-flex justify-content-center my-auto">
-        <a href="{{ route('userSetting') }}"  class="btn btn-primary text-white rounded-circle"> <i style="font-size:1.5rem" class="icon-settings"></i> </a>
-        <a href="{{ route('adminEmailMonitoring') }}"  class="btn btn-primary text-white rounded-circle"> <i style="font-size:1.5rem" class="icon-mail_outline"></i> </a>
+        <button onclick="Support.Goto('{{ route('userSetting') }}')" type="button" class="btn btn-primary text-white rounded-circle"> <i style="font-size:1.5rem" class="icon-settings"></i> </button>
+        <button onclick="Support.Goto('{{ route('adminEmailMonitoring') }}')" type="button" class="btn btn-primary text-white rounded-circle"> <i style="font-size:1.5rem" class="icon-mail_outline"></i> </button>
     </div>
 
 </div>

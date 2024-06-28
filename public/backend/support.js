@@ -305,6 +305,8 @@ const Support = {
                 return 'danger';
         }
     }
-   }, 
+   }, Goto: locat => {
+     window.location.href = locat;
+   }
 }
 
