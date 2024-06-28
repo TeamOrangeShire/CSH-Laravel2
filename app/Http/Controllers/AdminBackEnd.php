@@ -504,11 +504,11 @@ class AdminBackEnd extends Controller
 
         $level = new CshMailLevel();
         $level->pl_id = $req->pl_id;
-        $level->ml_date1 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->format('F j, Y');
-        $level->ml_date2 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(3)->format('F j, Y');
-        $level->ml_date3 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(6)->format('F j, Y');
-        $level->ml_date4 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(9)->format('F j, Y');
-        $level->ml_date5 =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(12)->format('F j, Y');
+        $level->ml_date_one =  Carbon::now()->setTimezone('Asia/Hong_Kong')->format('F j, Y');
+        $level->ml_date_two =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(3)->format('F j, Y');
+        $level->ml_date_three =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(6)->format('F j, Y');
+        $level->ml_date_four =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(9)->format('F j, Y');
+        $level->ml_date_five =  Carbon::now()->setTimezone('Asia/Hong_Kong')->addDays(12)->format('F j, Y');
         $level->ml_level = '1';
         $level->save();
 

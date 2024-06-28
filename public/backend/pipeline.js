@@ -731,31 +731,31 @@ const Pipeline = {
                 const list = document.getElementById('MailLevelProgressTable');
                 list.innerHTML = `<tr>
 						           <td>1</td>
-									<td>${data.ml_date1}</td>
+									<td>${data.ml_date_one}</td>
 									<td>${data.status1}</td>
 									<td>${data.view1}</td>
 										</tr>
                                         <tr>
 						           <td>2</td>
-									<td>${data.ml_date2}</td>
+									<td>${data.ml_date_two}</td>
 									<td>${data.status2}</td>
 									<td>${data.view2}</td>
 										</tr>
                                         <tr>
 						           <td>3</td>
-									<td>${data.ml_date3}</td>
+									<td>${data.ml_date_three}</td>
 									<td>${data.status3}</td>
 									<td>${data.view3}</td>
 										</tr>
                                         <tr>
 						           <td>4</td>
-									<td>${data.ml_date4}</td>
+									<td>${data.ml_date_four}</td>
 									<td>${data.status4}</td>
 									<td>${data.view4}</td>
 										</tr>
                                         <tr>
 						           <td>5</td>
-									<td>${data.ml_date5}</td>
+									<td>${data.ml_date_five}</td>
 									<td>${data.status5}</td>
 									<td>${data.view5}</td>
 										</tr>`;

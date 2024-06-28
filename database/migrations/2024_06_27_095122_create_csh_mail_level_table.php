@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id('ml_id');
             $table->unsignedBigInteger('pl_id');
             $table->foreign('pl_id')->references('pl_id')->on('csh_pipeline');
-            $table->string('ml_date1');
-            $table->string('ml_date2');
-            $table->string('ml_date3');
-            $table->string('ml_date4');
-            $table->string('ml_date5');
+            $table->string('ml_date_one');
+            $table->string('ml_date_two');
+            $table->string('ml_date_three');
+            $table->string('ml_date_four');
+            $table->string('ml_date_five');
             $table->string('ml_level');
             $table->timestamps();
         });
