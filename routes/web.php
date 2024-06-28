@@ -37,6 +37,7 @@ Route::get('/admin',[Authenticate::class, 'Dashboard'])->name('admin');
 Route::get('/admin/login', function () { return view('admin.login');})->name('adminLogin');
 Route::get('/admin/signup', function () { return view('admin.signup');})->name('adminSignup');
 Route::get('/admin/pipeline/{state}', [Authenticate::class, 'PipeLine'])->name('pipeline');
+Route::get('/admin/pipelinemasterlist', [Authenticate::class, 'Masterlist'])->name('masterlist');
 Route::get('/admin/attendance', [Authenticate::class, 'Attendance'])->name('adminAttendance');
 Route::get('/admin/monitoring/attendance', [Authenticate::class, 'AttendanceMonitoring'])->name('adminAttendanceMonitoring');
 Route::get('/admin/monitoring/email', [Authenticate::class, 'EmailMonitoring'])->name('adminEmailMonitoring');
@@ -77,6 +78,7 @@ Route::get('/admin/pipelineload/getTempView', [AdminBackEnd::class, 'GetTempView
 Route::get('/admin/pipelineload/loadSentMail', [AdminBackEnd::class, 'LoadMailLevel'])->name('loadMailLevel');
 
 Route::get('/admin/monitoring/email/load', [AdminBackEnd::class, 'LoadSentEmail'])->name('loadSentEmail');
+Route::get('/admin/monitoring/email/load/message', [AdminBackEnd::class, 'LoadMessage'])->name('loadMessage');
 Route::get('/admin/monitoring/attendance/load', [AdminBackEnd::class, 'AttMonLoad'])->name('attMonLoad');
 
 Route::post('/admin/user/settings/updateUserDetails', [AdminBackEnd::class, 'UpUserDetails'])->name('upUserDetails');
@@ -84,4 +86,6 @@ Route::post('/admin/user/settings/changePassword', [AdminBackEnd::class, 'Change
 Route::post('/admin/user/settings/changeProfilePic', [AdminBackEnd::class, 'ChangeProfilePic'])->name('changeProfilePic');
 Route::get('/admin/monitoring/attendance/employee/loadgraph', [AdminBackEnd::class, 'LoadUserGraphs'])->name('loadUserGraphs');
 Route::get('/track-email/{id}', [AdminBackEnd::class, 'EmailTracking'])->name('emailTracking');
+
+Route::get('/admin/pipelinemasterlist/load', [AdminBackEnd::class, 'LoadMasterList'])->name('loadMasterlist');
 Route::post('/admin/logout', [AdminBackEnd::class, 'UserLogout'])->name('userLogout');

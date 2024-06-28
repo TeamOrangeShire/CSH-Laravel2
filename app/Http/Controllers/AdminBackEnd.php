@@ -738,4 +738,22 @@ class AdminBackEnd extends Controller
         'Seen' : 'Not Yet';
         return response()->json(['schedule'=>$schedule]);
     }
+
+    public function LoadMessage(Request $req){
+        $mess = CshSentMail::where('se_id', $req->message)->first();
+        $pipe = CshPipeline::where('pl_id', $mess->pl_id)->first();
+        $mess->company = $pipe->pl_company_name;
+        $mess->name = $pipe->pl_name;
+        $mess->email = $pipe->pl_email;
+        return response()->json(['data'=>$mess]);
+    }
+
+    public function LoadMasterList(){
+        $lead = CshPipeline::where('pl_active', 1)->get();
+        foreach($lead as $l){
+            $user = CshUser::where('user_id', $l->user_id)->first();
+            $l->user = $user->user_name;
+        }
+        return response()->json(['data'=>$lead]);
+    }
 }

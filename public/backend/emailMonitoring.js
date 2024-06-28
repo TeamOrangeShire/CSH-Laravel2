@@ -1,5 +1,5 @@
 let table;
-function LoadAll(route){
+function LoadAll(route, load){
     $.ajax({
         type: "GET",
         url: route,
@@ -20,9 +20,11 @@ function LoadAll(route){
                             data: null,
                             render: data => {
                                 
-                                return `<div class="badge
-                                 bg-${data.se_status == 1 ? 'danger' : 'success'}
-                                  w-100"><h4 class="lead">${data.se_status == 1 ? 'Not Yet' : 'Seen'}</h4></div>`;
+                                return `<button onclick="PreviewMessage('${load}','${data.se_id}')" type="button" 
+                                            data-bs-toggle="modal" data-bs-target="#viewMessage" 
+                                  
+                                            class="btn btn-outline-${data.se_status == 1 ? 'danger' : 'success'} text-decoration-underline">
+                                            ${data.se_status == 1 ? 'Not Yet' : 'Seen'}</button>`;
                             }
                          },
                     ],
@@ -37,4 +39,19 @@ function LoadAll(route){
             console.log(xhr.responseText);
         }
     });
+}
+
+function PreviewMessage(route, id){
+
+    $.ajax({
+        type:'GET',
+        url: `${route}?message=${id}`,
+        dataType:"json",
+        success: res=>{
+            Support.AsText('previewCompany', res.data.company);
+            Support.AsText('previewPerson', res.data.name);
+            Support.AsText('previewMail', res.data.email);
+          document.getElementById('previewMessage').innerHTML = res.data.se_message;
+        }, error: xhr => console.log(xhr.responseText)
+    })
 }

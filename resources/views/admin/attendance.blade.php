@@ -7,6 +7,7 @@
 
 <body>
     @include('admin.components.loading')
+    @include('admin.components.qrScanner', ['loc'=> 'attendance']) 
     <!-- Page wrapper start -->
     <div class="page-wrapper">
 

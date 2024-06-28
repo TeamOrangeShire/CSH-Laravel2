@@ -7,7 +7,7 @@
 	</head>
 
 	<body>
-		@include('admin.components.qrScanner') 
+		@include('admin.components.qrScanner', ['loc'=> 'home']) 
 		@include('admin.components.loading') 
 		<!-- Page wrapper start -->
 		<div class="page-wrapper">
@@ -273,7 +273,7 @@
 		<!-- Page wrapper end -->
 
 		@include('admin.components.scripts')
-		<script src="{{ asset('backend/attendance.js') }}"></script>
+	
 	</body>
 
 </html>

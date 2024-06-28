@@ -7,7 +7,7 @@
 <!-- Custom JS files -->
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 <script src="{{ asset('backend/support.js') }}"></script>
-
+<script src="{{ asset('backend/attendance.js') }}"></script>
 <!-- Data Tables -->
 <script src="{{ asset('assets/vendor/datatables/dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap.min.js') }}"></script>

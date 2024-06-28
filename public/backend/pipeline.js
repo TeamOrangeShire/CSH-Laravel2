@@ -815,7 +815,15 @@ function LoadLead(route, getDetail, disable, level) {
                     columns: [
                         { title: "Company Name", data: "pl_company_name" },
                         { title: "Contact Name", data: "pl_name" },
-                        { title: "Email", data: "pl_email" },
+                        { title: "Email", data: null,
+                            render: data => {
+                                const separate = data.pl_email.split('@');
+                                const link = `${separate[0]}@<a  class="text-decoration-underline" style="color:skyblue"
+                                 target="_blank" href="https://${separate[1]}">${separate[1]}</a>`
+
+                                return link;
+                            }
+                         },
                         { title: "Service Offer", data: "pl_service_offer" },
                         { title: "No. Employees", data: "pl_employee" },
                         { title: "Position", data: "pl_position" },

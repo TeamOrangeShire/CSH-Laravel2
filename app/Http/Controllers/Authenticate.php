@@ -125,6 +125,14 @@ class Authenticate extends Controller
         }
   }
 
+  public function Masterlist(Request $req){
+    $userId = $req->cookie('admin_id');
+        if($userId){
+          return view('admin.masterlist', ['user'=>$userId, 'employee'=>$req->user]);
+        }else{
+          return redirect()->route('adminLogin');
+        }
+  }
   public function User(Request $req){
     $userId = $req->cookie('admin_id');
         if($userId){
