@@ -576,7 +576,8 @@ class AdminBackEnd extends Controller
         $employee = CshUser::where('user_status', 1)
         ->where('user_type', 'Employee')
         ->get();
-
+        $month = $req->month;
+        $year = $req->year;
     foreach ($employee as $emp) {
         $attend = CshAttendance::where('user_id', $emp->user_id)->get();
         $totalHours = 0;
@@ -585,10 +586,6 @@ class AdminBackEnd extends Controller
         foreach ($attend as $att) {
 
             $date = DateTime::createFromFormat('d/m/Y', $att->att_date);
-
-            $month = $req->month;
-            $year = $req->year;
-
             if ($date && $date->format('m') == $month && $date->format('Y') == $year) {
                 $totalHours += $att->att_total_hours;
                 $totalMinutes += $att->att_total_minutes;

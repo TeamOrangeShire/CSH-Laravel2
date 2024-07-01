@@ -48,7 +48,7 @@
                                 <div class="card mb-2">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-title">Attendance Monitoring</div>
-                                        <div class="d-flex gap-4">
+                                        <div class="d-flex gap-4 align-items-center">
                                             <div class="m-0">
                                                 <label class="form-label">Year</label>
                                                 <select onchange="Att.Filter('{{ route('attMonLoad') }}', '{{ asset('assets/user/') }}', '{{ route('empProfile') }}')" id="attYear" class="form-select" aria-label="Default select example">
