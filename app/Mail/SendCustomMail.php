@@ -22,13 +22,15 @@ class SendCustomMail extends Mailable
     public $id;
     public $fromAddress;
     public $name;
-    public function __construct($subject, $mess, $id, $fromAddress, $name)
+    public $pl_id;
+    public function __construct($subject, $mess, $id, $fromAddress, $name, $pl_id)
     {
         $this->mess = $mess;
         $this->subject = $subject;
         $this->id = $id;
         $this->fromAddress = $fromAddress;
         $this->name = $name;
+        $this->pl_id = $pl_id;
     }
 
     /**

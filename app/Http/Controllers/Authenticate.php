@@ -151,6 +151,6 @@ class Authenticate extends Controller
   }
 
   public function UnsubscribeView(Request $req){
-     return view('admin.unsubscribe', ['lead_id', $req->id]);
+     return view('admin.unsubscribe', ['lead_id'=> $req->id]);
   }
 }

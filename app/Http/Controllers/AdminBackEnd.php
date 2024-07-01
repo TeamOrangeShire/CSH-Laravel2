@@ -425,7 +425,7 @@ class AdminBackEnd extends Controller
          $user = CshUser::where('user_id', $req->user_id)->first();
          $conf = CshEmailConfig::where('user_id', $req->user_id)->first();
          $message =  str_replace('{{name}}', explode(' ', $user->user_name)[0], $req->message);
-         Mail::to(explode('-', $req->recipient)[0])->send(new SendCustomMail($req->subject, $message, $sent->se_id, $conf->econf_from_address, $user->user_name));
+         Mail::to(explode('-', $req->recipient)[0])->send(new SendCustomMail($req->subject, $message, $sent->se_id, $conf->econf_from_address, $user->user_name, explode('-', $req->recipient)[1]));
 
          return response()->json(['status'=>'success']);
     }
@@ -512,7 +512,7 @@ class AdminBackEnd extends Controller
         $level->ml_level = '1';
         $level->save();
 
-        Mail::to($lead->pl_email)->send(new SendCustomMail($subject->emsub_content, $message, $sent->se_id, $conf->econf_from_address, $user->user_name));
+        Mail::to($lead->pl_email)->send(new SendCustomMail($subject->emsub_content, $message, $sent->se_id, $conf->econf_from_address, $user->user_name, $req->pl_id));
 
         return response()->json(['status' => 'success']);
     } catch (\Exception $e) {
