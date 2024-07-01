@@ -47,6 +47,7 @@
                                         <option value="IT Service">IT Service</option>
                                         <option value="BPO">BPO</option>
                                         <option value="Software">Software</option>
+                                        <option value="Startup">Startup</option>
                                     </select>
                                 </div>
                             </div>
@@ -487,6 +488,7 @@
                                                             <option value="IT Service">IT Service</option>
                                                             <option value="BPO">BPO</option>
                                                             <option value="Software">Software</option>
+                                                            <option value="Startup">Startup</option>
                                                         </select>
                                                     </div>
 
@@ -895,6 +897,7 @@
                                     <option value="IT Service">IT Service</option>
                                     <option value="BPO">BPO</option>
                                     <option value="Software">Software</option>
+                                    <option value="Startup">Startup</option>
                                 </select>
                             </div>
                             <div class="d-flex justify-content-end w-100 mt-4">
@@ -968,6 +971,7 @@
                                     <option value="IT Service">IT Service</option>
                                     <option value="BPO">BPO</option>
                                     <option value="Software">Software</option>
+                                    <option value="Startup">Startup</option>
                                 </select>
                             </div>
                             <div class="d-flex justify-content-end w-100 mt-4">
