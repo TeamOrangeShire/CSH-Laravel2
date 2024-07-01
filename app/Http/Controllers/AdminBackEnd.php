@@ -715,26 +715,26 @@ class AdminBackEnd extends Controller
 
     public function LoadMailLevel(Request $req){
         $schedule = CshMailLevel::where('pl_id', $req->pl_id)->first();
-        $schedule->status1 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date1)->where('se_level', 1)->first() ?
+        $schedule->status1 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date_one)->where('se_level', 1)->first() ?
         'Sent' : 'Not Yet';
-        $schedule->status2 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date2)->where('se_level', 2)->first() ?
+        $schedule->status2 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date_two)->where('se_level', 2)->first() ?
         'Sent' : 'Not Yet';
-        $schedule->status3 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date3)->where('se_level', 3)->first() ?
+        $schedule->status3 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date_three)->where('se_level', 3)->first() ?
         'Sent' : 'Not Yet';
-        $schedule->status4 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date4)->where('se_level', 4)->first() ?
+        $schedule->status4 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date_four)->where('se_level', 4)->first() ?
         'Sent' : 'Not Yet';
-        $schedule->status5 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date5)->where('se_level', 5)->first() ?
+        $schedule->status5 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date_five)->where('se_level', 5)->first() ?
         'Sent' : 'Not Yet';
 
-        $schedule->view1 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date1)->where('se_level', 1)->where('se_status',2)->first() ?
+        $schedule->view1 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date_one)->where('se_level', 1)->where('se_status',2)->first() ?
         'Seen' : 'Not Yet';
-        $schedule->view2 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date2)->where('se_level', 2)->where('se_status',2)->first() ?
+        $schedule->view2 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date_two)->where('se_level', 2)->where('se_status',2)->first() ?
         'Seen' : 'Not Yet';
-        $schedule->view3 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date3)->where('se_level', 3)->where('se_status',2)->first() ?
+        $schedule->view3 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date_three)->where('se_level', 3)->where('se_status',2)->first() ?
         'Seen' : 'Not Yet';
-        $schedule->view4 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date4)->where('se_level', 4)->where('se_status',2)->first() ?
+        $schedule->view4 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date_four)->where('se_level', 4)->where('se_status',2)->first() ?
         "Seen" : 'Not Yet';
-        $schedule->view5 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date5)->where('se_level', 5)->where('se_status',2)->first() ?
+        $schedule->view5 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date_five)->where('se_level', 5)->where('se_status',2)->first() ?
         'Seen' : 'Not Yet';
         return response()->json(['schedule'=>$schedule]);
     }
