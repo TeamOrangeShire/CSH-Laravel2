@@ -43,6 +43,8 @@ Route::get('/admin/monitoring/attendance', [Authenticate::class, 'AttendanceMoni
 Route::get('/admin/monitoring/email', [Authenticate::class, 'EmailMonitoring'])->name('adminEmailMonitoring');
 Route::get('/admin/user', [Authenticate::class, 'User'])->name('user');
 Route::get('/admin/user/settings', [Authenticate::class, 'UserSetting'])->name('userSetting');
+Route::get('/unsubscribe', [Authenticate::class, 'UnsubscribeView'])->name('UnsubscribeView');
+Route::post('/unsubscribe/unsub', [AdminBackEnd::class, 'Unsub'])->name('Unsub');
 Route::get('/admin/monitoring/attendance/employee', [Authenticate::class, 'EmpProfile'])->name('empProfile');
 //Admin Routes BackEnd
 Route::post('/admin/login/authenticate', [Authenticate::class, 'AdminLogin'])->name('login');

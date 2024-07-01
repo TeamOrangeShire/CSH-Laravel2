@@ -149,4 +149,8 @@ class Authenticate extends Controller
           return redirect()->route('adminLogin');
         }
   }
+
+  public function UnsubscribeView(Request $req){
+     return view('admin.unsubscribe', ['lead_id', $req->id]);
+  }
 }

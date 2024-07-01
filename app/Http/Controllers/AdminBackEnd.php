@@ -756,4 +756,12 @@ class AdminBackEnd extends Controller
         }
         return response()->json(['data'=>$lead]);
     }
+
+    public function Unsub(Request $req){
+        CshPipeline::where('pl_id', $req->lead_id)->first()->update([
+          'pl_status'=> 'DNC'
+        ]);
+
+        return response()->json(['status'=> 'success']);
+    }
 }
