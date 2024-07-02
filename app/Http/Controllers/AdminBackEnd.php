@@ -397,7 +397,7 @@ class AdminBackEnd extends Controller
             $data->update([
               'emtemp_name'=>$req->name,
               'emtemp_content'=>$req->content,
-              'emptemp_followup'=>$req->followup
+              'emtemp_followup'=>$req->followup
             ]);
         }
 

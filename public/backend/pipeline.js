@@ -242,7 +242,7 @@ const Pipeline = {
                 Support.AsVal('tempSigName', document.getElementById('tempName').value);
                 Support.AsVal('tempSigContent', $('#emailTemplateEditor').summernote('code'));
                 Support.AsVal('tempSigType', 'template');
-                Support.AsVal('tempSigFollowup', $('#emailSignatureEditorFollowup').summernote('code'));
+                Support.AsVal('tempSigFollowup', $('#emailTemplateEditorFollowup').summernote('code'));
                 notify = 'Successfully Added a email template';
                 var closeBtn = 'closeUpdateTempButton';
             }
@@ -280,7 +280,7 @@ const Pipeline = {
                                             <div class="d-flex gap-2 align-items-center">
                                             ${e.emsig_status === 2 ? `<span class="badge rounded-pill bg-success p-2">Active</span>` : ''}
                                             <button data-bs-toggle="modal" 
-                                            onclick="EditTempSig('signature', '${e.emsig_id}', '#emailSignatureEditor', '${route}', '${dis}')" 
+                                            onclick="EditTempSig('signature', '${e.emsig_id}', '#emailSignatureEditor', '')" 
                                             data-bs-target="#addEmailSignature" class="btn btn-outline-primary"><i
                                             class="icon-edit"></i> Edit</button>
                                        
@@ -308,7 +308,7 @@ const Pipeline = {
                                             <div class="d-flex gap-2">
                                             <button data-bs-toggle="modal" 
                                             data-bs-target="#addEmailTemplate" 
-                                            onclick="EditTempSig('template', '${e.emtemp_id}', '#emailTemplateEditor')" 
+                                            onclick="EditTempSig('template', '${e.emtemp_id}', '#emailTemplateEditor','#emailTemplateEditorFollowup')" 
                                             class="btn btn-outline-primary"><i
                                             class="icon-edit"></i> Edit</button>
                                            
@@ -328,7 +328,6 @@ const Pipeline = {
             if (Support.CheckError('sigName', 'sigNameE') === 1) {
                 Support.AsVal('tempSigNameUpdate', document.getElementById('sigName').value);
                 Support.AsVal('tempSigContentUpdate', $('#emailSignatureEditor').summernote('code'));
-                Support.AsVal('tempSigFollowupUpdate', $('#emailSignatureEditorFollowup').summernote('code'));
                 var notif = 'Email Signature is successfully updated';
                 var close = 'closeUpdateTempButton';
             }
@@ -336,6 +335,7 @@ const Pipeline = {
             if (Support.CheckError('tempName', 'tempNameE') === 1) {
                 Support.AsVal('tempSigNameUpdate', document.getElementById('tempName').value);
                 Support.AsVal('tempSigContentUpdate', $('#emailTemplateEditor').summernote('code'));
+                Support.AsVal('tempSigFollowupUpdate', $('#emailTemplateEditorFollowup').summernote('code'));
                 var notif = 'Email Template is successfully updated';
                 var close = 'closeUpdateTempButton';
             }
@@ -990,7 +990,7 @@ $(document).ready(function () {
     });
 });
 
-function EditTempSig(type, id, editor) {
+function EditTempSig(type, id, editor, followup) {
     const route = document.getElementById('getTempSigRoute').value + "?sigTemp=" + id + "&type=" + type;
 
     $.ajax({
@@ -999,6 +999,7 @@ function EditTempSig(type, id, editor) {
         dataType: 'json',
         success: res => {
             $(editor).summernote('code', '');
+            $(followup).summernote('code', '');
             if (type === 'signature') {
                 const status = document.getElementById('activeStatusSignature');
                 status.style.display = '';
@@ -1025,7 +1026,8 @@ function EditTempSig(type, id, editor) {
                 Support.OpenDiv('updateEmailTempButton', '');
                 Support.CloseDiv('saveEmailTempButton');
                 document.getElementById('tempName').value = res.data.emtemp_name;
-                $(editor).summernote('pasteHTML', '<pre><code>' + res.data.emtemp_content + '</code></pre>');
+                $(editor).summernote('pasteHTML',  res.data.emtemp_content);
+                $(followup).summernote('pasteHTML', res.data.emtemp_followup);
                 document.getElementById('sigTempIdUpdate').value = res.data.emtemp_id;
             }
         }, error: xhr => {
