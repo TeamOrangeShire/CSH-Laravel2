@@ -55,10 +55,17 @@
 #hov:hover .overlay-text {
     opacity: 1;
 }
+ .card {
+   border: 1px solid #5057624b;
+  
+  }
 
+  .card:hover {
+    border-color: #c7ae6a; /* Gold border color on hover */
+  }
   </style>
   </head>
-  <body>
+  <body >
    
     <div class="preloader">
       <div class="preloader-body">
@@ -70,270 +77,68 @@
       <div id="home">
         <!-- Top Banner--> 
         <!-- Page Header-->
-   @include('Components.nav',['title'=>'bpo'])
-
-
+   @include('Components.nav',['title'=>'Brochures - Core Support Hub'])
       </div>
  
-    
-   
-<?php
+    {{-- main content --}}
+<div class="container col-12" >
+  <div class="row">
 
-if (isset($_GET['Type'])) {
-   
-    if ($_GET['Type'] == 'ItManageServices') {
-      ?>
-<div class="d-flex justify-content-center align-items-center" id="ItB">
-    <div id="hov" class="text-center position-relative" style="width: 80%;">
-        <img src="{{asset('images/ITmanaged.png')}}" class="rounded img-fluid" alt="Responsive image">
-        <div class="overlay-text">Click to expand</div>
+  <div class="card m-3" style="width: 22rem; height:500px;">
+       <div style="width:120%;">
+        <img   src="{{ asset('images/ITmanaged.png') }}" alt="Card image cap">
     </div>
-</div>
-      <?php 
-    }elseif ($_GET['Type'] == 'SoftDevelopment') {
-       ?>
-<div class="d-flex justify-content-center align-items-center" id="softB">
-    <div id="hov" class="text-center position-relative" style="width: 80%;">
-        <img src="{{asset('images/softdev.png')}}" class="rounded img-fluid" alt="Responsive image">
-        <div class="overlay-text">Click to expand</div>
+      <div class="card-body ">
+        <h5 class="card-title " style="background-color: #22252a;padding-top:3%;padding-bottom:3%;color:white">IT Managed Services</h5>
+        <p class="card-text"> Core Support Hub offers managed IT services including remote desktop support, system administration, and network monitoring to optimize your connectivity. </p>
+       <a href="{{ route('brochures2') }}?Service=ItManageServices" class="btn btn-primary" style="background-color: white; color:#c7ae6a">Learn More ➜</a>
+      </div>
     </div>
-</div>
-      <?php 
-    }elseif ($_GET['Type'] == 'BusinessProcessOutsourcing') {
-       ?>
-<div class="d-flex justify-content-center align-items-center" id="bpoB">
-    <div id="hov" class="text-center position-relative" style="width: 80%;">
-        <img src="{{asset('images/bpo.png')}}" class="rounded img-fluid" alt="Responsive image">
-        <div class="overlay-text">Click to expand</div>
-    </div>
-</div>
-      <?php 
-    }elseif ($_GET['Type'] == 'Consulting') {
-       ?>
-<div class="d-flex justify-content-center align-items-center" id="colB">
-    <div id="hov" class="text-center position-relative" style="width: 80%;">
-        <img src="{{asset('images/consulting.png')}}" class="rounded img-fluid" alt="Responsive image">
-        <div class="overlay-text">Click to expand</div>
-    </div>
-</div>
-      <?php 
-    }
-   
-} else {
-    
-    echo "<div>'var' parameter not found in the URL</div>";
-}
-?>
 
+   <div class="card m-3" style="width: 22rem; height:500px;">
+       <div style="width:120%;">
+        <img   src="{{asset('images/softdev.png')}}" alt="Card image cap">
+    </div>
+      <div class="card-body ">
+        <h5 class="card-title " style="background-color: #22252a;padding-top:3%;padding-bottom:3%;color:white">Software Development</h5>
+        <p class="card-text">We design, build, and customize software and applications to enhance performance across operations, finance, HR, inventory, and business websites.</p>
+       <a href="{{ route('brochures2') }}?Service=SoftDevelopment" class="btn btn-primary" style="background-color: white; color:#c7ae6a">Learn More ➜</a>
+      </div>
+    </div>
 
+     <div class="card m-3" style="width: 22rem; height:500px;">
+       <div style="width:120%;">
+        <img   src="{{asset('images/bpo.png')}}" alt="Card image cap">
+    </div>
+      <div class="card-body ">
+        <h5 class="card-title " style="background-color: #22252a;padding-top:3%;padding-bottom:3%;color:white">Business Process Outsourcing</h5>
+        <p class="card-text"> Core Support Hub extends your business by understanding operations and delivering authentic brand ambassador services to your customers.</p>
+       <a href="{{ route('brochures2') }}?Service=BusinessProcessOutsourcing" class="btn btn-primary" style="background-color: white; color:#c7ae6a">Learn More ➜</a>
+      </div>
+    </div>
 
-      {{-- main content --}}
-    {{-- <div class="d-flex justify-content-center align-items-center">
-    <div class="col-sm-8 col-md-6 col-lg-10">
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active" id="hov">
-            <img class="d-block w-100" src="{{asset('images/ITmanaged.png')}}" alt="First slide">
-            <div class="overlay-text">Click to expand</div>
-        </div>
-         <div class="carousel-item" id="hov">
-            <img class="d-block w-100" src="{{asset('images/softdev.png')}}" alt="Third slide">
-            <div class="overlay-text">Click to expand</div>
-        </div>
-        <div class="carousel-item" id="hov">
-            <img class="d-block w-100" src="{{asset('images/bpo.png')}}" alt="Second slide">
-            <div class="overlay-text">Click to expand</div>
-        </div>
-        <div class="carousel-item" id="hov">
-            <img class="d-block w-100" src="{{asset('images/consulting.png')}}" alt="Third slide">
-            <div class="overlay-text">Click to expand</div>
-        </div>
-       
+      <div class="card m-3" style="width: 22rem; height:500px;">
+       <div style="width:120%;">
+        <img   src="{{asset('images/consulting.png')}}" alt="Card image cap">
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
+      <div class="card-body ">
+        <h5 class="card-title " style="background-color: #22252a;padding-top:3%;padding-bottom:3%;color:white">Consulting</h5>
+        <p class="card-text">Core Support Hub is your strategic technology partner, enhancing efficiency and delivering exceptional products and services for seamless business success.</p>
+       <a href="{{ route('brochures2') }}?Service=Consulting" class="btn btn-primary" style="background-color: white; color:#c7ae6a">Learn More ➜</a>
+      </div>
+    </div>
 
-    </div>
-</div> --}}
-
-<!-- Modals -->
-<div class="modal fade" id="modalConsulting" tabindex="-1" role="dialog" aria-labelledby="modalConsultingLabel"
-    aria-hidden="true" style="margin-top: -60%;">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
-        <div class="modal-content" style=" background: transparent; border:none;">
-            <div class="modal-body" >
-                <div class="d-flex justify-content-center align-items-center">
-    <div class="col-sm-8 col-md-6 col-lg-12">
-        <div id="first" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="{{asset('images/ittech.png')}}" alt="First slide" style="">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="{{asset('images/ittech2.png')}}" alt="Second slide">
-                </div>
-               
-            </div>
-            <a class="carousel-control-prev" href="#first" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#first" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalITManaged" tabindex="-1" role="dialog" aria-labelledby="modalConsultingLabel"
-    aria-hidden="true" style="margin-top: -60%;">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
-        <div class="modal-content" style=" background: transparent; border:none;">
-            <div class="modal-body" >
-                <div class="d-flex justify-content-center align-items-center">
-    <div class="col-sm-8 col-md-6 col-lg-12">
-        <div id="second" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="{{asset('images/ittech.png')}}" alt="First slide">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="{{asset('images/ittech2.png')}}" alt="Second slide">
-                </div>
-              
-            </div>
-            <a class="carousel-control-prev" href="#second" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#second" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalSoftDev" tabindex="-1" role="dialog" aria-labelledby="modalConsultingLabel"
-    aria-hidden="true" style="margin-top: -60%;">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
-        <div class="modal-content" style=" background: transparent; border:none;">
-            <div class="modal-body" >
-                <div class="d-flex justify-content-center align-items-center">
-    <div class="col-sm-8 col-md-6 col-lg-12">
-        <div id="third" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="{{asset('images/bpobrochure.png')}}" alt="First slide">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="{{asset('images/bpobrochure2.png')}}" alt="Second slide">
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#third" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#third" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalConsult" tabindex="-1" role="dialog" aria-labelledby="modalConsultingLabel"
-    aria-hidden="true" style="margin-top: -60%;">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
-        <div class="modal-content" style=" background: transparent; border:none;">
-            <div class="modal-body" >
-                <div class="d-flex justify-content-center align-items-center">
-    <div class="col-sm-8 col-md-6 col-lg-12">
-        <div id="fourth" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="{{asset('images/consultingbrochure.png')}}" alt="First slide">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="{{asset('images/consultingbrochure2.png')}}" alt="Second slide">
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#fourth" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#fourth" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-</div>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
 
 <br>
-<br>
+    {{-- main content end--}}
+ 
       {{-- main content end --}}
     <!-- BPO Subservices end -->
     @include('Components.footer')
     </div>
-<script>
-    $(document).ready(function() {
-    // $('#carouselExampleControls .carousel-item').each(function() {
-    //     $(this).on('click', function() {
-    //         if ($(this).hasClass('active')) {
-    //             var index = $(this).index();
-    //             if (index === 0) {
-    //                 $('#modalConsulting').modal('show');
-    //             } else if (index === 1) {
-    //                 $('#modalITManaged').modal('show');
-    //             } else if (index === 2) {
-    //                 $('#modalSoftDev').modal('show');
-    //             }
-    //              else if (index === 3) {
-    //                 $('#modalConsult').modal('show');
-    //             }
-    //         }
-    //     });
-    // });
-     $('#ItB').on('click', function() {
-        $('#modalConsulting').modal('show');
-    });
-      $('#softB').on('click', function() {
-        $('#modalConsulting').modal('show');
-    });
-      $('#bpoB').on('click', function() {
-        $('#modalSoftDev').modal('show');
-    });
-      $('#colB').on('click', function() {
-        $('#modalConsult').modal('show');
-    });
-});
 
-</script>
 <!-- Button trigger modal -->
 
 <!-- Modal -->
