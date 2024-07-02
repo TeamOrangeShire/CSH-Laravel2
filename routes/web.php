@@ -41,10 +41,15 @@ Route::get('/admin',[Authenticate::class, 'Dashboard'])->name('admin');
 Route::get('/admin/login', function () { return view('admin.login');})->name('adminLogin');
 Route::get('/admin/signup', function () { return view('admin.signup');})->name('adminSignup');
 Route::get('/admin/pipeline/{state}', [Authenticate::class, 'PipeLine'])->name('pipeline');
+Route::get('/admin/pipelinemasterlist', [Authenticate::class, 'Masterlist'])->name('masterlist');
 Route::get('/admin/attendance', [Authenticate::class, 'Attendance'])->name('adminAttendance');
+Route::get('/admin/monitoring/attendance', [Authenticate::class, 'AttendanceMonitoring'])->name('adminAttendanceMonitoring');
+Route::get('/admin/monitoring/email', [Authenticate::class, 'EmailMonitoring'])->name('adminEmailMonitoring');
 Route::get('/admin/user', [Authenticate::class, 'User'])->name('user');
 Route::get('/admin/user/settings', [Authenticate::class, 'UserSetting'])->name('userSetting');
-
+Route::get('/unsubscribe', [Authenticate::class, 'UnsubscribeView'])->name('UnsubscribeView');
+Route::post('/unsubscribe/unsub', [AdminBackEnd::class, 'Unsub'])->name('Unsub');
+Route::get('/admin/monitoring/attendance/employee', [Authenticate::class, 'EmpProfile'])->name('empProfile');
 //Admin Routes BackEnd
 Route::post('/admin/login/authenticate', [Authenticate::class, 'AdminLogin'])->name('login');
 Route::post('/admin/login/signup', [Authenticate::class, 'AdminSignup'])->name('signup');
@@ -67,4 +72,26 @@ Route::post('/admin/pipelineload/DisableEmTempSig', [AdminBackEnd::class, 'Disab
 Route::post('/admin/pipelineload/SwitchToActiveSig', [AdminBackEnd::class, 'SwitchToActiveSig'])->name('SwitchToActiveSig');
 Route::get('/admin/pipelineload/LoadActiveSignature', [AdminBackEnd::class, 'LoadActiveSignature'])->name('LoadActiveSignature');
 Route::post('/admin/pipelineload/SendCustomMail', [AdminBackEnd::class, 'SendCustomMail'])->name('SendCustomMail');
+Route::get('/admin/pipelineload/massEmailLeads', [AdminBackEnd::class, 'MassEmailLeads'])->name('massEmailLeads');
+Route::get('/admin/pipelineload/checkMassMailValidity', [AdminBackEnd::class, 'CheckMassMailValidity'])->name('checkMassMailValidity');
+Route::post('/admin/pipelineload/sentProgressMassMail', [AdminBackEnd::class, 'SentProgressMassMail'])->name('sentProgressMassMail');
+
+Route::post('/admin/pipelineload/addEmailSubject', [AdminBackEnd::class, 'AddEmailSubject'])->name('addEmailSubject');
+Route::get('/admin/pipelineload/loadEmailSubject', [AdminBackEnd::class, 'LoadEmailSubject'])->name('loadEmailSubject');
+Route::post('/admin/pipelineload/updateEmailSubject', [AdminBackEnd::class, 'UpdateEmailSubject'])->name('updateEmailSubject');
+Route::post('/admin/pipelineload/disableEmailSubject', [AdminBackEnd::class, 'DisableEmailSubject'])->name('disableEmailSubject');
+Route::get('/admin/pipelineload/getTempView', [AdminBackEnd::class, 'GetTempView'])->name('getTempView');
+Route::get('/admin/pipelineload/loadSentMail', [AdminBackEnd::class, 'LoadMailLevel'])->name('loadMailLevel');
+
+Route::get('/admin/monitoring/email/load', [AdminBackEnd::class, 'LoadSentEmail'])->name('loadSentEmail');
+Route::get('/admin/monitoring/email/load/message', [AdminBackEnd::class, 'LoadMessage'])->name('loadMessage');
+Route::get('/admin/monitoring/attendance/load', [AdminBackEnd::class, 'AttMonLoad'])->name('attMonLoad');
+
+Route::post('/admin/user/settings/updateUserDetails', [AdminBackEnd::class, 'UpUserDetails'])->name('upUserDetails');
+Route::post('/admin/user/settings/changePassword', [AdminBackEnd::class, 'ChangePassword'])->name('changePassword');
+Route::post('/admin/user/settings/changeProfilePic', [AdminBackEnd::class, 'ChangeProfilePic'])->name('changeProfilePic');
+Route::get('/admin/monitoring/attendance/employee/loadgraph', [AdminBackEnd::class, 'LoadUserGraphs'])->name('loadUserGraphs');
 Route::get('/track-email/{id}', [AdminBackEnd::class, 'EmailTracking'])->name('emailTracking');
+
+Route::get('/admin/pipelinemasterlist/load', [AdminBackEnd::class, 'LoadMasterList'])->name('loadMasterlist');
+Route::post('/admin/logout', [AdminBackEnd::class, 'UserLogout'])->name('userLogout');

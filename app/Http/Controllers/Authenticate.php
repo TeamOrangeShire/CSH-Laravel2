@@ -45,6 +45,7 @@ class Authenticate extends Controller
 
     public function AdminSignup(Request $req){
         $user = new CshUser();
+        $user->user_emp_id = $req->IDNum;
         $user->user_name = $req->name;
         $user->user_username = $req->username;
         $user->user_password = Hash::make($req->password);
@@ -87,6 +88,24 @@ class Authenticate extends Controller
         }
   }
 
+  public function AttendanceMonitoring(Request $req){
+    $userId = $req->cookie('admin_id');
+        if($userId){
+          return view('admin.attendanceMonitoring', ['user'=>$userId]);
+        }else{
+          return redirect()->route('adminLogin');
+        }
+  }
+
+  public function EmailMonitoring(Request $req){
+    $userId = $req->cookie('admin_id');
+        if($userId){
+          return view('admin.emailMonitoring', ['user'=>$userId]);
+        }else{
+          return redirect()->route('adminLogin');
+        }
+  }
+
   public function PipeLine(Request $req){
     $userId = $req->cookie('admin_id');
         if($userId){
@@ -97,11 +116,27 @@ class Authenticate extends Controller
         }
   }
 
+  public function EmpProfile(Request $req){
+    $userId = $req->cookie('admin_id');
+        if($userId){
+          return view('admin.empProfile', ['user'=>$userId, 'employee'=>$req->user]);
+        }else{
+          return redirect()->route('adminLogin');
+        }
+  }
+
+  public function Masterlist(Request $req){
+    $userId = $req->cookie('admin_id');
+        if($userId){
+          return view('admin.masterlist', ['user'=>$userId, 'employee'=>$req->user]);
+        }else{
+          return redirect()->route('adminLogin');
+        }
+  }
   public function User(Request $req){
     $userId = $req->cookie('admin_id');
         if($userId){
-          $state = $req->route('state');
-          return view('admin.user', ['user'=>$userId, 'state'=>strtoupper($state)]);
+          return view('admin.user', ['user'=>$userId]);
         }else{
           return redirect()->route('adminLogin');
         }
@@ -109,10 +144,13 @@ class Authenticate extends Controller
   public function UserSetting(Request $req){
     $userId = $req->cookie('admin_id');
         if($userId){
-          $state = $req->route('state');
-          return view('admin.userSetting', ['user'=>$userId, 'state'=>strtoupper($state)]);
+          return view('admin.userSetting', ['user'=>$userId]);
         }else{
           return redirect()->route('adminLogin');
         }
+  }
+
+  public function UnsubscribeView(Request $req){
+     return view('admin.unsubscribe', ['lead_id'=> $req->id]);
   }
 }

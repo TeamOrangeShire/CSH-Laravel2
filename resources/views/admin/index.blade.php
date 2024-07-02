@@ -7,7 +7,7 @@
 	</head>
 
 	<body>
-		@include('admin.components.qrScanner') 
+		@include('admin.components.qrScanner', ['loc'=> 'home']) 
 		@include('admin.components.loading') 
 		<!-- Page wrapper start -->
 		<div class="page-wrapper">
@@ -42,6 +42,7 @@
 
 						@php
 							$status = App\Models\CshAttendance::where('user_id', $user)->where('att_status', 0)->first();
+							
 						@endphp
 		<!-- Row start -->
 		<div class="row gx-2">
@@ -68,24 +69,15 @@
 					<div class="col-sm-4 col-6">
 						<div class="card px-3 py-2 mb-2 d-flex flex-row align-items-center">
 							<div class="position-relative shape-block">
-								<img src="assets/images/shape1.png" class="img-fluid img-4x" alt="Bootstrap Themes" />
-								<i class="icon-book-open"></i>
-							</div>
-							<div class="ms-2">
-								<h3 class="m-0 fw-semibold">27</h3>
-								<h6 class="m-0 fw-light text-light">Active</h6>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-4 col-6">
-						<div class="card px-3 py-2 mb-2 d-flex flex-row align-items-center">
-							<div class="position-relative shape-block">
 								<img src="assets/images/shape2.png" class="img-fluid img-4x" alt="Bootstrap Themes" />
-								<i class="icon-check-circle"></i>
+								<i class="icon-user"></i>
 							</div>
 							<div class="ms-2">
-								<h3 class="m-0 fw-semibold">18</h3>
-								<h6 class="m-0 fw-light text-light">Solved</h6>
+								@php
+									$leads = App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Lead')->get()->count();
+								@endphp
+								<h3 class="m-0 fw-semibold">{{ $leads }}</h3>
+								<h6 class="m-0 fw-light text-light">Leads</h6>
 							</div>
 						</div>
 					</div>
@@ -93,11 +85,14 @@
 						<div class="card px-3 py-2 mb-2 d-flex flex-row align-items-center">
 							<div class="position-relative shape-block">
 								<img src="assets/images/shape3.png" class="img-fluid img-4x" alt="Bootstrap Themes" />
-								<i class="icon-x-circle"></i>
+								<i class="icon-user-check"></i>
 							</div>
 							<div class="ms-2">
-								<h3 class="m-0 fw-semibold">12</h3>
-								<h6 class="m-0 fw-light text-light">Closed</h6>
+								@php
+									$prospect = App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Prospect')->get()->count();
+								@endphp
+								<h3 class="m-0 fw-semibold">{{ $prospect }}</h3>
+								<h6 class="m-0 fw-light text-light">Prospect</h6>
 							</div>
 						</div>
 					</div>
@@ -105,11 +100,29 @@
 						<div class="card px-3 py-2 mb-2 d-flex flex-row align-items-center">
 							<div class="position-relative shape-block">
 								<img src="assets/images/shape4.png" class="img-fluid img-4x" alt="Bootstrap Themes" />
-								<i class="icon-add_task"></i>
+								<i class="icon-insert_comment"></i>
 							</div>
 							<div class="ms-2">
-								<h3 class="m-0 fw-semibold">3</h3>
-								<h6 class="m-0 fw-light text-light">Open</h6>
+								@php
+									$discussion =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Discussion')->get()->count();
+								@endphp
+								<h3 class="m-0 fw-semibold">{{ $discussion }}</h3>
+								<h6 class="m-0 fw-light text-light">Discussion</h6>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-4 col-6">
+						<div class="card px-3 py-2 mb-2 d-flex flex-row align-items-center">
+							<div class="position-relative shape-block">
+								<img src="assets/images/shape4.png" class="img-fluid img-4x" alt="Bootstrap Themes" />
+								<i class="icon-event_note"></i>
+							</div>
+							<div class="ms-2">
+								@php
+								$proposal =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Proposal')->get()->count();
+							   @endphp
+							<h3 class="m-0 fw-semibold">{{ $proposal }}</h3>
+								<h6 class="m-0 fw-light text-light">Proposal</h6>
 							</div>
 						</div>
 					</div>
@@ -117,51 +130,77 @@
 						<div class="card px-3 py-2 mb-2 d-flex flex-row align-items-center">
 							<div class="position-relative shape-block">
 								<img src="assets/images/shape5.png" class="img-fluid img-4x" alt="Bootstrap Themes" />
-								<i class="icon-alert-triangle"></i>
+								<i class="icon-voice_chat"></i>
 							</div>
 							<div class="ms-2">
-								<h3 class="m-0 fw-semibold">5</h3>
-								<h6 class="m-0 fw-light text-light">Critical</h6>
+								@php
+								$negotiation =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Negotiation')->get()->count();
+							   @endphp
+							<h3 class="m-0 fw-semibold">{{ $negotiation }}</h3>
+								<h6 class="m-0 fw-light text-light">Negotiations</h6>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-4 col-6">
 						<div class="card px-3 py-2 mb-2 d-flex flex-row align-items-center">
 							<div class="position-relative shape-block">
-								<img src="assets/images/shape6.png" class="img-fluid img-4x" alt="Bootstrap Themes" />
-								<i class="icon-access_time"></i>
+								<img src="assets/images/shape5.png" class="img-fluid img-4x" alt="Bootstrap Themes" />
+								<i class="icon-drafts"></i>
 							</div>
 							<div class="ms-2">
-								<h3 class="m-0 fw-semibold">7</h3>
-								<h6 class="m-0 fw-light text-light">High</h6>
+								@php
+								$contract =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Contract')->get()->count();
+							   @endphp
+							    <h3 class="m-0 fw-semibold">{{ $contract }}</h3>
+								<h6 class="m-0 fw-light text-light">Contract</h6>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-4 col-6">
 						<div class="card px-3 py-2 mb-2 d-flex flex-row align-items-center">
 							<div class="position-relative shape-block">
-								<img src="assets/images/shape6.png" class="img-fluid img-4x" alt="Bootstrap Themes" />
-								<i class="icon-access_time"></i>
+								<img src="assets/images/shape3.png" class="img-fluid img-4x" alt="Bootstrap Themes" />
+								<i class="icon-check-circle"></i>
 							</div>
 							<div class="ms-2">
-								<h3 class="m-0 fw-semibold">7</h3>
-								<h6 class="m-0 fw-light text-light">High</h6>
+								@php
+								$won =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Won')->get()->count();
+							   @endphp
+							    <h3 class="m-0 fw-semibold">{{ $won }}</h3>
+								<h6 class="m-0 fw-light text-light">Won</h6>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-4 col-6">
 						<div class="card px-3 py-2 mb-2 d-flex flex-row align-items-center">
 							<div class="position-relative shape-block">
-								<img src="assets/images/shape6.png" class="img-fluid img-4x" alt="Bootstrap Themes" />
-								<i class="icon-access_time"></i>
+								<img src="assets/images/shape1.png" class="img-fluid img-4x" alt="Bootstrap Themes" />
+								<i class="icon-x-circle"></i>
 							</div>
 							<div class="ms-2">
-								<h3 class="m-0 fw-semibold">7</h3>
-								<h6 class="m-0 fw-light text-light">High</h6>
+								@php
+								$lost =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'Lost')->get()->count();
+							   @endphp
+							    <h3 class="m-0 fw-semibold">{{ $lost }}</h3>
+								<h6 class="m-0 fw-light text-light">Lost</h6>
 							</div>
 						</div>
 					</div>
-			
+					<div class="col-sm-4 col-6">
+						<div class="card px-3 py-2 mb-2 d-flex flex-row align-items-center">
+							<div class="position-relative shape-block">
+								<img src="assets/images/shape1.png" class="img-fluid img-4x" alt="Bootstrap Themes" />
+								<i class="icon-slash"></i>
+							</div>
+							<div class="ms-2">
+								@php
+								$dnc =  App\Models\CshPipeline::where('user_id', $user)->where('pl_active',1)->where('pl_status', 'DNC')->get()->count();
+							   @endphp
+							    <h3 class="m-0 fw-semibold">{{ $dnc }}</h3>
+								<h6 class="m-0 fw-light text-light">DNC</h6>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -175,10 +214,10 @@
 									<div class="col-12">
 										<div class="card mb-2">
 											<div class="card-header">
-												<h5 class="card-title">Tickets</h5>
+												<h5 class="card-title">Visualization</h5>
 											</div>
 											<div class="card-body">
-												<div id="ticketsData"></div>
+												<div id="pipelineGraph"></div>
 											</div>
 										</div>
 									</div>
@@ -191,7 +230,34 @@
 						<!-- Row end -->
 						
 
-						
+						<script>
+							window.onload = () => {
+								VisualGraph(
+									[
+										'Lead',
+										'Prospect',
+										'Discussion',
+										'Proposal',
+										'Negotiation',
+										'Contract',
+										'Won', 
+										'Lost',
+										'DNC'
+									], 
+									[
+										'{{ $leads }}',
+										'{{ $prospect }}',
+										'{{ $discussion }}',
+										'{{ $proposal }}',
+										'{{ $negotiation }}',
+										'{{ $contract }}',
+										'{{ $won }}',
+										'{{ $lost }}',
+										'{{ $dnc }}'
+									]
+								);
+							}
+						</script>
 
 				
 					</div>
@@ -207,7 +273,7 @@
 		<!-- Page wrapper end -->
 
 		@include('admin.components.scripts')
-		<script src="{{ asset('backend/attendance.js') }}"></script>
+	
 	</body>
 
 </html>

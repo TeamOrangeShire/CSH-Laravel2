@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('att_time_out', 10);
             $table->string('att_date', 15);
             $table->string('att_total_time', 20);
+            $table->integer('att_total_hours')->nullable();
+            $table->integer('att_total_minutes')->nullable();
             $table->integer('att_status');
             $table->timestamps();
         });

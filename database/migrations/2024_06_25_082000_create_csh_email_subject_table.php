@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('csh_email_template', function (Blueprint $table) {
-            $table->id('emtemp_id');
+        Schema::create('csh_email_subject', function (Blueprint $table) {
+            $table->id('emsub_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('user_id')->on('csh_user');
-            $table->string('emtemp_name', 50);
-            $table->longText('emtemp_content');
-            $table->longText('emtemp_followup');
-            $table->integer('emtemp_status');
+            $table->string('emsub_content');
+            $table->string('emsub_service')->nullable();
+            $table->integer('emsub_status');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('csh_email_template');
+        Schema::dropIfExists('csh_email_subject');
     }
 };

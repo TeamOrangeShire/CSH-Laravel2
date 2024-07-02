@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('csh_user', function (Blueprint $table) {
             $table->id('user_id');
+            $table->string('user_emp_id',10)->nullable();
             $table->string('user_name', 100);
             $table->string('user_username', 100);
             $table->string('user_password', 100);

@@ -14,6 +14,7 @@ class CshEmailTemplate extends Model
        'user_id',
        'emtemp_name',
        'emtemp_content',
+       'emtemp_followup',
        'emtemp_status',
     ];
 }

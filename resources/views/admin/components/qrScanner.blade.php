@@ -1,22 +1,22 @@
-<div id="qr"class="d-lg-none d-sm-block w-100 fixed-bottom z-3"  style="height: 14%">
-<div class="d-flex justify-content-center h-100">
-    <button data-bs-toggle="modal" onclick=" ScanAttendance('{{ route('scanAttendance') }}')" data-bs-target="#openQr" class="btn btn-primary border-secondary rounded-circle w-25" ><i class="icon-qr_code_scanner" style="font-size:3rem" ></i></button>
-</div>
-</div>
-
-<div id="bg" class="d-lg-none d-sm-block justify-content-between align-items-center w-100 border fixed-bottom bg-primary z-1" style="height: 10%">
-<div class="d-flex justify-content-between h-100 align-items-center w-100">
-    <div style="width: 40%" class="h-100 d-flex justify-content-center my-auto">
-        <button  type="button" class="btn btn-primary text-white rounded-circle"> <i style="font-size:1.5rem" class="icon-home"></i> </button>
-        <button  type="button" class="btn btn-primary text-white rounded-circle"> <i style="font-size:1.5rem" class="icon-how_to_reg"></i> </button>
+<div id="qr"class="d-lg-none d-sm-block w-100 fixed-bottom z-2"  style="height: 10%">
+    <div class="d-flex justify-content-center h-100 w-100">
+        <div style="width: 40%" class="h-100 bg-primary d-flex justify-content-evenly my-auto">
+            <button  onclick="Support.Goto('{{ route('admin') }}')" type="button" class="btn btn-primary text-white z-4 {{ $loc==='home' ? 'bg-secondary' : '' }}"> <i style="font-size:1.5rem" class="icon-home"></i> </button>
+            <button onclick="Support.Goto('{{ route('adminAttendance') }}')" type="button" class="btn btn-primary text-white {{ $loc==='attendance' ? 'bg-secondary' : '' }} z-3"> <i style="font-size:1.5rem" class="icon-how_to_reg"></i> </button>
+        </div>
+        <div class="d-flex justify-content-center bg-primary">
+            <button data-bs-toggle="modal" onclick=" ScanAttendance('{{ route('scanAttendance') }}')" data-bs-target="#openQr" class="btn btn-primary border-secondary rounded-circle w-100" ><i class="icon-qr_code_scanner" style="font-size:3rem" ></i></button>
+        </div>
+        <div style="width: 40%" class="h-100 bg-primary d-flex justify-content-evenly my-auto">
+            <button onclick="Support.Goto('{{ route('userSetting') }}')" type="button" class="btn btn-primary text-white {{ $loc==='user' ? 'bg-secondary' : '' }} z-4"> <i style="font-size:1.5rem" class="icon-settings"></i> </button>
+            <button onclick="Support.Goto('{{ route('adminEmailMonitoring') }}')" type="button" class="btn btn-primary text-white {{ $loc==='emailMonitoring' ? 'bg-secondary' : '' }} z-3"> <i style="font-size:1.5rem" class="icon-mail_outline"></i> </button>
+        </div>
+    
     </div>
-    <div style="width: 40%" class="h-100 d-flex justify-content-center my-auto">
-        <button  type="button" class="btn btn-primary text-white rounded-circle"> <i style="font-size:1.5rem" class="icon-settings"></i> </button>
-        <button  type="button" class="btn btn-primary text-white rounded-circle"> <i style="font-size:1.5rem" class="icon-mail_outline"></i> </button>
     </div>
 
-</div>
-</div>
+
+
 
 <div class="modal fade" id="openQr" tabindex="-1"
 aria-labelledby="openQrLabel" aria-hidden="true">

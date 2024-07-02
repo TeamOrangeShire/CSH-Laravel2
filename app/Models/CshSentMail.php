@@ -12,9 +12,13 @@ class CshSentMail extends Model
     protected $primaryKey = 'se_id';
     protected $fillable = [
        'pl_id',
+       'user_id',
+       'se_offer',
        'se_message',
        'se_subject',
-       'se_date ',
+       'se_date',
+       'emtemp_id',
+       'emsub_id',
        'se_level',
        'se_status',
     ];

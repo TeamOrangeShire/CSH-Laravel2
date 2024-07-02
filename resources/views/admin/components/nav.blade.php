@@ -24,6 +24,7 @@
             @php
                 $user = App\Models\CshUser::where('user_id', $user)->first();
             @endphp
+          
             <div class="col-md-9 col-10">
                 <!-- App header actions start -->
                 <div class="header-actions d-flex align-items-center justify-content-end">
@@ -32,7 +33,7 @@
                         <a class="dropdown-toggle d-flex align-items-center user-settings" href="#!" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="d-none d-md-block">{{ $user->user_name }}</span>
-                            <img src="{{ $user->user_pic === 'none' ? asset('images/placeholder.webp') : asset('images/'. $user->user_pic) }}" class="img-3x m-2 me-0 rounded-5" alt="Profile Pic" />
+                            <img src="{{ $user->user_pic === 'none' ? asset('assets/user/placeholder.webp') : asset('assets/user/'. $user->user_pic) }}" class="img-3x m-2 me-0 rounded-5" alt="Profile Pic" />
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-sm shadow-sm gap-3" style="">
                             <a class="dropdown-item d-flex align-items-center py-2" href="{{route('user')}}"><i
@@ -40,8 +41,11 @@
                             <a class="dropdown-item d-flex align-items-center py-2" href="{{route('userSetting')}}"><i
                                     class="icon-settings fs-4 me-3"></i>Account
                                 Settings</a>
-                            <a class="dropdown-item d-flex align-items-center py-2" href="login.html"><i
-                                    class="icon-log-out fs-4 me-3"></i>Logout</a>
+                                <form method="POST" id="userLogoutForm">
+                                    @csrf
+                                </form>
+                            <button onclick="Support.Logout('{{ route('userLogout') }}', '{{ route('adminLogin') }}')" class="dropdown-item d-flex align-items-center py-2" href="login.html"><i
+                                    class="icon-log-out fs-4 me-3"></i>Logout</button>
                         </div>
                     </div>
 
@@ -80,9 +84,11 @@
                 <li class="nav-item {{ $active==='dashboard' ? 'active-link' : '' }}">
                     <a class="nav-link" href="{{ route('admin') }}"> Dashboard </a>
                 </li>
+                @if ($user->user_type === 'Employee')
                 <li class="nav-item {{ $active==='attendance' ? 'active-link' : '' }}">
                     <a class="nav-link" href="{{ route('adminAttendance') }}"> Attendance </a>
                 </li>
+                @endif
                 <li class="nav-item dropdown {{ $active==='pipeline' ? 'active-link' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -94,7 +100,7 @@
                                 <span>All</span></a>
                         </li>
                         <li>
-                            <a class="dropdown-item current-page"  href="{{ route('pipeline', ['state'=> 'leads']) }}">
+                            <a class="dropdown-item"  href="{{ route('pipeline', ['state'=> 'leads']) }}">
                                 <span>Leads</span></a>
                         </li>
                         <li>
@@ -138,12 +144,14 @@
                        
                     </ul>
                 </li>
-                <li class="nav-item {{ $active==='monitoring' ? 'active-link' : '' }}">
-                    <a class="nav-link" href="agents.html"> Email Sent Monitoring </a>
+                <li class="nav-item {{ $active==='emailMonitoring' ? 'active-link' : '' }}">
+                    <a class="nav-link" href="{{ route('adminEmailMonitoring') }}"> Email Sent Monitoring </a>
                 </li>
-                <li class="nav-item {{ $active==='monitoring' ? 'active-link' : '' }}">
-                    <a class="nav-link" href="agents.html"> Attendance Monitoring </a>
-                </li>
+               @if ($user->user_type === 'Super Admin')
+               <li class="nav-item {{ $active==='attendanceMonitoring' ? 'active-link' : '' }}">
+                <a class="nav-link" href="{{ route('adminAttendanceMonitoring') }}"> Attendance Monitoring </a>
+              </li>
+               @endif
             </ul>
         </div>
     </div>

@@ -9,6 +9,11 @@
 <body>
     {!! $mess !!}
 
-    {{-- <img src="{{ route('emailTracking', ['id' => $id]) }}" alt="" width="1" height="1" style="display:none;"> --}}
+    <img src="{{ route('emailTracking', ['id' => $id]) }}" alt="" width="1" height="1" style="display:none;">
+
+<div style="justify-content: center; display: flex; width: 100%">
+    <p>Do you want to <a href="{{ route('UnsubscribeView') }}?id={{ $pl_id }}">Unsubscribe</a> to this email?</p>
+
+</div>
 </body>
 </html>

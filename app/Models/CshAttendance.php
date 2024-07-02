@@ -16,6 +16,8 @@ class CshAttendance extends Model
        'att_time_out',
        'att_date',
        'att_total_time',
+       'att_total_hours',
+       'att_total_minutes',
        'att_status'
     ];
 }
