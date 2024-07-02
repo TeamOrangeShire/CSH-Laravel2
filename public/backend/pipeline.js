@@ -242,6 +242,7 @@ const Pipeline = {
                 Support.AsVal('tempSigName', document.getElementById('tempName').value);
                 Support.AsVal('tempSigContent', $('#emailTemplateEditor').summernote('code'));
                 Support.AsVal('tempSigType', 'template');
+                Support.AsVal('tempSigFollowup', $('#emailSignatureEditorFollowup').summernote('code'));
                 notify = 'Successfully Added a email template';
                 var closeBtn = 'closeUpdateTempButton';
             }
@@ -327,6 +328,7 @@ const Pipeline = {
             if (Support.CheckError('sigName', 'sigNameE') === 1) {
                 Support.AsVal('tempSigNameUpdate', document.getElementById('sigName').value);
                 Support.AsVal('tempSigContentUpdate', $('#emailSignatureEditor').summernote('code'));
+                Support.AsVal('tempSigFollowupUpdate', $('#emailSignatureEditorFollowup').summernote('code'));
                 var notif = 'Email Signature is successfully updated';
                 var close = 'closeUpdateTempButton';
             }
@@ -817,9 +819,12 @@ function LoadLead(route, getDetail, disable, level) {
                         { title: "Contact Name", data: "pl_name" },
                         { title: "Email", data: null,
                             render: data => {
-                                const separate = data.pl_email.split('@');
-                                const link = `${separate[0]}@<a  class="text-decoration-underline" style="color:skyblue"
-                                 target="_blank" href="https://${separate[1]}">${separate[1]}</a>`
+                               
+                                const separate = data.pl_email != null ? data.pl_email.includes('@') ? data.pl_email.split('@') : 
+                                data.pl_email.includes('https://www.linkedin.com/') ? [data.pl_email] : data.pl_email : data.pl_email;
+                                const link = Array.isArray(separate) ? separate.length > 1 ? `${separate[0]}@<a  class="text-decoration-underline" style="color:skyblue"
+                                 target="_blank" href="https://${separate[1]}">${separate[1]}</a>`: `<a class="text-decoration-underline" style="color:skyblue"
+                                 target="_blank" href="${separate[0]}">${separate[0]}</a>` : separate;
 
                                 return link;
                             }
@@ -946,7 +951,25 @@ $(document).ready(function () {
             ['help', ['help']]
         ]
     });
-
+    $('#emailTemplateEditorFollowup').summernote({
+        placeholder: 'Edit your email template here',
+        height: 300,
+        tabsize: 2,     // set editor height
+        minHeight: null,             // set minimum height of editor
+        maxHeight: null,             // set maximum height of edit
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['insert', ['link', 'picture', 'table', 'hr']],
+            ['view', ['fullscreen', 'codeview']],
+            ['help', ['help']]
+        ]
+    });
     $('#sendCustomMessageBox').summernote({
         placeholder: 'Compose a message',
         height: 300,                 // set editor height

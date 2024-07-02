@@ -763,6 +763,8 @@
                     <div class="tab-content" id="customTabContent2">
                         <div class="tab-pane fade show active" id="addTempEditor" role="tabpanel">
                             <div id="emailTemplateEditor"></div>
+                            <p class="lead mt-4">Follow up template</p>
+                            <div id="emailTemplateEditorFollowup"></div>
                         </div>
                         <div class="tab-pane fade" id="addTempOutput" role="tabpanel">
                             <div class="card">
@@ -994,6 +996,7 @@
     <input type="hidden" name="user_id" value="{{ $user }}">
     <input type="hidden" name="name" id="tempSigName">
     <input type="hidden" name="content" id="tempSigContent">
+    <input type="hidden" name="followup" id="tempSigFollowup">
     <input type="hidden" name="type" id="tempSigType">
 </form>
 
@@ -1002,6 +1005,7 @@
     <input type="hidden" name="sigTempId" id="sigTempIdUpdate">
     <input type="hidden" name="name" id="tempSigNameUpdate">
     <input type="hidden" name="content" id="tempSigContentUpdate">
+    <input type="hidden" name="followup" id="tempSigFollowupUpdate">
     <input type="hidden" name="type" id="tempSigTypeUpdate">
 </form>
 

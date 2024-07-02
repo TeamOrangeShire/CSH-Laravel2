@@ -67,7 +67,7 @@ class SendEmailJob implements ShouldQueue
                 $sig = CshEmailSignature::where('emsig_status', 2)->where('user_id', $person->user_id)->first();
                 $lead = CshPipeline::where('pl_id', $person->pl_id)->first();
 
-                $conc_mess = $temp->emtemp_content . "<br>" . $sig->emsig_content;
+                $conc_mess = $temp->emtemp_followup . "<br>" . $sig->emsig_content;
                 $replacements = [
                     '{reciever name}' => explode(' ', $lead->pl_name)[0],
                     '{sender name}' => explode(' ', $user->user_name)[0],
@@ -91,7 +91,7 @@ class SendEmailJob implements ShouldQueue
                     'ml_level'=> $mailLevelInc
                 ]);
         
-                Mail::to($lead->pl_email)->send(new SendCustomMail($subject->emsub_content, $message, $sent->se_id, $conf->econf_from_address, $user->user_name));
+                Mail::to($lead->pl_email)->send(new SendCustomMail($subject->emsub_content, $message, $sent->se_id, $conf->econf_from_address, $user->user_name, $person->pl_id));
         }
     }   
 }

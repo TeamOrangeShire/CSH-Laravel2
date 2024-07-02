@@ -361,6 +361,7 @@ class AdminBackEnd extends Controller
             $data->user_id = $req->user_id;
             $data->emtemp_name = $req->name;
             $data->emtemp_content = $req->content;
+            $data->emtemp_followup = $req->followup;
             $data->emtemp_status = 1;
             $data->save();
         }
@@ -395,7 +396,8 @@ class AdminBackEnd extends Controller
             $data = CshEmailTemplate::where('emtemp_id', $req->sigTempId)->first();
             $data->update([
               'emtemp_name'=>$req->name,
-              'emtemp_content'=>$req->content
+              'emtemp_content'=>$req->content,
+              'emptemp_followup'=>$req->followup
             ]);
         }
 

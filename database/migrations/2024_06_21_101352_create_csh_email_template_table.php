@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('user_id')->on('csh_user');
             $table->string('emtemp_name', 50);
             $table->longText('emtemp_content');
+            $table->longText('emtemp_followup');
             $table->integer('emtemp_status');
             $table->timestamps();
         });
