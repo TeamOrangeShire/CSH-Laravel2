@@ -93,7 +93,7 @@
               <div class="rd-navbar-nav-wrap">
                 <!-- RD Navbar Share-->
                 <ul class="rd-navbar-nav">
-                  <li class="rd-nav-item {{$title != 'Core Support Hub'? '':'active' }}"><a class="rd-nav-link" href="{{$title != 'Core Support Hub'? route('home'):'' }}#home" style="text-decoration: none;">Home</a></li>
+                  <li class="rd-nav-item active"><a class="rd-nav-link" href="{{$title != 'Core Support Hub'? route('home'):'' }}#home" style="text-decoration: none;">Home</a></li>
 <li class="rd-nav-item">
     <a class="rd-nav-link" href="{{$title != 'Core Support Hub'? route('home'):'' }}#services" style="text-decoration: none;">Services</a>
     {{-- <ul class="rd-nav-submenu">
@@ -105,25 +105,25 @@
     </ul> --}}
 </li>
     <li class="rd-nav-item "><a class="rd-nav-link" href="{{$title != 'Core Support Hub'? route('home'):'' }}#industries" style="text-decoration: none;">Industries</a></li>
-    <li class="rd-nav-item {{$title == 'Brochures - Core Support Hub'?'active':'' }}">
-    <a class="rd-nav-link" href="{{ route('brochures') }}" style="text-decoration: none;">Learn More</a>
+    <li class="rd-nav-item">
+    <a class="rd-nav-link" href="#" style="text-decoration: none;">Learn More</a>
     <ul class="rd-nav-submenu">
         <li class="rd-nav-subitem">
             <a class="rd-nav-sublink" href="#service1" id="itdropdown" style="text-decoration: none;">Technology Outsourcing ></a>
             <ul class="rd-nav-subsubmenu">
                 <li class="rd-nav-subitem">
-                    <a class="rd-nav-sublink" href="{{ route('brochures2') }}?Service=ItManageServices" style="text-decoration: none;"> > IT Managed Services </a>
+                    <a class="rd-nav-sublink" href="{{ route('brochures') }}?Type=ItManageServices" style="text-decoration: none;"> > IT Managed Services </a>
                 </li>
                 <li class="rd-nav-subitem">
-                    <a class="rd-nav-sublink" href="{{ route('brochures2') }}?Service=SoftDevelopment" style="text-decoration: none;"> > Software Development</a>
+                    <a class="rd-nav-sublink" href="{{ route('brochures') }}?Type=SoftDevelopment" style="text-decoration: none;"> > Software Development</a>
                 </li>
             </ul>
         </li>
         <li class="rd-nav-subitem">
-            <a class="rd-nav-sublink" href="{{ route('brochures2') }}?Service=BusinessProcessOutsourcing" style="text-decoration: none;">Business Process Outsourcing</a>
+            <a class="rd-nav-sublink" href="{{ route('brochures') }}?Type=BusinessProcessOutsourcing" style="text-decoration: none;">Business Process Outsourcing</a>
         </li>
         <li class="rd-nav-subitem">
-            <a class="rd-nav-sublink" href="{{ route('brochures2') }}?Service=Consulting" style="text-decoration: none;">Consulting</a>
+            <a class="rd-nav-sublink" href="{{ route('brochures') }}?Type=Consulting" style="text-decoration: none;">Consulting</a>
         </li>
     </ul>
 </li>

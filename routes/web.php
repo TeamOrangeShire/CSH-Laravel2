@@ -28,6 +28,10 @@ Route::get('/services/consulting', function () {
 Route::get('/brochures/', function () {
     return view('Brochures.index');
 })->name('brochures');
+Route::get('/brochures/resources/', function () {
+    return view('Brochures.brochures');
+})->name('brochures2');
+
 
 Route::post('/sendMessage', [ContactBackEnd::class, 'SubmitMessage'])->name('sendMessage');
 

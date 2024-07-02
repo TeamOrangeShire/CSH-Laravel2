@@ -71,8 +71,7 @@
                         <img src="{{ asset('images/cus_service.png') }}" alt="" style="height: 5rem; width: 5rem;">
                       </div>
                       <div class="box-contacts-decor"></div>
-                      <p class="box-contacts-link"><a href="#customer-service">Customer Service</a></p>
-                     
+                      <p class="box-contacts-link"><a href="#customer-service">Customer Service</a></p>                   
                     </div>
                   </article>
                 </div>
