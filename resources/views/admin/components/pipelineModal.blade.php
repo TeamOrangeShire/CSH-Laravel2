@@ -564,7 +564,7 @@
                                                 <div class="w-100 d-flex justify-content-end">
 
                                                     <button data-bs-toggle="modal" data-bs-target="#addEmailTemplate"
-                                                        onclick="Support.OpenAdd('tempName', 'emailTemplateEditor', 'updateEmailTempButton', 'saveEmailTempButton')"
+                                                        onclick="Support.OpenAdd('tempName', 'emailTemplateEditor', 'emailTemplateEditorFollowup', 'updateEmailTempButton', 'saveEmailTempButton')"
                                                         class="btn btn-success"><i class="icon-plus-circle"></i>
                                                         Add Template</button>
                                                 </div>
@@ -593,7 +593,7 @@
                                                 <div class="w-100 d-flex justify-content-end">
 
                                                     <button data-bs-toggle="modal"
-                                                        onclick="Support.OpenAdd('sigName', 'emailSignatureEditor', 'updateEmailSigButton', 'saveEmailSigButton')"
+                                                        onclick="Support.OpenAdd('sigName', 'emailSignatureEditor', '', 'updateEmailSigButton', 'saveEmailSigButton')"
                                                         data-bs-target="#addEmailSignature" class="btn btn-success"><i
                                                             class="icon-plus-circle"></i>
                                                         Add Signature</button>

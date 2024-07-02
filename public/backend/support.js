@@ -53,13 +53,14 @@ const Support = {
 
         out.innerHTML =  $('#' + editor).summernote('code');
 
-    }, OpenAdd: (stname, editor, update, save) => {
+    }, OpenAdd: (stname, editor, follow, update, save) => {
         stname === 'sigName' ? Support.AsText('updateSignatureHeader', 'Add Signature') : Support.AsText('updateTemplateHeader', 'Add Template');
         if(document.getElementById('activeStatusSignature')){
             document.getElementById('activeStatusSignature').style.display = 'none';
         }
         document.getElementById(stname).value = '';
         $('#' + editor).summernote('empty');
+        $('#' + follow).summernote('empty');
         Support.OpenDiv(save, '');
         Support.CloseDiv(update);
     },
