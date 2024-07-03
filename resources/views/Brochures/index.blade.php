@@ -63,7 +63,7 @@
   .card:hover {
     border-color: #c7ae6a; /* Gold border color on hover */
   }
- @media (min-width: 1000px) and (max-width: 2000px) {
+ @media (min-width: 1000px) and (max-width: 1549px) {
     .m-3 {
       width: 18rem !important;
     }
