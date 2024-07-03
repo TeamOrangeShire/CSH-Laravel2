@@ -66,6 +66,7 @@
  @media (min-width: 1000px) and (max-width: 1549px) {
     .m-3 {
       width: 18rem !important;
+      height: 514px!important;
     }
     .x {
       width: 130% !important;
