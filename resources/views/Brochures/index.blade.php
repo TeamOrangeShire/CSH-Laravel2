@@ -63,13 +63,22 @@
   .card:hover {
     border-color: #c7ae6a; /* Gold border color on hover */
   }
- @media (min-width: 1000px) and (max-width: 1549px) {
+ @media (min-width: 1280px) and (max-width: 1549px) {
     .m-3 {
       width: 18rem !important;
       height: 514px!important;
     }
     .x {
       width: 130% !important;
+    }
+  }
+   @media (min-width: 1145px) and (max-width: 1279px) {
+    .m-3 {
+      width: 14rem !important;
+      height: 500px!important;
+    }
+    .x {
+      width: 155% !important;
     }
   }
   </style>
@@ -147,6 +156,7 @@
 </div>
 
 <br>
+
     {{-- main content end--}}
  
       {{-- main content end --}}
