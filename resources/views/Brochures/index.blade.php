@@ -63,6 +63,24 @@
   .card:hover {
     border-color: #c7ae6a; /* Gold border color on hover */
   }
+ @media (min-width: 1280px) and (max-width: 1549px) {
+    .m-3 {
+      width: 18rem !important;
+      height: 514px!important;
+    }
+    .x {
+      width: 130% !important;
+    }
+  }
+   @media (min-width: 1145px) and (max-width: 1279px) {
+    .m-3 {
+      width: 14rem !important;
+      height: 500px!important;
+    }
+    .x {
+      width: 155% !important;
+    }
+  }
   </style>
   </head>
   <body >
@@ -83,20 +101,26 @@
     {{-- main content --}}
 <div class="container col-12" >
   <div class="row">
-
-  <div class="card m-3" style="width: 22rem; height:500px;">
-       <div style="width:120%;">
-        <img   src="{{ asset('images/ITmanaged.png') }}" alt="Card image cap">
-    </div>
-      <div class="card-body ">
-        <h5 class="card-title " style="background-color: #22252a;padding-top:3%;padding-bottom:3%;color:white">IT Managed Services</h5>
-        <p class="card-text"> Core Support Hub offers managed IT services including remote desktop support, system administration, and network monitoring to optimize your connectivity. </p>
-       <a href="{{ route('brochures2') }}?Service=ItManageServices" class="btn btn-primary" style="background-color: white; color:#c7ae6a">Learn More ➜</a>
+ 
+   <div class="card m-3" style="width: 22rem; height: 500px;">
+      <div style="width: 120%;" class="x">
+        <img src="{{ asset('images/ITmanaged.png') }}" alt="Card image cap">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title" style="background-color: #22252a; padding-top: 3%; padding-bottom: 3%; color: white;">
+          IT Managed Services
+        </h5>
+        <p class="card-text">
+          Core Support Hub offers managed IT services including remote desktop support, system administration, and network monitoring to optimize your connectivity.
+        </p>
+        <a href="{{ route('brochures2') }}?Service=ItManageServices" class="btn btn-primary" style="background-color: white; color: #c7ae6a;">
+          Learn More ➜
+        </a>
       </div>
     </div>
 
    <div class="card m-3" style="width: 22rem; height:500px;">
-       <div style="width:120%;">
+       <div style="width:120%;" class="x">
         <img   src="{{asset('images/softdev.png')}}" alt="Card image cap">
     </div>
       <div class="card-body ">
@@ -107,7 +131,7 @@
     </div>
 
      <div class="card m-3" style="width: 22rem; height:500px;">
-       <div style="width:120%;">
+       <div style="width:120%;" class="x">
         <img   src="{{asset('images/bpo.png')}}" alt="Card image cap">
     </div>
       <div class="card-body ">
@@ -118,7 +142,7 @@
     </div>
 
       <div class="card m-3" style="width: 22rem; height:500px;">
-       <div style="width:120%;">
+       <div style="width:120%;" class="x">
         <img   src="{{asset('images/consulting.png')}}" alt="Card image cap">
     </div>
       <div class="card-body ">
@@ -132,6 +156,7 @@
 </div>
 
 <br>
+
     {{-- main content end--}}
  
       {{-- main content end --}}

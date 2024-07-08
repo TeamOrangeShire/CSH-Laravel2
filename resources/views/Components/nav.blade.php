@@ -130,8 +130,8 @@
 
 
 
-                  <li class="rd-nav-item"><a class="rd-nav-link" href="#why-core-support-hub" style="text-decoration: none;">Why Core Support Hub?</a></li>
-                  <li class="rd-nav-item"><a class="button button-secondary button-pipaluk" href="#contacts" style="text-decoration: none;">Contact Us</a></li>
+                  <li class="rd-nav-item"><a class="rd-nav-link" href="{{$title != 'Core Support Hub'? route('home'):'' }}#why-core-support-hub" style="text-decoration: none;">Why Core Support Hub?</a></li>
+                  <li class="rd-nav-item"><a class="button button-secondary button-pipaluk" href="{{$title != 'Core Support Hub'? route('home'):'' }}#contacts" style="text-decoration: none;">Contact Us</a></li>
                 </ul>
               </div>
             </div>
