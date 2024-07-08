@@ -388,7 +388,7 @@ class AdminBackEnd extends Controller
     public function UpdateEmailTempSig(Request $req){
         $replacements = [
             '<pre><code>' => '',
-            '<\pre><\code>' => '',
+            '</pre></code>' => '',
         ];
         $content = str_replace(array_keys($replacements), array_values($replacements), $req->content);
         $followup = str_replace(array_keys($replacements), array_values($replacements), $req->followup);

@@ -596,6 +596,8 @@ const Pipeline = {
                                     if (ready === checkedCheckboxes.length) {
                                         Support.CloseDiv('mainLoader');
                                         Support.OpenDiv('progressEmailQueue', 'grid');
+                                        Support.CloseDiv('closeProgressMailButton');
+                                        Support.OpenDiv('minimizeProgressMailButton', '');
                                         document.getElementById('loaderMailQueueID').innerHTML = `<div class="bar1"></div>
                                     <div class="bar2"></div>
                                     <div class="bar3"></div>
@@ -805,6 +807,7 @@ const Pipeline = {
 }
 let tables;
 let tablesMass;
+
 function LoadLead(route, getDetail, disable, level) {
     $.ajax({
         type: "GET",
@@ -814,6 +817,7 @@ function LoadLead(route, getDetail, disable, level) {
             if (!$.fn.DataTable.isDataTable('#pipeline')) {
                 tables = $('#pipeline').DataTable({
                     data: res.data,
+                    order: [[3, 'asc']],
                     columns: [
                         { title: "Company Name", data: "pl_company_name" },
                         { title: "Contact Name", data: "pl_name" },
