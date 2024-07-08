@@ -407,7 +407,7 @@ const Pipeline = {
             dataType: "json",
             success: res => {
                 if (res.status === 'success') {
-                    $('#sendCustomMessageBox').summernote('pasteHTML', '<pre><code><br><br>' + res.data.emsig_content + '</code></pre>');
+                    $('#sendCustomMessageBox').summernote('pasteHTML', '<br><br>' + res.data.emsig_content);
                 }
             }, error: xhr => console.log(xhr.responseText),
         })
