@@ -408,7 +408,7 @@ class AdminBackEnd extends Controller
         if($req->type === 'signature'){
           CshEmailSignature::where('emsig_id', $req->id)->first()->update(['emsig_status'=>0]);
         }else{
-            CshEmailTemplate::where('emtemp_id', $req->id)->first()->where(['emtemp_status'=>1]);
+            CshEmailTemplate::where('emtemp_id', $req->id)->first()->where(['emtemp_status'=>0]);
         }
 
         return response()->json(['status'=>'success']);
