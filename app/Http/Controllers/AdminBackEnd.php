@@ -386,18 +386,24 @@ class AdminBackEnd extends Controller
     }
 
     public function UpdateEmailTempSig(Request $req){
+        $replacements = [
+            '<pre><code>' => '',
+            '<\pre><\code>' => '',
+        ];
+        $content = str_replace(array_keys($replacements), array_values($replacements), $req->content);
+        $followup = str_replace(array_keys($replacements), array_values($replacements), $req->followup);
         if($req->type === 'signature'){
             $data = CshEmailSignature::where('emsig_id', $req->sigTempId)->first();
             $data->update([
               'emsig_name'=>$req->name,
-              'emsig_content'=>$req->content
+              'emsig_content'=>$content,
             ]);
         }else{
             $data = CshEmailTemplate::where('emtemp_id', $req->sigTempId)->first();
             $data->update([
               'emtemp_name'=>$req->name,
-              'emtemp_content'=>$req->content,
-              'emtemp_followup'=>$req->followup
+              'emtemp_content'=>$content,
+              'emtemp_followup'=>$followup
             ]);
         }
 
@@ -408,7 +414,7 @@ class AdminBackEnd extends Controller
         if($req->type === 'signature'){
           CshEmailSignature::where('emsig_id', $req->id)->first()->update(['emsig_status'=>0]);
         }else{
-            CshEmailTemplate::where('emtemp_id', $req->id)->first()->where(['emtemp_status'=>0]);
+            CshEmailTemplate::where('emtemp_id', $req->id)->first()->update(['emtemp_status'=>0]);
         }
 
         return response()->json(['status'=>'success']);

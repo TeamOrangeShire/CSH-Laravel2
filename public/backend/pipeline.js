@@ -312,7 +312,7 @@ const Pipeline = {
                                             class="btn btn-outline-primary"><i
                                             class="icon-edit"></i> Edit</button>
                                            
-                                            <button onclick="Pipeline.DisableTempSig('${dis}', '${e.emtemp_id}', 'template', 'na', 'na')" class="btn btn-outline-danger"><i
+                                            <button onclick="Pipeline.DisableTempSig('${dis}', '${e.emtemp_id}', 'template', '${route}')" class="btn btn-outline-danger"><i
                                             class="icon-trash"></i> Delete</button>
                                             </div>
                                             </li>`;
@@ -1019,16 +1019,18 @@ function EditTempSig(type, id, editor, followup) {
                 Support.OpenDiv('updateEmailSigButton', '');
                 Support.CloseDiv('saveEmailSigButton');
                 document.getElementById('sigName').value = res.data.emsig_name;
-                $(editor).summernote('pasteHTML', '<pre><code>' + res.data.emsig_content + '</code></pre>');
+                $(editor).summernote('pasteHTML',  res.data.emsig_content);
                 document.getElementById('sigTempIdUpdate').value = res.data.emsig_id;
             } else {
                 Support.AsText('updateTemplateHeader', 'Update Template');
                 Support.OpenDiv('updateEmailTempButton', '');
                 Support.CloseDiv('saveEmailTempButton');
+                Support.AsVal('sigTempIdUpdate', res.data.emtemp_id);
+                console.log(document.getElementById('sigTempIdUpdate').value);
                 document.getElementById('tempName').value = res.data.emtemp_name;
-                $(editor).summernote('pasteHTML',  res.data.emtemp_content);
-                $(followup).summernote('pasteHTML', res.data.emtemp_followup);
-                document.getElementById('sigTempIdUpdate').value = res.data.emtemp_id;
+                $(editor).summernote('pasteHTML', res.data.emtemp_content );
+                $(followup).summernote('pasteHTML',   res.data.emtemp_followup );
+               
             }
         }, error: xhr => {
             console.log(xhr.responseText);
