@@ -31,7 +31,7 @@ class AdminBackEnd extends Controller
             'monday'    => ['09:00-18:00'],
             'tuesday'   => ['09:00-18:00'],
             'wednesday' => ['09:00-18:00'],
-            'thursday'  => [],
+            'thursday'  => ['09:00-18:00'],
             'friday'    => ['09:00-18:00'],
             'saturday'  => [],
             'sunday'    => [],
