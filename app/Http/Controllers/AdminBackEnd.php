@@ -27,7 +27,12 @@ class AdminBackEnd extends Controller
     public function ScanAttendance(Request $req){
         $user = $req->user_id;
         $check = CshAttendance::where('user_id', $user)->where('att_status', 0)->first();
-        BusinessTime::enable(Carbon::class, config('business_time'));
+        $config = config('business_time');
+        BusinessTime::enable(Carbon::class, [
+            'holidaysAreClosed' => true,
+            'holidays' => $config['holidays'],
+            'weekendDays' => $config['weekends'],
+        ]);
         $date = Carbon::now()->setTimezone('Asia/Hong_Kong');
         if($req->code === 'OiFT2qnVVpEn0tmmrkANKHJO6cSOmvQk'){
             

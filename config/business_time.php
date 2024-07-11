@@ -1,5 +1,4 @@
 <?php
-use Carbon\Carbon;
 return [
     'holidays' => [
         '01-01', // New Year's Day
@@ -32,12 +31,5 @@ return [
     'weekends' => [
         'saturday',
         'sunday',
-    ],
-    'working_hours' => [
-        'monday' => ['09:00-17:00'],
-        'tuesday' => ['09:00-17:00'],
-        'wednesday' => ['09:00-17:00'],
-        'thursday' => ['09:00-17:00'],
-        'friday' => ['09:00-17:00'],
     ],
 ];
