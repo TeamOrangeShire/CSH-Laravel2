@@ -1090,6 +1090,7 @@
                                 <th>Date Send</th>
                                 <th>Status</th>
                                 <th>View</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody id="MailLevelProgressTable">
@@ -1099,6 +1100,38 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editScheduleForResend" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="MailLevelProgress" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                 Reschedule 
+                </h5>
+                <button type="button"  style="filter: brightness(0) invert(1);" class="btn-close" data-bs-toggle="modal" data-bs-target="#MailLevelProgress" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="m-0">
+                    <div class="form-label">Select New Time</div>
+                    <div class="input-group">
+                        <input type="text" class="form-control datepicker-time" />
+                        <span class="input-group-text">
+                            <i class="icon-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#MailLevelProgress">
                     Close
                 </button>
                

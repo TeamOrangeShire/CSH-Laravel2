@@ -18,6 +18,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Hash;
 use App\Models\CshMailLevel;
 use Illuminate\Support\Facades\Mail;
+use Cmixin\BusinessTime;
 
 use DateTime;
 
@@ -26,6 +27,8 @@ class AdminBackEnd extends Controller
     public function ScanAttendance(Request $req){
         $user = $req->user_id;
         $check = CshAttendance::where('user_id', $user)->where('att_status', 0)->first();
+        BusinessTime::enable(Carbon::class, config('business_time'));
+        $date = Carbon::now()->setTimezone('Asia/Hong_Kong');
         if($req->code === 'OiFT2qnVVpEn0tmmrkANKHJO6cSOmvQk'){
             
             if($check){
@@ -35,16 +38,17 @@ class AdminBackEnd extends Controller
             }else{
                 $att = new CshAttendance();
                 $att->user_id = $user;
-                $att->att_time_in = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+                $att->att_workday = $date->isBusinessDay() ? ($date->isWeekend() ? 'Weekend Duty' : 'Regular Workday') : 'Holiday Duty';
+                $att->att_time_in = $date->format('h:i A');
                 $att->att_time_out = '';
-                $att->att_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('F j, Y');
+                $att->att_date = $date->format('F j, Y');
                 $att->att_total_time = '';
                 $att->att_status = 0;
                 $att->save();
                 
                 $status = 'success';
                 $action = 'login';
-                $data = [Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A'), Carbon::now()->setTimezone('Asia/Hong_Kong')->format('F j, Y')];
+                $data = [$date->format('h:i A'),  $date->format('F j, Y')];
             }
           
         }
@@ -55,13 +59,14 @@ class AdminBackEnd extends Controller
                 $action = '';
                 $data = ['',''];
             }else{
-                $time = timeDifference($check->att_time_in, Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A'));
+                $time = timeDifference($check->att_time_in, $date->format('h:i A'));
                 $totalTime = $time['hours']. "Hrs & " . $time['minutes'] . 'Mins';
                 $check->update([
-                   'att_time_out'=> Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A'),
+                   'att_time_out'=> $date->format('h:i A'),
                    'att_total_time'=>$totalTime,
                    'att_total_hours'=> $time['hours'],
                    'att_total_minutes'=> $time['minutes'],
+                   'att_overtime'=> $time['hours'] >=9 ? ($time['hours'] == 9 ? "0 Hrs & " . $time['minutes'] . 'Mins' : $time['hours'] - 9 . "Hrs & " . $time['minutes'] . 'Mins') : 0,
                    'att_status'=>1,
                 ]);
 
@@ -74,6 +79,11 @@ class AdminBackEnd extends Controller
 
         return response()->json(['status'=> $status, 'action'=>$action, 'data'=>$data]);
 
+    }
+
+    public function AttendanceLoadData(Request $req){
+        $user = CshAttendance::where('user_id', $req->user_id)->get();
+        return response()->json(['data'=>$user]);
     }
 
     public function GetAttendance(Request $req){
@@ -677,44 +687,18 @@ class AdminBackEnd extends Controller
     }
 
     public function LoadUserGraphs(Request $req){
-        $pipeline = CshPipeline::where('user_id', $req->user_id);
+
         $user = CshUser::where('user_id', $req->user_id)->first();
-        $user->lead = $pipeline->where('pl_status', 'Lead')->get()->count();
-        $user->prospect = $pipeline->where('pl_status', 'Prospect')->get()->count();
-        $user->discussion = $pipeline->where('pl_status', 'Discussion')->get()->count();
-        $user->proposal = $pipeline->where('pl_status', 'Proposal')->get()->count();
-        $user->negotiation = $pipeline->where('pl_status', 'Negotiation')->get()->count();
-        $user->contract = $pipeline->where('pl_status', 'Contract')->get()->count();
-        $user->won = $pipeline->where('pl_status', 'Won')->get()->count();
-        $user->lost = $pipeline->where('pl_status', 'Lost')->get()->count();
-        $user->dnc = $pipeline->where('pl_status', 'DNC')->get()->count();
+        $user->lead =  CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Lead')->get()->count();
+        $user->prospect =  CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Prospect')->get()->count();
+        $user->discussion =  CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Discussion')->get()->count();
+        $user->proposal =  CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Proposal')->get()->count();
+        $user->negotiation =  CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Negotiation')->get()->count();
+        $user->contract =  CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Contract')->get()->count();
+        $user->won =  CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Won')->get()->count();
+        $user->lost =  CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'Lost')->get()->count();
+        $user->dnc =  CshPipeline::where('user_id', $req->user_id)->where('pl_status', 'DNC')->get()->count();
 
-        $attend = CshAttendance::where('user_id',$req->user_id)->get();
-        $months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-        foreach($months as $m){
-        $totalHours = 0;
-        $totalMinutes = 0;
-
-        foreach ($attend as $att) {
-
-            $date = DateTime::createFromFormat('d/m/Y', $att->att_date);
-
-            $year = Carbon::now()->year;
-
-            if ($date && $date->format('m') == $m && $date->format('Y') == $year) {
-                $totalHours += $att->att_total_hours;
-                $totalMinutes += $att->att_total_minutes;
-            }
-        }
-
-        $additionalHours = intdiv($totalMinutes, 60);
-        $remainingMinutes = $totalMinutes % 60;
-        $fractionalHours = $remainingMinutes / 60;
-
-        $totalTime = $totalHours + $additionalHours + $fractionalHours;
-        $monthName = DateTime::createFromFormat('!m', $m)->format('F');
-        $user->$monthName = $totalTime;
-        }
         return response()->json(['users'=>$user]);
     }
 
@@ -741,8 +725,11 @@ class AdminBackEnd extends Controller
         "Seen" : 'Not Yet';
         $schedule->view5 = CshSentMail::where('pl_id', $req->pl_id)->where('se_date', $schedule->ml_date_five)->where('se_level', 5)->where('se_status',2)->first() ?
         'Seen' : 'Not Yet';
+
+
         return response()->json(['schedule'=>$schedule]);
     }
+    
 
     public function LoadMessage(Request $req){
         $mess = CshSentMail::where('se_id', $req->message)->first();
@@ -768,5 +755,17 @@ class AdminBackEnd extends Controller
         ]);
 
         return response()->json(['status'=> 'success']);
+    }
+
+    public function ApprovedOvertime(Request $req){
+        $ot = CshAttendance::where('att_id', $req->att_id)->first();
+        
+        $value = $ot->att_overtime_status === 1 ? 0 : 1;
+        $return = $ot->att_overtime_status === 1 ? 'cancel' : 'approve';
+        $ot->update([
+            'att_overtime_status'=> $value,
+        ]);
+
+        return response()->json(['status'=> 'success', 'data'=>$return]);
     }
 }

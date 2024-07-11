@@ -1,4 +1,5 @@
 let table;
+let tables;
 const Att = {
     LoadTable: (route, img, user) => {
         $.ajax({
@@ -56,9 +57,7 @@ const Att = {
             success: res=> {
               const data = res.users;
               const pl_data = [data.lead, data.prospect, data.discussion, data.proposal, data.negotiation, data.contract, data.won, data.lost, data.dnc];
-              const dh_data = [data.January, data.February, data.March, data.April, data.May, data.June, data.July, data.August, data.September, data.October, data.November, data.December];
               Att.Graph(pipeline,pl_data,'#pipeline');
-              Att.Graph(month,dh_data,'#dutyHours');
             }, error: xhr => console.log(xhr.responseText)
         })
     }, Graph: (key, value, graphs) => {
@@ -128,5 +127,70 @@ const Att = {
         var chart = new ApexCharts(document.querySelector(graphs), options);
         chart.render();
         
+    }, LoadAttendance: (route, approved) => {
+        $.ajax({
+            type: "GET",
+            url: route,
+            dataType: "json",
+            success: res => {
+                if (!$.fn.DataTable.isDataTable('#empAttendance')) {
+                    tables = $('#empAttendance').DataTable({
+                        data: res.data,
+                        columns: [
+                            { title: "Date", data: "att_date" },
+                            { title: "Workday", data: "att_workday" },
+                            { title: "Time In", data: "att_time_in" },
+                            { title: "Time Out", data: "att_time_out" },
+                            { title: "Total Time", data: "att_total_time" },
+                            { title: "Final Time(Deducted Break Time)", data: null,
+                                render: data => {
+                                    return data.att_time_out != '' ? `${data.att_total_hours - 1 }Hrs & ${data.att_total_minutes}Mins` : 'N/A';
+                                }
+                             },
+                            { title: "Over Time", data: "att_overtime" },
+                            { title: "Approval", data: null, 
+                                render: data=> {
+                                    const btn = data.att_overtime_status === 1 ? 'btn-outline-danger' : 'btn-outline-success';
+                                    const icon = data.att_overtime_status === 1 ? 'icon-x' : 'icon-check_circle';
+                                    const text = data.att_overtime_status === 1 ? 'Cancel' : 'Approve Overtime';
+                                    const dis = data.att_time_out == '' ? 'disabled' : '';
+                                    return `<button  ${dis} onclick="Att.ApproveOvertime('${approved}', '${data.att_id}', this)" class="btn w-100 ${btn}"><i class="${icon}"></i> ${text}</button>`
+                                }
+                             },
+                        ],
+                        autoWidth: false,
+    
+                    });
+                } else {
+                    tables.clear().rows.add(res.data).draw();
+                }
+    
+            }, error: xhr => {
+                console.log(xhr.responseText);
+            }
+        });
+    }, ApproveOvertime: (route, id, button) => {
+       Support.AsVal('att_id', id);
+
+       $.ajax({
+         type: "POST",
+         url: route,
+         data: $('form#approvedOvertime').serialize(),
+         success: res => {
+           if(res.status === 'success'){
+              if(res.data === 'cancel'){
+                button.classList.add('btn-outline-success');
+                button.classList.remove('btn-outline-danger');
+  
+                button.innerHTML = `<i class="icon-check_circle"></i> Approve Overtime`;
+              }else {
+                button.classList.remove('btn-outline-success');
+                button.classList.add('btn-outline-danger');
+  
+                button.innerHTML = `<i class="icon-x"></i> Cancel`
+              }
+           }
+         }, error: xhr => console.log(xhr.responseText),
+       });
     }
 }

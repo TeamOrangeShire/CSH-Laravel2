@@ -738,30 +738,35 @@ const Pipeline = {
 									<td>${data.ml_date_one}</td>
 									<td>${data.status1}</td>
 									<td>${data.view1}</td>
+                                    <td><button data-bs-toggle="modal" data-bs-target="#editScheduleForResend" class="btn btn-sm btn-outline-primary"><i class="icon-edit"></i> Reschedule</button></td>
 										</tr>
                                         <tr>
 						           <td>2</td>
 									<td>${data.ml_date_two}</td>
 									<td>${data.status2}</td>
 									<td>${data.view2}</td>
+                                    <td><button data-bs-toggle="modal" data-bs-target="#editScheduleForResend" class="btn btn-sm btn-outline-primary"><i class="icon-edit"></i> Reschedule</button></td>
 										</tr>
                                         <tr>
 						           <td>3</td>
 									<td>${data.ml_date_three}</td>
 									<td>${data.status3}</td>
 									<td>${data.view3}</td>
+                                    <td><button data-bs-toggle="modal" data-bs-target="#editScheduleForResend" class="btn btn-sm btn-outline-primary"><i class="icon-edit"></i> Reschedule</button></td>
 										</tr>
                                         <tr>
 						           <td>4</td>
 									<td>${data.ml_date_four}</td>
 									<td>${data.status4}</td>
 									<td>${data.view4}</td>
+                                    <td><button data-bs-toggle="modal" data-bs-target="#editScheduleForResend" class="btn btn-sm btn-outline-primary"><i class="icon-edit"></i> Reschedule</button></td>
 										</tr>
                                         <tr>
 						           <td>5</td>
 									<td>${data.ml_date_five}</td>
 									<td>${data.status5}</td>
 									<td>${data.view5}</td>
+                                    <td><button data-bs-toggle="modal" data-bs-target="#editScheduleForResend" class="btn btn-sm btn-outline-primary"><i class="icon-edit"></i> Reschedule  </button></td>
 										</tr>`;
 
             }, error: xhr => {

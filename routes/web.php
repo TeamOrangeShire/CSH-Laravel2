@@ -86,6 +86,8 @@ Route::get('/admin/pipelineload/loadSentMail', [AdminBackEnd::class, 'LoadMailLe
 Route::get('/admin/monitoring/email/load', [AdminBackEnd::class, 'LoadSentEmail'])->name('loadSentEmail');
 Route::get('/admin/monitoring/email/load/message', [AdminBackEnd::class, 'LoadMessage'])->name('loadMessage');
 Route::get('/admin/monitoring/attendance/load', [AdminBackEnd::class, 'AttMonLoad'])->name('attMonLoad');
+Route::get('/admin/monitoring/attendance/loaddata', [AdminBackEnd::class, 'AttendanceLoadData'])->name('AttendanceLoadData');
+Route::post('/admin/monitoring/attendance/approvedovertime', [AdminBackEnd::class, 'ApprovedOvertime'])->name('ApprovedOvertime');
 
 Route::post('/admin/user/settings/updateUserDetails', [AdminBackEnd::class, 'UpUserDetails'])->name('upUserDetails');
 Route::post('/admin/user/settings/changePassword', [AdminBackEnd::class, 'ChangePassword'])->name('changePassword');

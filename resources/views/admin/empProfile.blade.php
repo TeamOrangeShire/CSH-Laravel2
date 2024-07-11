@@ -72,7 +72,7 @@
 
                     <!-- Row start -->
                     <div class="row gx-2">
-                        <div class="col-xl-6 col-sm-12 col-12">
+                        <div class="col-xl-12 col-sm-12 col-12">
                             <div class="card mb-2">
                                 <div class="card-header">
                                     <h5 class="card-title">Progress on leads</h5>
@@ -82,13 +82,30 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-6 col-sm-12 col-12">
+                        <div class="col-xl-12 col-sm-12 col-12">
                             <div class="card mb-2">
                                 <div class="card-header">
-                                    <h5 class="card-title">Duty Hours</h5>
+                                    <h5 class="card-title">Attendance Records</h5>
                                 </div>
                                 <div class="card-body">
-                                    <div id="dutyHours"></div>
+                                    <div class="table-responsive">
+                                        <table id="empAttendance" class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Work Day</th>
+                                                    <th>Time In</th>
+                                                    <th>Time Out</th>
+                                                    <th>Total Time</th>
+                                                    <th>Final Time(Deducted Break Time)</th>
+                                                    <th>Over Time</th>
+                                                    <th>Approval</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,11 +129,16 @@
     <!-- Page wrapper end -->
     <!-- Modal -->
    
+    <form method="post" id="approvedOvertime">
+        @csrf
+        <input type="hidden" name="att_id" id="att_id">
+    </form>
     @include('admin.components.scripts')
     <script src="{{ asset('backend/attendanceMonitoring.js') }}"></script>
      <script>
         window.onload = () => {
             Att.LoadUserGraph("{{ route('loadUserGraphs') }}", "{{ $employee }}");
+            Att.LoadAttendance("{{ route('AttendanceLoadData') }}?user_id={{ $employee }}", "{{ route('ApprovedOvertime') }}");
         }
      </script>
 </body>

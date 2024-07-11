@@ -6,6 +6,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "cmixin/business-time": "^1.14",
+        "jenssegers/date": "^2.0",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
         "php-imap/php-imap": "^2.0",

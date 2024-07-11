@@ -32,7 +32,7 @@
 		<link rel="stylesheet" href="{{ asset('assets/vendor/datatables/dataTables.bs5.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/vendor/datatables/dataTables.bs5-custom.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/vendor/datatables/buttons/dataTables.bs5-custom.css') }}" />
-		
+		<link rel="stylesheet" href="{{ asset('assets/vendor/daterange/daterange.css') }}" />
 		<!-- Summer Note -->
 			<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 		<!--Quil-->

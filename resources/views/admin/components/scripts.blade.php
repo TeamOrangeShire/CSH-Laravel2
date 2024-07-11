@@ -3,6 +3,7 @@
 <!-- Overlay Scroll JS -->
 <script src="{{ asset('assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/overlay-scroll/custom-scrollbar.js') }}"></script>
+<script src="{{ asset('assets/js/moment.min.js') }}"></script>
 
 <!-- Custom JS files -->
 <script src="{{ asset('assets/js/custom.js') }}"></script>
@@ -22,5 +23,6 @@
 <script src="{{ asset('assets/vendor/datatables/buttons/buttons.colVis.min.js') }}"></script>
 <!-- Charts  -->
 <script src="{{ asset('assets/vendor/apex/apexcharts.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/apex/custom/home/ticketsData.js') }}"></script>
+<script src="{{ asset('assets/vendor/daterange/daterange.js') }}"></script>
+<script src="{{ asset('assets/vendor/daterange/custom-daterange.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>

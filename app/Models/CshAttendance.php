@@ -12,12 +12,16 @@ class CshAttendance extends Model
     protected $primaryKey = 'att_id';
     protected $fillable = [
        'user_id',
+       'att_workday',
+       'att_overtime',
        'att_time_in',
        'att_time_out',
        'att_date',
        'att_total_time',
        'att_total_hours',
        'att_total_minutes',
+       'att_leave_status',
+       'att_overtime_status',
        'att_status'
     ];
 }

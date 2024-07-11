@@ -37,7 +37,7 @@
 								</div>
 								
 								<div class="d-grid py-3 mt-3">
-									<button onclick="Login('{{ route('login') }}', '{{ route('admin') }}')" type="button" class="btn btn-lg btn-success">
+									<button id="loginButton" onclick="Login('{{ route('login') }}', '{{ route('admin') }}')" type="button" class="btn btn-lg btn-success">
 										LOGIN
 									</button>
 								</div>
@@ -56,6 +56,14 @@
 		<!-- Container end -->
         @include('admin.components.scripts')
 		<script src="{{ asset('backend/authenticate.js') }}"></script>
+		<script>
+			 document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('loginButton').click();
+             }
+           });
+
+		</script>
 	</body>
 
 </html>
