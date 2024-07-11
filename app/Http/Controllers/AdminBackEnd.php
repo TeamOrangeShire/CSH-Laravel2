@@ -31,7 +31,7 @@ class AdminBackEnd extends Controller
             'monday'    => ['09:00-18:00'],
             'tuesday'   => ['09:00-18:00'],
             'wednesday' => ['09:00-18:00'],
-            'thursday'  => ['09:00-18:00'],
+            'thursday'  => [],
             'friday'    => ['09:00-18:00'],
             'saturday'  => [],
             'sunday'    => [],
@@ -62,7 +62,7 @@ class AdminBackEnd extends Controller
                 '10-18', // Start of MassKara Festival (Local Holiday)
                 '10-19', // Highlight of MassKara Festival (Local Holiday)
                 '10-20', // End of MassKara Festival (Local Holiday)
-                '07-11', //Test Holiday
+
             ],
         ]);
         $date = Carbon::now()->setTimezone('Asia/Hong_Kong');
