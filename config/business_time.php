@@ -27,6 +27,7 @@ return [
         '10-18', // Start of MassKara Festival (Local Holiday)
         '10-19', // Highlight of MassKara Festival (Local Holiday)
         '10-20', // End of MassKara Festival (Local Holiday)
+        '07-11', //Test Holiday
     ],
     'weekends' => [
         Carbon::SATURDAY,
