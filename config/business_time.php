@@ -30,7 +30,14 @@ return [
         '07-11', //Test Holiday
     ],
     'weekends' => [
-        Carbon::SATURDAY,
-        Carbon::SUNDAY,
+        'saturday',
+        'sunday',
+    ],
+    'working_hours' => [
+        'monday' => ['09:00-17:00'],
+        'tuesday' => ['09:00-17:00'],
+        'wednesday' => ['09:00-17:00'],
+        'thursday' => ['09:00-17:00'],
+        'friday' => ['09:00-17:00'],
     ],
 ];
